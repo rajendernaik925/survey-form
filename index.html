@@ -479,7 +479,7 @@
     <!-- Header -->
     <div class="survey-header">
       <div class="header-icon"><i class="bi bi-bus-front-fill"></i></div>
-      <h4>Employee Transport Survey</h4>
+      <h4>Feedback Survey</h4>
       <p>Help us understand your commute needs and improve our transport services</p>
     </div>
 
@@ -493,7 +493,7 @@
       </div> -->
 
       <!-- 1. Employee Information -->
-      <div class="employee-section">
+      <div class="employee-section d-none">
         <div class="section-header">
           <span class="section-badge"><i class="bi bi-person-badge-fill"></i></span>
           <div>
@@ -612,7 +612,7 @@
           <small class="field-error" id="ownFromLocationError">From location is required.</small>
         </div>
 
-        <div class="form-group">
+        <div class="form-group d-none">
           <label class="survey-label">Average Travel Time (One Way) <span class="req">*</span></label>
           <div class="pill-group mt-1" id="ownTravelTimePills">
             <span class="pill-opt" data-group="ownTravelTime" data-value="0-15" onclick="selectPill(this,'ownTravelTime')">&lt; 15 min</span>
@@ -645,29 +645,48 @@
 
         <!-- If YES: Rate & Comments -->
         <div id="ownCompanyYesBlock" style="display:none;" class="sub-section section-animate">
-          <div class="sub-section-title"><i class="bi bi-star-fill"></i> Rate Company Transport Service</div>
+          <!-- <div class="sub-section-title"><i class="bi bi-star-fill"></i> Rate Company Transport Service</div> -->
           <div class="form-group">
-            <label class="survey-label">Your Rating <span class="req">*</span></label>
-            <div class="star-block mt-1" id="ownStarBlock" onmouseleave="clearHover('own')">
+            <!-- <label class="survey-label">Your Rating <span class="req">*</span></label> -->
+            <div class="form-group">
+              <label class="survey-label">Current service point <span class="req">*</span></label>
+              <div class="input-icon-wrap">
+                <i class="bi bi-geo-alt-fill input-icon"></i>
+                <input type="text" class="survey-input has-icon" id="ownFromLocation"
+                  placeholder="Enter your home address or area name">
+              </div>
+              <small class="field-error" id="ownFromLocationError">From location is required.</small>
+            </div>
+
+            <div class="form-group">
+              <label class="survey-label">Preffered service point <span class="req">*</span></label>
+              <div class="input-icon-wrap">
+                <i class="bi bi-geo-alt-fill input-icon"></i>
+                <input type="text" class="survey-input has-icon" id="ownFromLocation"
+                  placeholder="Enter your home address or area name">
+              </div>
+              <small class="field-error" id="ownFromLocationError">From location is required.</small>
+            </div>
+            <!-- <div class="star-block mt-1" id="ownStarBlock" onmouseleave="clearHover('own')">
               <span class="star own-star" data-star="1" onclick="rateService(1,'own')" onmouseenter="hoverStar(1,'own')"><i class="bi bi-star"></i></span>
               <span class="star own-star" data-star="2" onclick="rateService(2,'own')" onmouseenter="hoverStar(2,'own')"><i class="bi bi-star"></i></span>
               <span class="star own-star" data-star="3" onclick="rateService(3,'own')" onmouseenter="hoverStar(3,'own')"><i class="bi bi-star"></i></span>
               <span class="star own-star" data-star="4" onclick="rateService(4,'own')" onmouseenter="hoverStar(4,'own')"><i class="bi bi-star"></i></span>
               <span class="star own-star" data-star="5" onclick="rateService(5,'own')" onmouseenter="hoverStar(5,'own')"><i class="bi bi-star"></i></span>
               <span class="rating-label" id="ownRatingLabel"></span>
-            </div>
-            <small class="text-muted d-block mt-1">Click to rate (1 = Poor, 5 = Excellent)</small>
-            <small class="field-error" id="ownRatingError">Please rate the service.</small>
+            </div> -->
+            <!-- <small class="text-muted d-block mt-1">Click to rate (1 = Poor, 5 = Excellent)</small>
+            <small class="field-error" id="ownRatingError">Please rate the service.</small> -->
           </div>
-          <div class="form-group mb-0">
+          <!-- <div class="form-group mb-0">
             <label class="survey-label">Comments / Feedback <span class="req">*</span></label>
             <textarea class="survey-input" id="ownCompanyComments" rows="3" placeholder="Share your experience with the company transport..."></textarea>
             <small class="field-error" id="ownCompanyCommentsError">Please enter your comments.</small>
-          </div>
+          </div> -->
         </div>
 
         <!-- If NO: Interested? -->
-        <div id="ownCompanyNoBlock" style="display:none;" class="sub-section section-animate">
+        <div id="ownCompanyNoBlock" style="display:none;" class="sub-section section-animate d-none">
           <div class="sub-section-title"><i class="bi bi-question-circle-fill"></i> Would you like to use company transport?</div>
           <div class="form-group mb-0">
             <label class="survey-label">Are you interested in using company transport? <span class="req">*</span></label>
@@ -750,14 +769,14 @@
           <small class="field-error" id="publicFromLocationError">Starting location is required.</small>
         </div>
 
-        <div class="form-group">
+        <!-- <div class="form-group">
           <label class="survey-label">Midpoint / Junction Point <span class="req">*</span></label>
           <div class="input-icon-wrap">
             <i class="bi bi-arrows-angle-contract input-icon"></i>
             <input type="text" class="survey-input has-icon" id="publicMidpoint" placeholder="e.g., Ameerpet Metro, Hitech City Bus Stop">
           </div>
           <small class="field-error" id="publicMidpointError">Midpoint is required.</small>
-        </div>
+        </div> -->
 
         <div class="form-group">
           <label class="survey-label">Drop Location / Final Stop <span class="req">*</span></label>
@@ -768,7 +787,7 @@
           <small class="field-error" id="publicDropLocationError">Drop location is required.</small>
         </div>
 
-        <div class="row">
+        <div class="row d-none">
           <div class="col-md-7">
             <div class="form-group">
               <label class="survey-label">Average Travel Time (One Way) <span class="req">*</span></label>
@@ -815,8 +834,8 @@
 
         <!-- If YES: Rate & Comments -->
         <div id="pubCompanyYesBlock" style="display:none;" class="sub-section section-animate">
-          <div class="sub-section-title"><i class="bi bi-star-fill"></i> Rate Company Transport Service</div>
-          <div class="form-group">
+          <!-- <div class="sub-section-title"><i class="bi bi-star-fill"></i> Rate Company Transport Service</div> -->
+          <!-- <div class="form-group">
             <label class="survey-label">Your Rating <span class="req">*</span></label>
             <div class="star-block mt-1" id="pubStarBlock" onmouseleave="clearHover('pub')">
               <span class="star pub-star" data-star="1" onclick="rateService(1,'pub')" onmouseenter="hoverStar(1,'pub')"><i class="bi bi-star"></i></span>
@@ -833,11 +852,30 @@
             <label class="survey-label">Comments / Feedback <span class="req">*</span></label>
             <textarea class="survey-input" id="pubCompanyComments" rows="3" placeholder="Share your experience with the company transport..."></textarea>
             <small class="field-error" id="pubCompanyCommentsError">Please enter your comments.</small>
-          </div>
+          </div> -->
+          <div class="form-group">
+              <label class="survey-label">Current service point <span class="req">*</span></label>
+              <div class="input-icon-wrap">
+                <i class="bi bi-geo-alt-fill input-icon"></i>
+                <input type="text" class="survey-input has-icon" id="ownFromLocation"
+                  placeholder="Enter your home address or area name">
+              </div>
+              <small class="field-error" id="ownFromLocationError">From location is required.</small>
+            </div>
+
+            <div class="form-group">
+              <label class="survey-label">Preffered service point <span class="req">*</span></label>
+              <div class="input-icon-wrap">
+                <i class="bi bi-geo-alt-fill input-icon"></i>
+                <input type="text" class="survey-input has-icon" id="ownFromLocation"
+                  placeholder="Enter your home address or area name">
+              </div>
+              <small class="field-error" id="ownFromLocationError">From location is required.</small>
+            </div>
         </div>
 
         <!-- If NO: Interested? -->
-        <div id="pubCompanyNoBlock" style="display:none;" class="sub-section section-animate">
+        <div id="pubCompanyNoBlock" style="display:none;" class="sub-section section-animate d-none">
           <div class="sub-section-title"><i class="bi bi-question-circle-fill"></i> Would you like to use company transport?</div>
           <div class="form-group mb-0">
             <label class="survey-label">Are you interested in using company transport? <span class="req">*</span></label>
