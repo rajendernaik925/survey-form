@@ -1,1167 +1,1136 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Employee Transport Survey</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    *, *::before, *::after { box-sizing: border-box; }
-
-    :root {
-      --primary: #0072bc;
-      --primary-dark: #005a96;
-      --primary-light: rgba(0,114,188,0.09);
-      --primary-mid: rgba(0,114,188,0.18);
-      --gradient: linear-gradient(135deg, #0072bc 0%, #005a96 100%);
-      --section-bg: #f7f9fc;
-      --border: #dde3ec;
-      --border-sel: #0072bc;
-      --text: #212529;
-      --text-sub: #6c757d;
-      --text-label: #495057;
-      --star-color: #f59e0b;
-      --radius-lg: 12px;
-      --radius-md: 8px;
-      --radius-sm: 6px;
-      --shadow-card: 0 2px 16px rgba(0,0,0,0.08);
-      --trans: all 0.2s ease;
-      --success: #198754;
-      --danger: #dc3545;
-    }
-
-    body {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      background: #eef2f7;
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
       margin: 0;
       padding: 0;
     }
 
-    /* Shell */
-    .survey-shell {
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      padding: 1.5rem 1rem;
-      background: #eef2f7;
-      min-height: 100vh;
+    :root {
+      --blue: #0072BC;
+      --blue-dark: #005a96;
+      --blue-soft: rgba(0, 114, 188, 0.08);
+      --blue-mid: rgba(0, 114, 188, 0.16);
+      --green: #0a9f6e;
+      --green-soft: rgba(10, 159, 110, 0.08);
+      --red: #e8334a;
+      --red-soft: rgba(232, 51, 74, 0.08);
+      --surface: #ffffff;
+      --bg: #eef3f8;
+      --border: #dde5ef;
+      --text: #0d1b2a;
+      --sub: #6b7a90;
+      --label: #344054;
+      --r: 10px;
+      --r-sm: 7px;
     }
 
-    /* Card */
-    .survey-card {
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      min-height: 100vh;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 1.5rem 1rem 3rem;
+    }
+
+    .card {
       width: 100%;
-      max-width: 820px;
-      background: #fff;
+      max-width: 760px;
+      background: var(--surface);
       border-radius: 16px;
       overflow: hidden;
-      box-shadow: 0 6px 32px rgba(0,0,0,0.10);
+      box-shadow: 0 4px 40px rgba(0, 114, 188, 0.1);
     }
 
-    /* Header */
-    .survey-header {
-      background: var(--gradient);
-      color: #fff;
-      padding: 2rem 2rem 1.75rem;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-    }
-    .survey-header::before {
-      content: '';
-      position: absolute;
-      top: -40px; right: -40px;
-      width: 140px; height: 140px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.07);
-    }
-    .survey-header::after {
-      content: '';
-      position: absolute;
-      bottom: -30px; left: -20px;
-      width: 100px; height: 100px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.05);
-    }
-    .header-icon {
-      width: 56px; height: 56px;
-      background: rgba(255,255,255,0.18);
-      border-radius: 14px;
-      display: flex; align-items: center; justify-content: center;
-      margin: 0 auto 1rem;
-      font-size: 1.6rem;
-      backdrop-filter: blur(4px);
-      border: 1px solid rgba(255,255,255,0.25);
-    }
-    .survey-header h4 {
-      font-size: 1.45rem;
-      font-weight: 800;
-      letter-spacing: 0.2px;
-      margin-bottom: 0.25rem;
-    }
-    .survey-header p {
-      font-size: 0.875rem;
-      opacity: 0.85;
-      margin: 0;
-    }
-
-    /* Progress bar */
-    .survey-progress {
-      padding: 0.75rem 1.75rem;
-      background: #f0f4fa;
-      border-bottom: 1px solid var(--border);
-    }
-    .progress-label {
-      font-size: 0.75rem;
-      font-weight: 600;
-      color: var(--text-sub);
-      margin-bottom: 0.35rem;
-      display: flex;
-      justify-content: space-between;
-    }
-    .progress { height: 5px; border-radius: 999px; background: var(--border); }
-    .progress-bar { background: var(--gradient); border-radius: 999px; transition: width 0.4s ease; }
-
-    /* Form */
-    .survey-form { padding: 1.5rem 1.75rem; }
-
-    /* Section */
-    .survey-section {
-      background: var(--section-bg);
-      border: 1px solid var(--border);
-      border-left: 4px solid var(--primary);
-      border-radius: var(--radius-lg);
-      padding: 1.4rem 1.5rem;
-      margin-bottom: 1.25rem;
-    }
-    .section-animate { animation: fadeSlideIn 0.3s ease-out; }
-
-    /* Section header */
-    .section-header {
-      display: flex;
-      align-items: center;
-      gap: 0.875rem;
-      margin-bottom: 1.2rem;
-    }
-    .section-badge {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 40px;
-      height: 40px;
-      min-width: 40px;
-      background: var(--primary-light);
-      border-radius: var(--radius-md);
-      color: var(--primary);
-      font-size: 1.25rem;
-      border: 1px solid var(--primary-mid);
-    }
-    .section-title { font-size: 1rem; font-weight: 700; color: var(--text); line-height: 1.3; }
-    .section-subtitle { font-size: 0.78rem; color: var(--text-sub); margin-top: 1px; }
-
-    /* Labels */
-    .survey-label {
-      display: block;
-      font-weight: 600;
-      color: var(--text-label);
-      font-size: 0.84rem;
-      margin-bottom: 0.35rem;
-    }
-    .req { color: #dc3545; }
-
-    /* Inputs */
-    .survey-input {
-      border: 1.5px solid var(--border);
-      border-radius: var(--radius-md);
-      font-size: 0.875rem;
-      padding: 0.55rem 0.85rem;
-      transition: var(--trans);
-      background: #fff;
-      color: var(--text);
-      width: 100%;
-      font-family: inherit;
-      outline: none;
-    }
-    .survey-input:focus {
-      border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(0,114,188,0.11);
-    }
-    .survey-input.is-invalid {
-      border-color: #dc3545;
-      box-shadow: 0 0 0 3px rgba(220,53,69,0.10);
-    }
-    .survey-input::placeholder { color: #b0b8c4; }
-
-    .input-icon-wrap { position: relative; }
-    .input-icon {
-      position: absolute;
-      top: 50%;
-      left: 0.75rem;
-      transform: translateY(-50%);
-      color: var(--primary);
-      font-size: 0.9rem;
-      pointer-events: none;
-    }
-    .has-icon { padding-left: 2.2rem !important; }
-
-    /* Employee ID section */
-    .employee-section {
-      background: linear-gradient(135deg, rgba(0,114,188,0.06) 0%, rgba(0,90,150,0.04) 100%);
-      border: 1px solid rgba(0,114,188,0.2);
-      border-left: 4px solid var(--primary);
-      border-radius: var(--radius-lg);
-      padding: 1.4rem 1.5rem;
-      margin-bottom: 1.25rem;
-    }
-
-    /* Transport Mode Cards */
-    .transport-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 0.75rem; }
-    .transport-card {
-      cursor: pointer;
+    .hdr {
+      background: linear-gradient(135deg, var(--blue) 0%, var(--blue-dark) 100%);
+      padding: 1.5rem 1.75rem;
       display: flex;
       flex-direction: column;
+      /* stack vertically */
       align-items: center;
+      /* center horizontally */
+      justify-content: center;
       text-align: center;
-      padding: 1.25rem 0.75rem;
-      background: #fff;
-      border: 2px solid var(--border);
-      border-radius: var(--radius-lg);
-      transition: var(--trans);
-      user-select: none;
-      position: relative;
-    }
-    .tc-check-badge {
-      position: absolute;
-      top: 8px; right: 8px;
-      width: 22px; height: 22px;
-      border-radius: 50%;
-      background: var(--primary);
-      color: #fff;
-      font-size: 0.7rem;
-      display: none;
-      align-items: center;
-      justify-content: center;
-    }
-    .transport-card.selected .tc-check-badge { display: flex; }
-    .tc-icon { font-size: 2.2rem; color: var(--primary); margin-bottom: 0.45rem; line-height: 1; }
-    .tc-title { font-weight: 700; font-size: 0.875rem; color: var(--text); }
-    .tc-desc { font-size: 0.72rem; color: var(--text-sub); margin-top: 3px; }
-    .transport-card:hover { border-color: var(--primary); background: rgba(0,114,188,0.03); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,114,188,0.12); }
-    .transport-card.selected { border-color: var(--border-sel); background: var(--primary-light); }
-    .transport-card.selected .tc-title { color: var(--primary); }
-
-    /* Vehicle Cards */
-    .vehicle-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
-    .vehicle-card {
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      padding: 0.9rem 1rem;
-      background: #fff;
-      border: 2px solid var(--border);
-      border-radius: var(--radius-lg);
-      transition: var(--trans);
-      user-select: none;
-    }
-    .vc-icon { font-size: 1.75rem; color: var(--primary); }
-    .vc-label { font-weight: 700; font-size: 0.875rem; color: var(--text); display: block; }
-    .vc-sub { font-size: 0.72rem; color: var(--text-sub); }
-    .vehicle-card:hover { border-color: var(--primary); background: rgba(0,114,188,0.03); }
-    .vehicle-card.selected { border-color: var(--border-sel); background: var(--primary-light); }
-    .vehicle-card.selected .vc-label { color: var(--primary); }
-
-    /* Pill Travel Time */
-    .pill-group { display: flex; flex-wrap: wrap; gap: 0.4rem; }
-    .pill-opt {
-      cursor: pointer;
-      display: inline-block;
-      padding: 0.35rem 0.85rem;
-      border: 1.5px solid var(--border);
-      border-radius: 999px;
-      font-size: 0.8rem;
-      font-weight: 500;
-      color: var(--text-sub);
-      background: #fff;
-      transition: var(--trans);
-      user-select: none;
-    }
-    .pill-opt:hover { border-color: var(--primary); color: var(--primary); }
-    .pill-opt.selected { border-color: var(--primary); background: var(--primary); color: #fff; }
-
-    /* Yes/No Cards - big choice cards */
-    .yn-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
-    .yn-card {
-      cursor: pointer;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
       gap: 0.5rem;
-      padding: 1.1rem 1rem;
-      background: #fff;
-      border: 2px solid var(--border);
-      border-radius: var(--radius-lg);
-      transition: var(--trans);
-      user-select: none;
-      text-align: center;
-    }
-    .yn-card .yn-icon { font-size: 2rem; }
-    .yn-card .yn-label { font-weight: 700; font-size: 0.9rem; color: var(--text); }
-    .yn-card .yn-sub { font-size: 0.72rem; color: var(--text-sub); }
-    .yn-card:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
-    .yn-card[data-yn="yes"]:hover, .yn-card[data-yn="yes"].selected { border-color: #198754; background: rgba(25,135,84,0.07); }
-    .yn-card[data-yn="yes"].selected .yn-label { color: #198754; }
-    .yn-card[data-yn="no"]:hover, .yn-card[data-yn="no"].selected { border-color: #dc3545; background: rgba(220,53,69,0.07); }
-    .yn-card[data-yn="no"].selected .yn-label { color: #dc3545; }
-    .yn-card[data-yn="yes"] .yn-icon { color: #198754; }
-    .yn-card[data-yn="no"] .yn-icon { color: #dc3545; }
-
-    /* Public Transport Type Cards */
-    .pub-type-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 0.6rem; }
-    .pub-type-card {
-      position: relative;
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-      padding: 0.75rem 0.9rem;
-      background: #fff;
-      border: 1.5px solid var(--border);
-      border-radius: var(--radius-md);
-      cursor: pointer;
-      transition: var(--trans);
-      text-align: left;
-      width: 100%;
-      font-family: inherit;
-    }
-    .ptc-icon { font-size: 1.3rem; color: var(--primary); min-width: 1.5rem; }
-    .ptc-label { font-size: 0.82rem; font-weight: 600; color: var(--text); flex: 1; }
-    .ptc-check { font-size: 0.9rem; color: var(--primary); }
-    .pub-type-card:hover { border-color: var(--primary); background: rgba(0,114,188,0.03); }
-    .pub-type-card.selected { border-color: var(--border-sel); background: var(--primary-light); }
-    .pub-type-card.selected .ptc-label { color: var(--primary); }
-
-    /* Service Like Grid */
-    .like-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; }
-    .like-card {
-      position: relative;
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-      padding: 0.7rem 0.9rem;
-      background: #fff;
-      border: 1.5px solid var(--border);
-      border-radius: var(--radius-md);
-      cursor: pointer;
-      transition: var(--trans);
-      text-align: left;
-      width: 100%;
-      font-family: inherit;
-    }
-    .lc-icon { font-size: 1.2rem; color: var(--primary); min-width: 1.4rem; }
-    .lc-label { font-size: 0.82rem; font-weight: 500; color: var(--text); flex: 1; }
-    .lc-check { font-size: 0.85rem; color: var(--primary); }
-    .like-card:hover { border-color: var(--primary); background: rgba(0,114,188,0.03); }
-    .like-card.selected { border-color: var(--border-sel); background: var(--primary-light); }
-    .like-card.selected .lc-label { color: var(--primary); }
-
-    /* Star Rating */
-    .star-block { display: flex; align-items: center; gap: 0.3rem; }
-    .star { font-size: 2rem; cursor: pointer; color: #cbd5e1; transition: color 0.15s, transform 0.15s; line-height: 1; }
-    .star.active { color: var(--star-color); }
-    .star:hover { transform: scale(1.15); }
-    .rating-label { font-size: 0.85rem; font-weight: 600; color: var(--primary); margin-left: 0.5rem; }
-
-    /* Divider */
-    .section-divider {
-      border: none;
-      border-top: 1px dashed var(--border);
-      margin: 1.1rem 0;
     }
 
-    /* Sub section */
-    .sub-section {
-      background: #fff;
-      border: 1.5px solid var(--border);
-      border-radius: var(--radius-md);
-      padding: 1.1rem 1.2rem;
-      margin-top: 0.75rem;
-    }
-    .sub-section-title {
-      font-size: 0.84rem;
+    .hdr-text h1 {
+      font-size: 1.1rem;
       font-weight: 700;
-      color: var(--primary);
+      color: #fff;
+    }
+
+    .hdr-text p {
+      font-size: 0.76rem;
+      color: rgba(255, 255, 255, 0.7);
+      margin-top: 2px;
+    }
+
+    .hdr-icon {
+      width: 44px;
+      height: 44px;
+      background: rgba(255, 255, 255, 0.18);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+    }
+
+    .body {
+      padding: 1.4rem 1.5rem;
+    }
+
+    .block {
+      border: 1.5px solid var(--border);
+      border-radius: var(--r);
+      padding: 1.15rem 1.2rem;
+      margin-bottom: 0.9rem;
+    }
+
+    .block-title {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--sub);
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
       margin-bottom: 0.9rem;
       display: flex;
       align-items: center;
       gap: 0.4rem;
     }
 
-    /* Field error */
-    .field-error { display: none; color: #dc3545; font-size: 0.78rem; margin-top: 0.3rem; }
-    .field-error.show { display: block; }
+    .block-title i {
+      color: var(--blue);
+      font-size: 0.9rem;
+    }
 
-    /* Mandatory note */
-    .mandatory-note {
-      font-size: 0.75rem;
-      color: var(--text-sub);
-      background: rgba(220,53,69,0.06);
-      border: 1px solid rgba(220,53,69,0.15);
-      border-radius: var(--radius-sm);
-      padding: 0.4rem 0.7rem;
+    .lbl {
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--label);
+      margin-bottom: 0.35rem;
+    }
+
+    .req {
+      color: var(--red);
+    }
+
+    .inp {
+      width: 100%;
+      font-family: inherit;
+      font-size: 0.84rem;
+      padding: 0.48rem 0.72rem;
+      border: 1.5px solid var(--border);
+      border-radius: var(--r-sm);
+      background: #fff;
+      color: var(--text);
+      outline: none;
+      transition: border 0.15s, box-shadow 0.15s;
+    }
+
+    .inp:focus {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 3px var(--blue-soft);
+    }
+
+    .inp.err {
+      border-color: var(--red);
+      box-shadow: 0 0 0 3px var(--red-soft);
+    }
+
+    .inp::placeholder {
+      color: #b8c2ce;
+    }
+
+    textarea.inp {
+      resize: none;
+    }
+
+    .inp-wrap {
+      position: relative;
+    }
+
+    .inp-ico {
+      position: absolute;
+      left: 0.6rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--blue);
+      font-size: 0.78rem;
+      pointer-events: none;
+    }
+
+    .inp-wrap .inp {
+      padding-left: 1.9rem;
+    }
+
+    .fg {
+      margin-bottom: 0.8rem;
+    }
+
+    .fg:last-child {
+      margin-bottom: 0;
+    }
+
+    .g2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.6rem;
+    }
+
+    /* Mode cards */
+    .mode-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.6rem;
+    }
+
+    .mode-card {
       display: flex;
       align-items: center;
-      gap: 0.4rem;
-      margin-bottom: 1.25rem;
+      gap: 0.7rem;
+      padding: 0.85rem 0.95rem;
+      border: 2px solid var(--border);
+      border-radius: var(--r);
+      cursor: pointer;
+      transition: all 0.15s;
+      user-select: none;
+      background: #f8fafc;
     }
 
-    /* Submit */
-    .submit-area { padding: 0.75rem 0 0.5rem; text-align: center; }
-    .submit-btn {
-      background: var(--gradient);
-      color: #fff;
-      border: none;
-      border-radius: var(--radius-md);
-      padding: 0.8rem 3.5rem;
-      font-size: 0.95rem;
+    .mode-card:hover {
+      border-color: var(--blue);
+      background: var(--blue-soft);
+    }
+
+    .mode-card.sel {
+      border-color: var(--blue);
+      background: var(--blue-soft);
+    }
+
+    .mode-card.sel .mc-title {
+      color: var(--blue);
+    }
+
+    .mc-ico {
+      font-size: 1.5rem;
+      color: var(--blue);
+      line-height: 1;
+    }
+
+    .mc-title {
+      font-size: 0.86rem;
       font-weight: 700;
-      letter-spacing: 0.3px;
-      transition: var(--trans);
+      color: var(--text);
+    }
+
+    .mc-sub {
+      font-size: 0.7rem;
+      color: var(--sub);
+    }
+
+    .mc-badge {
+      margin-left: auto;
+      width: 18px;
+      height: 18px;
+      background: var(--blue);
+      border-radius: 50%;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 0.6rem;
+    }
+
+    .mode-card.sel .mc-badge {
+      display: flex;
+    }
+
+    /* Vehicle chips */
+    .veh-chips {
+      display: flex;
+      gap: 0.45rem;
+    }
+
+    .veh-chip {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.55rem 0.8rem;
+      border: 1.5px solid var(--border);
+      border-radius: var(--r-sm);
+      cursor: pointer;
+      transition: all 0.15s;
+      user-select: none;
+      background: #fff;
+    }
+
+    .veh-chip i {
+      font-size: 1.1rem;
+      color: var(--blue);
+    }
+
+    .veh-chip span {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--sub);
+    }
+
+    .veh-chip:hover {
+      border-color: var(--blue);
+      background: var(--blue-soft);
+    }
+
+    .veh-chip.sel {
+      border-color: var(--blue);
+      background: var(--blue-soft);
+    }
+
+    .veh-chip.sel span {
+      color: var(--blue);
+    }
+
+    /* Pub type chips */
+    .pub-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.38rem;
+    }
+
+    .pub-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      padding: 0.3rem 0.75rem;
+      border: 1.5px solid var(--border);
+      border-radius: var(--r-sm);
+      font-size: 0.77rem;
+      font-weight: 600;
+      color: var(--sub);
+      background: #fff;
+      cursor: pointer;
+      transition: all 0.15s;
+      user-select: none;
+    }
+
+    .pub-chip i {
+      font-size: 0.88rem;
+      color: var(--blue);
+    }
+
+    .pub-chip:hover {
+      border-color: var(--blue);
+      color: var(--blue);
+      background: var(--blue-soft);
+    }
+
+    .pub-chip.sel {
+      border-color: var(--blue);
+      background: var(--blue);
+      color: #fff;
+    }
+
+    .pub-chip.sel i {
+      color: #fff;
+    }
+
+    /* YN pills */
+    .yn-row {
+      display: flex;
+      gap: 0.4rem;
+      margin-top: 0.4rem;
+    }
+
+    .yn-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      padding: 0.32rem 0.8rem;
+      border-radius: 999px;
+      border: 1.5px solid var(--border);
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      user-select: none;
+      transition: all 0.15s;
+      background: #fff;
+      color: var(--sub);
       font-family: inherit;
+    }
+
+    .yn-btn i {
+      font-size: 0.85rem;
+    }
+
+    .yn-btn[data-yn="yes"]:hover,
+    .yn-btn[data-yn="yes"].sel {
+      border-color: var(--green);
+      background: var(--green-soft);
+      color: var(--green);
+    }
+
+    .yn-btn[data-yn="no"]:hover,
+    .yn-btn[data-yn="no"].sel {
+      border-color: var(--red);
+      background: var(--red-soft);
+      color: var(--red);
+    }
+
+    .div {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 0.9rem 0;
+    }
+
+    /* Sub block — conditional reveal */
+    .sub-block {
+      background: #f0f6fb;
+      border: 1.5px solid var(--blue-mid);
+      border-left: 3px solid var(--blue);
+      border-radius: var(--r-sm);
+      padding: 0.9rem 1rem;
+      margin-top: 0.65rem;
+      animation: fadeIn 0.2s ease;
+    }
+
+    .sub-block-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--blue);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 0.65rem;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    /* Location Dropdown */
+    .loc-wrap {
+      position: relative;
+    }
+
+    .loc-search {
+      width: 100%;
+      font-family: inherit;
+      font-size: 0.84rem;
+      padding: 0.48rem 1.9rem 0.48rem 1.9rem;
+      border: 1.5px solid var(--border);
+      border-radius: var(--r-sm);
+      background: #fff;
+      color: var(--text);
+      outline: none;
+      transition: border 0.15s, box-shadow 0.15s;
       cursor: pointer;
     }
-    .submit-btn:hover:not(:disabled) {
-      opacity: 0.91;
-      transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(0,114,188,0.32);
-    }
-    .submit-btn:active { transform: translateY(0); }
-    .submit-btn:disabled { opacity: 0.55; cursor: not-allowed; }
-    .submit-note { font-size: 0.78rem; color: var(--text-sub); margin-top: 0.5rem; }
 
-    /* form-group spacing */
-    .form-group { margin-bottom: 1rem; }
-    .form-group.mb-0 { margin-bottom: 0; }
-
-    /* row field */
-    .row { margin-left: -0.4rem; margin-right: -0.4rem; }
-    .row > * { padding-left: 0.4rem; padding-right: 0.4rem; }
-
-    /* Animation */
-    @keyframes fadeSlideIn {
-      from { opacity: 0; transform: translateY(-10px); }
-      to   { opacity: 1; transform: translateY(0); }
+    .loc-search:focus {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 3px var(--blue-soft);
     }
 
-    /* SweetAlert2 override */
-    .swal2-confirm { background: var(--primary) !important; }
+    .loc-search.err {
+      border-color: var(--red);
+      box-shadow: 0 0 0 3px var(--red-soft);
+    }
 
-    /* Responsive */
-    @media (max-width: 600px) {
-      .survey-shell { padding: 0.75rem 0.5rem; }
-      .survey-form { padding: 1.1rem 1rem; }
-      .transport-grid { grid-template-columns: 1fr 1fr; gap: 0.5rem; }
-      .pub-type-grid { grid-template-columns: 1fr 1fr; }
-      .like-grid { grid-template-columns: 1fr; }
-      .vehicle-grid { grid-template-columns: 1fr 1fr; }
-      .survey-section { padding: 1rem; }
-      .submit-btn { width: 100%; padding: 0.75rem; }
-      .row > .col-md-6, .row > .col-md-7, .row > .col-md-5 { width: 100%; }
+    .loc-search::placeholder {
+      color: #b8c2ce;
+    }
+
+    .loc-arrow {
+      position: absolute;
+      right: 0.65rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--sub);
+      font-size: 0.75rem;
+      pointer-events: none;
+      transition: transform 0.2s;
+    }
+
+    .loc-wrap.open .loc-arrow {
+      transform: translateY(-50%) rotate(180deg);
+    }
+
+    .loc-dropdown {
+      display: none;
+      position: absolute;
+      top: calc(100% + 4px);
+      left: 0;
+      right: 0;
+      background: #fff;
+      border: 1.5px solid var(--border);
+      border-radius: var(--r-sm);
+      z-index: 200;
+      box-shadow: 0 8px 30px rgba(0, 114, 188, 0.13);
+      max-height: 240px;
+      overflow: hidden;
+      flex-direction: column;
+    }
+
+    .loc-wrap.open .loc-dropdown {
+      display: flex;
+    }
+
+    .loc-filter-wrap {
+      padding: 0.45rem 0.55rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      position: relative;
+    }
+
+    .loc-filter {
+      width: 100%;
+      font-family: inherit;
+      font-size: 0.8rem;
+      padding: 0.32rem 0.6rem 0.32rem 1.75rem;
+      border: 1.5px solid var(--border);
+      border-radius: var(--r-sm);
+      outline: none;
+      background: #f8fafc;
+      color: var(--text);
+    }
+
+    .loc-filter:focus {
+      border-color: var(--blue);
+    }
+
+    .loc-filter::placeholder {
+      color: #b8c2ce;
+    }
+
+    .loc-filter-ico {
+      position: absolute;
+      left: 1.1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 0.72rem;
+      color: var(--sub);
+    }
+
+    .loc-list {
+      overflow-y: auto;
+      flex: 1;
+    }
+
+    .loc-group-label {
+      padding: 0.4rem 0.75rem 0.2rem;
+      font-size: 0.67rem;
+      font-weight: 700;
+      color: var(--blue);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      background: #f0f6fb;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 1;
+    }
+
+    .loc-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.38rem 0.75rem;
+      font-size: 0.82rem;
+      color: var(--text);
+      cursor: pointer;
+      transition: background 0.12s;
+    }
+
+    .loc-item:hover {
+      background: var(--blue-soft);
+      color: var(--blue);
+    }
+
+    .loc-item.selected {
+      background: var(--blue-mid);
+      color: var(--blue);
+      font-weight: 600;
+    }
+
+    .loc-item i {
+      font-size: 0.72rem;
+      color: var(--sub);
+      flex-shrink: 0;
+    }
+
+    .loc-item.selected i {
+      color: var(--blue);
+    }
+
+    .loc-empty {
+      padding: 0.75rem;
+      font-size: 0.8rem;
+      color: var(--sub);
+      text-align: center;
+    }
+
+    .err-txt {
+      display: none;
+      font-size: 0.72rem;
+      color: var(--red);
+      margin-top: 0.28rem;
+    }
+
+    .err-txt.show {
+      display: block;
+    }
+
+    .submit-area {
+      padding: 0.2rem 0 0.4rem;
+      text-align: center;
+    }
+
+    .submit-btn {
+      background: linear-gradient(135deg, var(--blue) 0%, var(--blue-dark) 100%);
+      color: #fff;
+      border: none;
+      border-radius: var(--r-sm);
+      padding: 0.68rem 2.8rem;
+      font-size: 0.88rem;
+      font-weight: 700;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all 0.18s;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+    }
+
+    .submit-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(0, 114, 188, 0.35);
+    }
+
+    .submit-btn:active {
+      transform: translateY(0);
+    }
+
+    .submit-note {
+      font-size: 0.71rem;
+      color: var(--sub);
+      margin-top: 0.45rem;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-5px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .anim {
+      animation: fadeIn 0.22s ease;
+    }
+
+    @media (max-width: 540px) {
+      .body {
+        padding: 1rem;
+      }
+
+      .g2,
+      .mode-cards {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .veh-chips {
+        flex-direction: column;
+      }
+
+      .submit-btn {
+        width: 100%;
+        justify-content: center;
+      }
     }
   </style>
 </head>
+
 <body>
 
-<div class="survey-shell">
-  <div class="survey-card">
-
-    <!-- Header -->
-    <div class="survey-header">
-      <div class="header-icon"><i class="bi bi-bus-front-fill"></i></div>
-      <h4>Feedback Survey</h4>
-      <p>Help us understand your commute needs and improve our transport services</p>
+  <div class="card">
+    <div class="hdr">
+      <div class="hdr-icon"><i class="bi bi-bus-front-fill"></i></div>
+      <div class="hdr-text">
+        <h1>Feedback Survey</h1>
+        <!-- <p>Help us understand your commute and improve our services</p> -->
+      </div>
     </div>
 
-    <!-- Form -->
-    <form id="busForm" class="survey-form" novalidate>
+    <form id="form" class="body" novalidate>
 
-      <!-- Mandatory note -->
-      <!-- <div class="mandatory-note">
-        <i class="bi bi-exclamation-circle-fill text-danger"></i>
-        All fields marked with <strong class="text-danger ms-1 me-1">*</strong> are mandatory.
-      </div> -->
-
-      <!-- 1. Employee Information -->
-      <div class="employee-section d-none">
-        <div class="section-header">
-          <span class="section-badge"><i class="bi bi-person-badge-fill"></i></span>
-          <div>
-            <div class="section-title">Employee Information</div>
-            <div class="section-subtitle">Your basic details for this survey</div>
+      <!-- Transport Mode -->
+      <div class="block">
+        <div class="block-title"><i class="bi bi-signpost-split"></i> How do you commute to office?</div>
+        <div class="mode-cards">
+          <div class="mode-card" data-mode="own" onclick="pickMode('own')">
+            <i class="bi bi-bicycle mc-ico"></i>
+            <div>
+              <div class="mc-title">Own Transport</div>
+              <div class="mc-sub">2-Wheeler / 4-Wheeler</div>
+            </div>
+            <div class="mc-badge"><i class="bi bi-check"></i></div>
+          </div>
+          <div class="mode-card" data-mode="public" onclick="pickMode('public')">
+            <i class="bi bi-bus-front mc-ico"></i>
+            <div>
+              <div class="mc-title">Public Transport</div>
+              <div class="mc-sub">Bus, Metro, Auto, Taxi</div>
+            </div>
+            <div class="mc-badge"><i class="bi bi-check"></i></div>
           </div>
         </div>
-
-        <div class="row">
-          <div class="col-md-6">
-            <div class="form-group">
-              <label class="survey-label">Employee ID <span class="req">*</span></label>
-              <div class="input-icon-wrap">
-                <i class="bi bi-person-badge input-icon"></i>
-                <input type="text" class="survey-input has-icon" id="employeeId" placeholder="Enter your Employee ID (numbers only)" maxlength="10" inputmode="numeric">
-              </div>
-              <small class="field-error" id="employeeIdError">Employee ID is required (numbers only).</small>
-            </div>
-          </div>
-          <div class="col-md-6">
-            <div class="form-group">
-              <label class="survey-label">Employee Name <span class="req">*</span></label>
-              <div class="input-icon-wrap">
-                <i class="bi bi-person input-icon"></i>
-                <input type="text" class="survey-input has-icon" id="employeeName" placeholder="Enter your full name">
-              </div>
-              <small class="field-error" id="employeeNameError">Employee name is required.</small>
-            </div>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col-md-6">
-            <div class="form-group">
-              <label class="survey-label">Department <span class="req">*</span></label>
-              <div class="input-icon-wrap">
-                <i class="bi bi-building input-icon"></i>
-                <input type="text" class="survey-input has-icon" id="department" placeholder="e.g., IT, Finance, HR">
-              </div>
-              <small class="field-error" id="departmentError">Department is required.</small>
-            </div>
-          </div>
-          <div class="col-md-6">
-            <div class="form-group mb-0">
-              <label class="survey-label">Mobile Number <span class="req">*</span></label>
-              <div class="input-icon-wrap">
-                <i class="bi bi-phone input-icon"></i>
-                <input type="text" class="survey-input has-icon" id="mobile" placeholder="10-digit mobile number" maxlength="10" inputmode="numeric">
-              </div>
-              <small class="field-error" id="mobileError">Valid 10-digit mobile number is required.</small>
-            </div>
-          </div>
-        </div>
+        <div class="err-txt" id="e_mode">Please select a transport mode.</div>
       </div>
 
-      <!-- 2. Transport Preference -->
-      <div class="survey-section">
-        <div class="section-header">
-          <span class="section-badge"><i class="bi bi-signpost-split"></i></span>
-          <div>
-            <div class="section-title">Transport Preference</div>
-            <div class="section-subtitle">Select your primary mode of transportation to office</div>
-          </div>
-        </div>
-        <div class="form-group mb-0">
-          <label class="survey-label">How do you commute to office? <span class="req">*</span></label>
-          <div class="transport-grid mt-2">
-            <div class="transport-card" data-mode="own" onclick="selectTransportMode('own')">
-              <div class="tc-check-badge"><i class="bi bi-check"></i></div>
-              <div class="tc-icon"><i class="bi bi-bicycle"></i></div>
-              <div class="tc-title">Own Transport</div>
-              <div class="tc-desc">2-Wheeler / 4-Wheeler</div>
+      <!-- ── OWN TRANSPORT ─────────────────────────────── -->
+      <div class="block anim" id="ownSection" style="display:none;">
+        <div class="block-title"><i class="bi bi-car-front"></i> Own Transport Details</div>
+
+        <div class="fg">
+          <label class="lbl">Vehicle Type <span class="req">*</span></label>
+          <div class="veh-chips">
+            <div class="veh-chip" data-v="2w" onclick="pickVeh('2w')">
+              <i class="bi bi-bicycle"></i><span>2-Wheeler</span>
             </div>
-            <div class="transport-card" data-mode="public" onclick="selectTransportMode('public')">
-              <div class="tc-check-badge"><i class="bi bi-check"></i></div>
-              <div class="tc-icon"><i class="bi bi-bus-front"></i></div>
-              <div class="tc-title">Public Transport</div>
-              <div class="tc-desc">Bus, Metro, Auto, Taxi</div>
+            <div class="veh-chip" data-v="4w" onclick="pickVeh('4w')">
+              <i class="bi bi-car-front"></i><span>4-Wheeler</span>
             </div>
           </div>
-          <small class="field-error" id="transportModeError">Please select a transport mode.</small>
-        </div>
-      </div>
-
-      <!-- 3. Own Transport -->
-      <div class="survey-section section-animate" id="ownSection" style="display:none;">
-        <div class="section-header">
-          <span class="section-badge"><i class="bi bi-car-front"></i></span>
-          <div>
-            <div class="section-title">Own Transport Details</div>
-            <div class="section-subtitle">Tell us about your personal commute</div>
-          </div>
+          <div class="err-txt" id="e_veh">Please select vehicle type.</div>
         </div>
 
-        <div class="form-group">
-          <label class="survey-label">Vehicle Type <span class="req">*</span></label>
-          <div class="vehicle-grid mt-2">
-            <div class="vehicle-card" data-vehicle="2wheeler" onclick="selectVehicle('2wheeler')">
-              <i class="bi bi-bicycle vc-icon"></i>
-              <div><span class="vc-label">2-Wheeler</span><span class="vc-sub">Bike / Scooter</span></div>
-            </div>
-            <div class="vehicle-card" data-vehicle="4wheeler" onclick="selectVehicle('4wheeler')">
-              <i class="bi bi-car-front vc-icon"></i>
-              <div><span class="vc-label">4-Wheeler</span><span class="vc-sub">Car</span></div>
+        <div class="fg">
+          <label class="lbl">Home Location <span class="req">*</span></label>
+          <div class="loc-wrap" id="ownLocWrap">
+            <i class="bi bi-geo-alt-fill inp-ico"
+              style="position:absolute;left:0.6rem;top:50%;transform:translateY(-50%);color:var(--blue);font-size:0.78rem;pointer-events:none;z-index:1;"></i>
+            <input type="text" class="loc-search" id="ownLocDisplay" placeholder="Select your home location" readonly
+              onclick="toggleDropdown('ownLoc')">
+            <i class="bi bi-chevron-down loc-arrow"></i>
+            <div class="loc-dropdown" id="ownLocDropdown">
+              <div class="loc-filter-wrap">
+                <i class="bi bi-search loc-filter-ico"></i>
+                <input type="text" class="loc-filter" id="ownLocFilter" placeholder="Search location..."
+                  oninput="filterLoc('ownLoc',this.value)" onclick="event.stopPropagation()">
+              </div>
+              <div class="loc-list" id="ownLocList"></div>
             </div>
           </div>
-          <small class="field-error" id="vehicleTypeError">Please select your vehicle type.</small>
+          <div class="err-txt" id="e_ownLoc">Please select your home location.</div>
         </div>
 
-        <div class="form-group">
-          <label class="survey-label">From Location <span class="req">*</span></label>
-          <div class="input-icon-wrap">
-            <i class="bi bi-geo-alt-fill input-icon"></i>
-            <input type="text" class="survey-input has-icon" id="ownFromLocation" placeholder="Enter your home address or area name">
-          </div>
-          <small class="field-error" id="ownFromLocationError">From location is required.</small>
-        </div>
-
-        <div class="form-group d-none">
-          <label class="survey-label">Average Travel Time (One Way) <span class="req">*</span></label>
-          <div class="pill-group mt-1" id="ownTravelTimePills">
-            <span class="pill-opt" data-group="ownTravelTime" data-value="0-15" onclick="selectPill(this,'ownTravelTime')">&lt; 15 min</span>
-            <span class="pill-opt" data-group="ownTravelTime" data-value="15-30" onclick="selectPill(this,'ownTravelTime')">15–30 min</span>
-            <span class="pill-opt" data-group="ownTravelTime" data-value="30-45" onclick="selectPill(this,'ownTravelTime')">30–45 min</span>
-            <span class="pill-opt" data-group="ownTravelTime" data-value="45-60" onclick="selectPill(this,'ownTravelTime')">45–60 min</span>
-            <span class="pill-opt" data-group="ownTravelTime" data-value="60+" onclick="selectPill(this,'ownTravelTime')">60+ min</span>
-          </div>
-          <small class="field-error" id="ownTravelTimeError">Please select travel time.</small>
-        </div>
+        <hr class="div">
 
         <!-- Are you using company transport? -->
-        <hr class="section-divider">
-        <div class="form-group">
-          <label class="survey-label">Are you using company transport? <span class="req">*</span></label>
-          <div class="yn-grid mt-2" id="ownUsingCompanyGrid">
-            <div class="yn-card" data-yn="yes" data-group="ownUsingCompany" onclick="selectYN('ownUsingCompany','yes')">
-              <span class="yn-icon"><i class="bi bi-check-circle-fill"></i></span>
-              <span class="yn-label">Yes</span>
-              <span class="yn-sub">I use company transport</span>
-            </div>
-            <div class="yn-card" data-yn="no" data-group="ownUsingCompany" onclick="selectYN('ownUsingCompany','no')">
-              <span class="yn-icon"><i class="bi bi-x-circle-fill"></i></span>
-              <span class="yn-label">No</span>
-              <span class="yn-sub">I don't use company transport</span>
-            </div>
+        <div class="fg">
+          <label class="lbl">Are you using company transport? <span class="req">*</span></label>
+          <div class="yn-row" id="g_ownCo">
+            <button type="button" class="yn-btn" data-yn="yes" onclick="pickYN('ownCo','yes')"><i
+                class="bi bi-check-circle-fill"></i> Yes</button>
+            <button type="button" class="yn-btn" data-yn="no" onclick="pickYN('ownCo','no')"><i
+                class="bi bi-x-circle-fill"></i> No</button>
           </div>
-          <small class="field-error" id="ownUsingCompanyError">Please select an option.</small>
+          <div class="err-txt" id="e_ownCo">Please select an option.</div>
         </div>
 
-        <!-- If YES: Rate & Comments -->
-        <div id="ownCompanyYesBlock" style="display:none;" class="sub-section section-animate">
-          <!-- <div class="sub-section-title"><i class="bi bi-star-fill"></i> Rate Company Transport Service</div> -->
-          <div class="form-group">
-            <!-- <label class="survey-label">Your Rating <span class="req">*</span></label> -->
-            <div class="form-group">
-              <label class="survey-label">Current service point <span class="req">*</span></label>
-              <div class="input-icon-wrap">
-                <i class="bi bi-geo-alt-fill input-icon"></i>
-                <input type="text" class="survey-input has-icon" id="ownFromLocation"
-                  placeholder="Enter your home address or area name">
-              </div>
-              <small class="field-error" id="ownFromLocationError">From location is required.</small>
+        <!-- Own → Yes → JNTU question -->
+        <div class="sub-block" id="ownJntuBlock" style="display:none;">
+          <div class="sub-block-label"><i class="bi bi-arrow-return-right"></i> Follow-up</div>
+          <div class="fg">
+            <label class="lbl">Are you pass by JNTU? <span class="req">*</span></label>
+            <div class="yn-row" id="g_ownJntu">
+              <button type="button" class="yn-btn" data-yn="yes" onclick="pickYN('ownJntu','yes')"><i
+                  class="bi bi-check-circle-fill"></i> Yes</button>
+              <button type="button" class="yn-btn" data-yn="no" onclick="pickYN('ownJntu','no')"><i
+                  class="bi bi-x-circle-fill"></i> No</button>
             </div>
-
-            <div class="form-group">
-              <label class="survey-label">Preffered service point <span class="req">*</span></label>
-              <div class="input-icon-wrap">
-                <i class="bi bi-geo-alt-fill input-icon"></i>
-                <input type="text" class="survey-input has-icon" id="ownFromLocation"
-                  placeholder="Enter your home address or area name">
-              </div>
-              <small class="field-error" id="ownFromLocationError">From location is required.</small>
-            </div>
-            <!-- <div class="star-block mt-1" id="ownStarBlock" onmouseleave="clearHover('own')">
-              <span class="star own-star" data-star="1" onclick="rateService(1,'own')" onmouseenter="hoverStar(1,'own')"><i class="bi bi-star"></i></span>
-              <span class="star own-star" data-star="2" onclick="rateService(2,'own')" onmouseenter="hoverStar(2,'own')"><i class="bi bi-star"></i></span>
-              <span class="star own-star" data-star="3" onclick="rateService(3,'own')" onmouseenter="hoverStar(3,'own')"><i class="bi bi-star"></i></span>
-              <span class="star own-star" data-star="4" onclick="rateService(4,'own')" onmouseenter="hoverStar(4,'own')"><i class="bi bi-star"></i></span>
-              <span class="star own-star" data-star="5" onclick="rateService(5,'own')" onmouseenter="hoverStar(5,'own')"><i class="bi bi-star"></i></span>
-              <span class="rating-label" id="ownRatingLabel"></span>
-            </div> -->
-            <!-- <small class="text-muted d-block mt-1">Click to rate (1 = Poor, 5 = Excellent)</small>
-            <small class="field-error" id="ownRatingError">Please rate the service.</small> -->
-          </div>
-          <!-- <div class="form-group mb-0">
-            <label class="survey-label">Comments / Feedback <span class="req">*</span></label>
-            <textarea class="survey-input" id="ownCompanyComments" rows="3" placeholder="Share your experience with the company transport..."></textarea>
-            <small class="field-error" id="ownCompanyCommentsError">Please enter your comments.</small>
-          </div> -->
-        </div>
-
-        <!-- If NO: Interested? -->
-        <div id="ownCompanyNoBlock" style="display:none;" class="sub-section section-animate d-none">
-          <div class="sub-section-title"><i class="bi bi-question-circle-fill"></i> Would you like to use company transport?</div>
-          <div class="form-group mb-0">
-            <label class="survey-label">Are you interested in using company transport? <span class="req">*</span></label>
-            <div class="yn-grid mt-2" id="ownInterestedGrid">
-              <div class="yn-card" data-yn="yes" data-group="ownInterested" onclick="selectYN('ownInterested','yes')">
-                <span class="yn-icon"><i class="bi bi-hand-thumbs-up-fill"></i></span>
-                <span class="yn-label">Yes, Interested</span>
-                <span class="yn-sub">I'd like to use it</span>
-              </div>
-              <div class="yn-card" data-yn="no" data-group="ownInterested" onclick="selectYN('ownInterested','no')">
-                <span class="yn-icon"><i class="bi bi-hand-thumbs-down-fill"></i></span>
-                <span class="yn-label">Not Interested</span>
-                <span class="yn-sub">I'll continue with own</span>
-              </div>
-            </div>
-            <small class="field-error" id="ownInterestedError">Please select an option.</small>
+            <div class="err-txt" id="e_ownJntu">Please select an option.</div>
           </div>
         </div>
 
-        <div class="form-group mb-0 mt-3">
-          <label class="survey-label">Comments / Suggestions <span class="req">*</span></label>
-          <textarea class="survey-input" id="ownComments" rows="3" placeholder="Any parking issues, route problems, or suggestions for improvement..."></textarea>
-          <small class="field-error" id="ownCommentsError">Please enter your comments.</small>
+        <div class="fg" style="margin-top:0.8rem;">
+          <label class="lbl">Comments</label>
+          <textarea class="inp" id="ownComments" rows="3" placeholder="Any additional comments..."></textarea>
         </div>
       </div>
 
-      <!-- 4. Public Transport -->
-      <div class="survey-section section-animate" id="publicSection" style="display:none;">
-        <div class="section-header">
-          <span class="section-badge"><i class="bi bi-bus-front"></i></span>
-          <div>
-            <div class="section-title">Public Transport Details</div>
-            <div class="section-subtitle">Tell us about your public commute route</div>
-          </div>
-        </div>
+      <!-- ── PUBLIC TRANSPORT ──────────────────────────── -->
+      <div class="block anim" id="pubSection" style="display:none;">
+        <div class="block-title"><i class="bi bi-bus-front"></i> Public Transport Details</div>
 
-        <div class="form-group">
-          <label class="survey-label">Transport Type <span class="req">*</span></label>
-          <div class="pub-type-grid mt-2">
-            <button type="button" class="pub-type-card" data-pubtype="bus" onclick="selectPublicType('bus')">
-              <i class="bi bi-bus-front ptc-icon"></i>
-              <span class="ptc-label">Bus</span>
-              <i class="bi bi-check-circle-fill ptc-check" style="display:none;"></i>
-            </button>
-            <button type="button" class="pub-type-card" data-pubtype="metro" onclick="selectPublicType('metro')">
-              <i class="bi bi-train-front ptc-icon"></i>
-              <span class="ptc-label">Metro</span>
-              <i class="bi bi-check-circle-fill ptc-check" style="display:none;"></i>
-            </button>
-            <button type="button" class="pub-type-card" data-pubtype="auto" onclick="selectPublicType('auto')">
-              <i class="bi bi-bicycle ptc-icon"></i>
-              <span class="ptc-label">Auto Rickshaw</span>
-              <i class="bi bi-check-circle-fill ptc-check" style="display:none;"></i>
-            </button>
-            <button type="button" class="pub-type-card" data-pubtype="taxi" onclick="selectPublicType('taxi')">
-              <i class="bi bi-taxi-front ptc-icon"></i>
-              <span class="ptc-label">Taxi / Cab</span>
-              <i class="bi bi-check-circle-fill ptc-check" style="display:none;"></i>
-            </button>
-            <button type="button" class="pub-type-card" data-pubtype="train" onclick="selectPublicType('train')">
-              <i class="bi bi-train-freight-front ptc-icon"></i>
-              <span class="ptc-label">Local Train</span>
-              <i class="bi bi-check-circle-fill ptc-check" style="display:none;"></i>
-            </button>
-            <button type="button" class="pub-type-card" data-pubtype="other" onclick="selectPublicType('other')">
-              <i class="bi bi-three-dots ptc-icon"></i>
-              <span class="ptc-label">Other</span>
-              <i class="bi bi-check-circle-fill ptc-check" style="display:none;"></i>
-            </button>
-          </div>
-          <small class="field-error" id="publicTypeError">Please select a transport type.</small>
-        </div>
-
-        <div class="form-group">
-          <label class="survey-label">Starting Location (From) <span class="req">*</span></label>
-          <div class="input-icon-wrap">
-            <i class="bi bi-geo-alt-fill input-icon"></i>
-            <input type="text" class="survey-input has-icon" id="publicFromLocation" placeholder="Your home address or nearest station / stop">
-          </div>
-          <small class="field-error" id="publicFromLocationError">Starting location is required.</small>
-        </div>
-
-        <!-- <div class="form-group">
-          <label class="survey-label">Midpoint / Junction Point <span class="req">*</span></label>
-          <div class="input-icon-wrap">
-            <i class="bi bi-arrows-angle-contract input-icon"></i>
-            <input type="text" class="survey-input has-icon" id="publicMidpoint" placeholder="e.g., Ameerpet Metro, Hitech City Bus Stop">
-          </div>
-          <small class="field-error" id="publicMidpointError">Midpoint is required.</small>
-        </div> -->
-
-        <div class="form-group">
-          <label class="survey-label">Drop Location / Final Stop <span class="req">*</span></label>
-          <div class="input-icon-wrap">
-            <i class="bi bi-geo-fill input-icon"></i>
-            <input type="text" class="survey-input has-icon" id="publicDropLocation" placeholder="Nearest point to office">
-          </div>
-          <small class="field-error" id="publicDropLocationError">Drop location is required.</small>
-        </div>
-
-        <div class="row d-none">
-          <div class="col-md-7">
-            <div class="form-group">
-              <label class="survey-label">Average Travel Time (One Way) <span class="req">*</span></label>
-              <div class="pill-group mt-1">
-                <span class="pill-opt" data-value="0-15" onclick="selectPill(this,'publicTravelTime')">&lt; 15 min</span>
-                <span class="pill-opt" data-value="15-30" onclick="selectPill(this,'publicTravelTime')">15–30 min</span>
-                <span class="pill-opt" data-value="30-45" onclick="selectPill(this,'publicTravelTime')">30–45 min</span>
-                <span class="pill-opt" data-value="45-60" onclick="selectPill(this,'publicTravelTime')">45–60 min</span>
-                <span class="pill-opt" data-value="60+" onclick="selectPill(this,'publicTravelTime')">60+ min</span>
-              </div>
-              <small class="field-error" id="publicTravelTimeError">Please select travel time.</small>
+        <div class="fg">
+          <label class="lbl">Transport Type <span class="req">*</span></label>
+          <div class="pub-chips">
+            <div class="pub-chip" data-pt="bus" onclick="pickPubType('bus')"><i class="bi bi-bus-front"></i> Bus</div>
+            <div class="pub-chip" data-pt="metro" onclick="pickPubType('metro')"><i class="bi bi-train-front"></i> Metro
+            </div>
+            <div class="pub-chip" data-pt="auto" onclick="pickPubType('auto')"><i class="bi bi-bicycle"></i> Auto</div>
+            <div class="pub-chip" data-pt="taxi" onclick="pickPubType('taxi')"><i class="bi bi-taxi-front"></i> Taxi/Cab
+            </div>
+            <div class="pub-chip" data-pt="train" onclick="pickPubType('train')"><i
+                class="bi bi-train-freight-front"></i> Local Train</div>
+            <div class="pub-chip" data-pt="other" onclick="pickPubType('other')"><i class="bi bi-three-dots"></i> Other
             </div>
           </div>
-          <div class="col-md-5">
-            <div class="form-group">
-              <label class="survey-label">Daily Cost (Round Trip) <span class="req">*</span></label>
-              <div class="input-icon-wrap">
-                <i class="bi bi-currency-rupee input-icon"></i>
-                <input type="text" class="survey-input has-icon" id="publicCost" placeholder="e.g., 100" maxlength="6" inputmode="numeric">
+          <div class="err-txt" id="e_pubType">Please select a transport type.</div>
+        </div>
+
+        <div class="g2">
+          <div class="fg">
+            <label class="lbl">Home Location <span class="req">*</span></label>
+            <div class="loc-wrap" id="pubFromWrap">
+              <i class="bi bi-geo-alt-fill inp-ico"
+                style="position:absolute;left:0.6rem;top:50%;transform:translateY(-50%);color:var(--blue);font-size:0.78rem;pointer-events:none;z-index:1;"></i>
+              <input type="text" class="loc-search" id="pubFromDisplay" placeholder="Select home location" readonly
+                onclick="toggleDropdown('pubFrom')">
+              <i class="bi bi-chevron-down loc-arrow"></i>
+              <div class="loc-dropdown" id="pubFromDropdown">
+                <div class="loc-filter-wrap">
+                  <i class="bi bi-search loc-filter-ico"></i>
+                  <input type="text" class="loc-filter" id="pubFromFilter" placeholder="Search..."
+                    oninput="filterLoc('pubFrom',this.value)" onclick="event.stopPropagation()">
+                </div>
+                <div class="loc-list" id="pubFromList"></div>
               </div>
-              <small class="field-error" id="publicCostError">Please enter daily cost (numbers only).</small>
             </div>
+            <div class="err-txt" id="e_pubFrom">Home location is required.</div>
+          </div>
+          <div class="fg">
+            <label class="lbl">Public Transport End Point <span class="req">*</span></label>
+            <div class="loc-wrap" id="pubDropWrap">
+              <i class="bi bi-geo-fill inp-ico"
+                style="position:absolute;left:0.6rem;top:50%;transform:translateY(-50%);color:var(--blue);font-size:0.78rem;pointer-events:none;z-index:1;"></i>
+              <input type="text" class="loc-search" id="pubDropDisplay" placeholder="Select end point" readonly
+                onclick="toggleDropdown('pubDrop')">
+              <i class="bi bi-chevron-down loc-arrow"></i>
+              <div class="loc-dropdown" id="pubDropDropdown">
+                <div class="loc-filter-wrap">
+                  <i class="bi bi-search loc-filter-ico"></i>
+                  <input type="text" class="loc-filter" id="pubDropFilter" placeholder="Search..."
+                    oninput="filterLoc('pubDrop',this.value)" onclick="event.stopPropagation()">
+                </div>
+                <div class="loc-list" id="pubDropList"></div>
+              </div>
+            </div>
+            <div class="err-txt" id="e_pubDrop">Drop location is required.</div>
           </div>
         </div>
+
+        <hr class="div">
 
         <!-- Are you using company transport? -->
-        <hr class="section-divider">
-        <div class="form-group">
-          <label class="survey-label">Are you using company transport? <span class="req">*</span></label>
-          <div class="yn-grid mt-2" id="pubUsingCompanyGrid">
-            <div class="yn-card" data-yn="yes" data-group="pubUsingCompany" onclick="selectYN('pubUsingCompany','yes')">
-              <span class="yn-icon"><i class="bi bi-check-circle-fill"></i></span>
-              <span class="yn-label">Yes</span>
-              <span class="yn-sub">I use company transport</span>
-            </div>
-            <div class="yn-card" data-yn="no" data-group="pubUsingCompany" onclick="selectYN('pubUsingCompany','no')">
-              <span class="yn-icon"><i class="bi bi-x-circle-fill"></i></span>
-              <span class="yn-label">No</span>
-              <span class="yn-sub">I don't use company transport</span>
-            </div>
+        <div class="fg">
+          <label class="lbl">Are you using company transport? <span class="req">*</span></label>
+          <div class="yn-row" id="g_pubCo">
+            <button type="button" class="yn-btn" data-yn="yes" onclick="pickYN('pubCo','yes')"><i
+                class="bi bi-check-circle-fill"></i> Yes</button>
+            <button type="button" class="yn-btn" data-yn="no" onclick="pickYN('pubCo','no')"><i
+                class="bi bi-x-circle-fill"></i> No</button>
           </div>
-          <small class="field-error" id="pubUsingCompanyError">Please select an option.</small>
+          <div class="err-txt" id="e_pubCo">Please select an option.</div>
         </div>
 
-        <!-- If YES: Rate & Comments -->
-        <div id="pubCompanyYesBlock" style="display:none;" class="sub-section section-animate">
-          <!-- <div class="sub-section-title"><i class="bi bi-star-fill"></i> Rate Company Transport Service</div> -->
-          <!-- <div class="form-group">
-            <label class="survey-label">Your Rating <span class="req">*</span></label>
-            <div class="star-block mt-1" id="pubStarBlock" onmouseleave="clearHover('pub')">
-              <span class="star pub-star" data-star="1" onclick="rateService(1,'pub')" onmouseenter="hoverStar(1,'pub')"><i class="bi bi-star"></i></span>
-              <span class="star pub-star" data-star="2" onclick="rateService(2,'pub')" onmouseenter="hoverStar(2,'pub')"><i class="bi bi-star"></i></span>
-              <span class="star pub-star" data-star="3" onclick="rateService(3,'pub')" onmouseenter="hoverStar(3,'pub')"><i class="bi bi-star"></i></span>
-              <span class="star pub-star" data-star="4" onclick="rateService(4,'pub')" onmouseenter="hoverStar(4,'pub')"><i class="bi bi-star"></i></span>
-              <span class="star pub-star" data-star="5" onclick="rateService(5,'pub')" onmouseenter="hoverStar(5,'pub')"><i class="bi bi-star"></i></span>
-              <span class="rating-label" id="pubRatingLabel"></span>
+        <!-- Pub → Yes → JNTU question -->
+        <div class="sub-block" id="pubJntuBlock" style="display:none;">
+          <div class="sub-block-label"><i class="bi bi-arrow-return-right"></i> Follow-up</div>
+          <div class="fg">
+            <label class="lbl">Are you pass by JNTU? <span class="req">*</span></label>
+            <div class="yn-row" id="g_pubJntu">
+              <button type="button" class="yn-btn" data-yn="yes" onclick="pickYN('pubJntu','yes')"><i
+                  class="bi bi-check-circle-fill"></i> Yes</button>
+              <button type="button" class="yn-btn" data-yn="no" onclick="pickYN('pubJntu','no')"><i
+                  class="bi bi-x-circle-fill"></i> No</button>
             </div>
-            <small class="text-muted d-block mt-1">Click to rate (1 = Poor, 5 = Excellent)</small>
-            <small class="field-error" id="pubRatingError">Please rate the service.</small>
-          </div>
-          <div class="form-group mb-0">
-            <label class="survey-label">Comments / Feedback <span class="req">*</span></label>
-            <textarea class="survey-input" id="pubCompanyComments" rows="3" placeholder="Share your experience with the company transport..."></textarea>
-            <small class="field-error" id="pubCompanyCommentsError">Please enter your comments.</small>
-          </div> -->
-          <div class="form-group">
-              <label class="survey-label">Current service point <span class="req">*</span></label>
-              <div class="input-icon-wrap">
-                <i class="bi bi-geo-alt-fill input-icon"></i>
-                <input type="text" class="survey-input has-icon" id="ownFromLocation"
-                  placeholder="Enter your home address or area name">
-              </div>
-              <small class="field-error" id="ownFromLocationError">From location is required.</small>
-            </div>
-
-            <div class="form-group">
-              <label class="survey-label">Preffered service point <span class="req">*</span></label>
-              <div class="input-icon-wrap">
-                <i class="bi bi-geo-alt-fill input-icon"></i>
-                <input type="text" class="survey-input has-icon" id="ownFromLocation"
-                  placeholder="Enter your home address or area name">
-              </div>
-              <small class="field-error" id="ownFromLocationError">From location is required.</small>
-            </div>
-        </div>
-
-        <!-- If NO: Interested? -->
-        <div id="pubCompanyNoBlock" style="display:none;" class="sub-section section-animate d-none">
-          <div class="sub-section-title"><i class="bi bi-question-circle-fill"></i> Would you like to use company transport?</div>
-          <div class="form-group mb-0">
-            <label class="survey-label">Are you interested in using company transport? <span class="req">*</span></label>
-            <div class="yn-grid mt-2" id="pubInterestedGrid">
-              <div class="yn-card" data-yn="yes" data-group="pubInterested" onclick="selectYN('pubInterested','yes')">
-                <span class="yn-icon"><i class="bi bi-hand-thumbs-up-fill"></i></span>
-                <span class="yn-label">Yes, Interested</span>
-                <span class="yn-sub">I'd like to use it</span>
-              </div>
-              <div class="yn-card" data-yn="no" data-group="pubInterested" onclick="selectYN('pubInterested','no')">
-                <span class="yn-icon"><i class="bi bi-hand-thumbs-down-fill"></i></span>
-                <span class="yn-label">Not Interested</span>
-                <span class="yn-sub">I'll continue with public</span>
-              </div>
-            </div>
-            <small class="field-error" id="pubInterestedError">Please select an option.</small>
+            <div class="err-txt" id="e_pubJntu">Please select an option.</div>
           </div>
         </div>
 
-        <div class="form-group mb-0 mt-3">
-          <label class="survey-label">Comments / Challenges <span class="req">*</span></label>
-          <textarea class="survey-input" id="publicComments" rows="3" placeholder="Any issues with frequency, connectivity, safety, or suggestions..."></textarea>
-          <small class="field-error" id="publicCommentsError">Please enter your comments.</small>
+        <div class="fg" style="margin-top:0.8rem;">
+          <label class="lbl">Comments <span class="req">*</span></label>
+          <textarea class="inp" id="pubComments" rows="3" placeholder="Comments.."></textarea>
+          <div class="err-txt" id="e_pubComments">Please enter your comments.</div>
         </div>
       </div>
 
-      <!-- Submit -->
       <div class="submit-area">
-        <button type="submit" class="submit-btn" id="submitBtn">
-          <i class="bi bi-send-fill me-2"></i> Submit Survey
-        </button>
-        <p class="submit-note">
-          <i class="bi bi-shield-check me-1"></i>
-          Your response is confidential and will be used to improve services.
-        </p>
+        <button type="submit" class="submit-btn"><i class="bi bi-send-fill"></i> Submit Survey</button>
+        <p class="submit-note"><i class="bi bi-shield-check"></i> Your response is confidential and used to improve
+          services.</p>
       </div>
-
     </form>
   </div>
-</div>
 
-<!-- SweetAlert2 -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.10.5/sweetalert2.all.min.js"></script>
-
-<script>
-  // ── State ──────────────────────────────────────────────────────
-  let transportMode = '';
-  let vehicleType   = '';
-  let selectedPublicType = '';
-  const ratings   = { own: 0, pub: 0 };
-  const hovered   = { own: 0, pub: 0 };
-  const pillValues = { ownTravelTime: '', publicTravelTime: '' };
-  const ynValues  = { ownUsingCompany: '', ownInterested: '', pubUsingCompany: '', pubInterested: '' };
-
-  const ratingLabels = ['','Poor','Fair','Good','Very Good','Excellent'];
-
-  // ── Number-only inputs ─────────────────────────────────────────
-  document.getElementById('employeeId').addEventListener('input', function() {
-    this.value = this.value.replace(/\D/g,'');
-  });
-  document.getElementById('mobile').addEventListener('input', function() {
-    this.value = this.value.replace(/\D/g,'');
-  });
-  document.getElementById('publicCost').addEventListener('input', function() {
-    this.value = this.value.replace(/\D/g,'');
-  });
-
-  // ── Transport Mode ─────────────────────────────────────────────
-  function selectTransportMode(mode) {
-    transportMode = mode;
-    document.querySelectorAll('.transport-card').forEach(c => {
-      c.classList.toggle('selected', c.dataset.mode === mode);
-    });
-    document.getElementById('ownSection').style.display     = mode === 'own'    ? '' : 'none';
-    document.getElementById('publicSection').style.display  = mode === 'public' ? '' : 'none';
-    document.getElementById('transportModeError').classList.remove('show');
-  }
-
-  // ── Vehicle ────────────────────────────────────────────────────
-  function selectVehicle(v) {
-    vehicleType = v;
-    document.querySelectorAll('.vehicle-card').forEach(c => {
-      c.classList.toggle('selected', c.dataset.vehicle === v);
-    });
-    document.getElementById('vehicleTypeError').classList.remove('show');
-  }
-
-  // ── Pills ──────────────────────────────────────────────────────
-  function selectPill(el, group) {
-    const pills = el.parentElement.querySelectorAll('.pill-opt');
-    pills.forEach(p => p.classList.remove('selected'));
-    el.classList.add('selected');
-    pillValues[group] = el.dataset.value;
-    const errMap = { ownTravelTime: 'ownTravelTimeError', publicTravelTime: 'publicTravelTimeError' };
-    if (errMap[group]) document.getElementById(errMap[group]).classList.remove('show');
-  }
-
-  // ── Public Type ────────────────────────────────────────────────
-  function selectPublicType(val) {
-    selectedPublicType = selectedPublicType === val ? '' : val;
-    document.querySelectorAll('.pub-type-card').forEach(c => {
-      const isSel = c.dataset.pubtype === selectedPublicType;
-      c.classList.toggle('selected', isSel);
-      c.querySelector('.ptc-check').style.display = isSel ? '' : 'none';
-    });
-    document.getElementById('publicTypeError').classList.remove('show');
-  }
-
-  // ── Yes/No Cards ───────────────────────────────────────────────
-  function selectYN(group, val) {
-    ynValues[group] = val;
-    const gridId = {
-      ownUsingCompany: 'ownUsingCompanyGrid',
-      ownInterested:   'ownInterestedGrid',
-      pubUsingCompany: 'pubUsingCompanyGrid',
-      pubInterested:   'pubInterestedGrid'
-    }[group];
-    document.querySelectorAll('#' + gridId + ' .yn-card').forEach(c => {
-      c.classList.toggle('selected', c.dataset.yn === val);
-    });
-    const errId = group + 'Error';
-    const el = document.getElementById(errId);
-    if (el) el.classList.remove('show');
-
-    // Show/hide dependent blocks
-    if (group === 'ownUsingCompany') {
-      document.getElementById('ownCompanyYesBlock').style.display = val === 'yes' ? '' : 'none';
-      document.getElementById('ownCompanyNoBlock').style.display  = val === 'no'  ? '' : 'none';
-    }
-    if (group === 'pubUsingCompany') {
-      document.getElementById('pubCompanyYesBlock').style.display = val === 'yes' ? '' : 'none';
-      document.getElementById('pubCompanyNoBlock').style.display  = val === 'no'  ? '' : 'none';
-    }
-  }
-
-  // ── Star Rating ────────────────────────────────────────────────
-  function updateStars(prefix) {
-    const display = hovered[prefix] || ratings[prefix];
-    document.querySelectorAll('.' + prefix + '-star').forEach(s => {
-      const n = parseInt(s.dataset.star);
-      s.classList.toggle('active', n <= display);
-      s.querySelector('i').className = 'bi ' + (n <= display ? 'bi-star-fill' : 'bi-star');
-    });
-    const lbl = document.getElementById(prefix + 'RatingLabel');
-    if (lbl) lbl.textContent = display > 0 ? ratingLabels[display] : '';
-  }
-
-  function rateService(star, prefix) {
-    ratings[prefix] = star;
-    updateStars(prefix);
-    const errId = prefix + 'RatingError';
-    const el = document.getElementById(errId);
-    if (el) el.classList.remove('show');
-  }
-  function hoverStar(star, prefix) { hovered[prefix] = star; updateStars(prefix); }
-  function clearHover(prefix)       { hovered[prefix] = 0; updateStars(prefix); }
-
-  // ── Validation Helpers ─────────────────────────────────────────
-  function showErr(id) { document.getElementById(id).classList.add('show'); }
-  function hideErr(id) { document.getElementById(id).classList.remove('show'); }
-  function markInvalid(inputId) { document.getElementById(inputId).classList.add('is-invalid'); }
-  function markValid(inputId)   { document.getElementById(inputId).classList.remove('is-invalid'); }
-  function val(id) { return document.getElementById(id).value.trim(); }
-
-  // ── Submit ─────────────────────────────────────────────────────
-  document.getElementById('busForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    let valid = true;
-
-    // Employee info validation
-    if (!val('employeeId') || !/^\d+$/.test(val('employeeId'))) { showErr('employeeIdError'); markInvalid('employeeId'); valid = false; } else { hideErr('employeeIdError'); markValid('employeeId'); }
-    if (!val('employeeName')) { showErr('employeeNameError'); markInvalid('employeeName'); valid = false; } else { hideErr('employeeNameError'); markValid('employeeName'); }
-    if (!val('department')) { showErr('departmentError'); markInvalid('department'); valid = false; } else { hideErr('departmentError'); markValid('department'); }
-    if (!val('mobile') || !/^\d{10}$/.test(val('mobile'))) { showErr('mobileError'); markInvalid('mobile'); valid = false; } else { hideErr('mobileError'); markValid('mobile'); }
-
-    // Transport mode
-    if (!transportMode) { showErr('transportModeError'); valid = false; }
-
-    // Own transport validation
-    if (transportMode === 'own') {
-      if (!vehicleType)            { showErr('vehicleTypeError'); valid = false; }
-      if (!val('ownFromLocation')) { showErr('ownFromLocationError'); markInvalid('ownFromLocation'); valid = false; } else { hideErr('ownFromLocationError'); markValid('ownFromLocation'); }
-      if (!pillValues.ownTravelTime) { showErr('ownTravelTimeError'); valid = false; }
-      if (!ynValues.ownUsingCompany) { showErr('ownUsingCompanyError'); valid = false; }
-      if (ynValues.ownUsingCompany === 'yes') {
-        if (!ratings.own) { showErr('ownRatingError'); valid = false; }
-        if (!val('ownCompanyComments')) { showErr('ownCompanyCommentsError'); markInvalid('ownCompanyComments'); valid = false; } else { hideErr('ownCompanyCommentsError'); markValid('ownCompanyComments'); }
-      }
-      if (ynValues.ownUsingCompany === 'no') {
-        if (!ynValues.ownInterested) { showErr('ownInterestedError'); valid = false; }
-      }
-      if (!val('ownComments')) { showErr('ownCommentsError'); markInvalid('ownComments'); valid = false; } else { hideErr('ownCommentsError'); markValid('ownComments'); }
-    }
-
-    // Public transport validation
-    if (transportMode === 'public') {
-      if (!selectedPublicType)          { showErr('publicTypeError'); valid = false; }
-      if (!val('publicFromLocation'))   { showErr('publicFromLocationError'); markInvalid('publicFromLocation'); valid = false; } else { hideErr('publicFromLocationError'); markValid('publicFromLocation'); }
-      if (!val('publicMidpoint'))       { showErr('publicMidpointError'); markInvalid('publicMidpoint'); valid = false; } else { hideErr('publicMidpointError'); markValid('publicMidpoint'); }
-      if (!val('publicDropLocation'))   { showErr('publicDropLocationError'); markInvalid('publicDropLocation'); valid = false; } else { hideErr('publicDropLocationError'); markValid('publicDropLocation'); }
-      if (!pillValues.publicTravelTime) { showErr('publicTravelTimeError'); valid = false; }
-      if (!val('publicCost') || !/^\d+$/.test(val('publicCost'))) { showErr('publicCostError'); markInvalid('publicCost'); valid = false; } else { hideErr('publicCostError'); markValid('publicCost'); }
-      if (!ynValues.pubUsingCompany)    { showErr('pubUsingCompanyError'); valid = false; }
-      if (ynValues.pubUsingCompany === 'yes') {
-        if (!ratings.pub) { showErr('pubRatingError'); valid = false; }
-        if (!val('pubCompanyComments')) { showErr('pubCompanyCommentsError'); markInvalid('pubCompanyComments'); valid = false; } else { hideErr('pubCompanyCommentsError'); markValid('pubCompanyComments'); }
-      }
-      if (ynValues.pubUsingCompany === 'no') {
-        if (!ynValues.pubInterested) { showErr('pubInterestedError'); valid = false; }
-      }
-      if (!val('publicComments')) { showErr('publicCommentsError'); markInvalid('publicComments'); valid = false; } else { hideErr('publicCommentsError'); markValid('publicComments'); }
-    }
-
-    if (!valid) {
-      const firstError = document.querySelector('.field-error.show');
-      if (firstError) firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      return;
-    }
-
-    // Build payload
-    const payload = {
-      employeeInfo: {
-        employeeId:   val('employeeId'),
-        employeeName: val('employeeName'),
-        department:   val('department'),
-        mobile:       val('mobile')
-      },
-      transportMode
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.10.5/sweetalert2.all.min.js"></script>
+  <script>
+    // ── Location Master Data ────────────────────────────────────────
+    const LOCATIONS = {
+      "West Hyderabad / IT Corridor": [
+        "Madhapur", "Hitech City", "Raidurg", "Gachibowli", "Kondapur", "Kothaguda",
+        "Hafeezpet", "Miyapur", "Chandanagar", "Lingampally", "Nallagandla", "Tellapur",
+        "Financial District", "Nanakramguda", "Manikonda", "Puppalaguda",
+        "Alkapuri Township", "Narsingi", "Kokapet", "Khajaguda"
+      ],
+      "Central Hyderabad": [
+        "Ameerpet", "Punjagutta", "Begumpet", "Somajiguda", "Lakdikapul", "Khairatabad",
+        "Banjara Hills", "Jubilee Hills", "Panjagutta", "Nampally", "Abids",
+        "Basheerbagh", "Himayatnagar", "Koti", "Narayanguda"
+      ],
+      "South Hyderabad": [
+        "Mehdipatnam", "Tolichowki", "Attapur", "Rajendranagar", "Shamshabad",
+        "Falaknuma", "Chandrayangutta", "Barkas", "Santosh Nagar", "Bahadurpura",
+        "Charminar", "Shalibanda", "Moghalpura", "Saidabad", "Jahanuma"
+      ],
+      "East Hyderabad": [
+        "Uppal", "Nagole", "LB Nagar", "Dilsukhnagar", "Kothapet", "Ramanthapur",
+        "Habsiguda", "Tarnaka", "Nacharam", "Mallapur", "Cherlapally",
+        "Peerzadiguda", "Boduppal", "Medipally", "Ghatkesar"
+      ],
+      "North Hyderabad": [
+        "Secunderabad", "Paradise", "Trimulgherry", "Bowenpally", "Suchitra",
+        "Kompally", "Petbasheerabad", "Jeedimetla", "Balanagar", "Kukatpally",
+        "Moosapet", "JNTU", "Erragadda", "Sanathnagar", "Fatehnagar", "Begumpet"
+      ],
+      "Secunderabad & Nearby Areas": [
+        "Malkajgiri", "Sainikpuri", "AS Rao Nagar", "ECIL", "Kapra", "Alwal",
+        "Old Alwal", "Yapral", "Kushaiguda", "Moula Ali"
+      ],
+      "Outer Areas / Expanding Zones": [
+        "Shamirpet", "Medchal", "Dundigal", "Suraram", "Bachupally", "Pragathi Nagar",
+        "Nizampet", "Chintal", "Quthbullapur", "Patancheru", "Sangareddy", "Isnapur",
+        "Beeramguda", "Ameenpur", "BHEL Township"
+      ]
     };
 
-    if (transportMode === 'own') {
-      payload.ownTransport = {
-        vehicleType,
-        fromLocation:       val('ownFromLocation'),
-        travelTime:         pillValues.ownTravelTime,
-        usingCompany:       ynValues.ownUsingCompany,
-        companyRating:      ynValues.ownUsingCompany === 'yes' ? ratings.own : null,
-        companyComments:    ynValues.ownUsingCompany === 'yes' ? val('ownCompanyComments') : null,
-        interestedInCompany:ynValues.ownUsingCompany === 'no'  ? ynValues.ownInterested : null,
-        comments:           val('ownComments')
-      };
+    // ── State ───────────────────────────────────────────────────────
+    const S = {
+      mode: '', veh: '', pubType: '',
+      ownCo: '', ownJntu: '',
+      pubCo: '', pubJntu: '',
+      ownLoc: '', pubFrom: '', pubDrop: ''
+    };
+
+    // ── Location Dropdown ───────────────────────────────────────────
+    function buildLocList(key, filter = '') {
+      const listEl = document.getElementById(key + 'List');
+      const term = filter.toLowerCase().trim();
+      let html = '', hasResult = false;
+
+      for (const [group, items] of Object.entries(LOCATIONS)) {
+        const filtered = items.filter(n => !term || n.toLowerCase().includes(term));
+        if (!filtered.length) continue;
+        hasResult = true;
+        html += `<div class="loc-group-label">${group}</div>`;
+        filtered.forEach(name => {
+          const sel = S[key] === name ? ' selected' : '';
+          html += `<div class="loc-item${sel}" onclick="selectLoc('${key}','${name}')">
+        <i class="bi bi-geo-alt${sel ? '-fill' : ''}"></i>${name}
+      </div>`;
+        });
+      }
+
+      if (!hasResult) html = `<div class="loc-empty"><i class="bi bi-search"></i> No results for "${filter}"</div>`;
+      listEl.innerHTML = html;
     }
 
-    if (transportMode === 'public') {
-      payload.publicTransport = {
-        transportType:      selectedPublicType,
-        fromLocation:       val('publicFromLocation'),
-        midpoint:           val('publicMidpoint'),
-        dropLocation:       val('publicDropLocation'),
-        travelTime:         pillValues.publicTravelTime,
-        dailyCost:          val('publicCost'),
-        usingCompany:       ynValues.pubUsingCompany,
-        companyRating:      ynValues.pubUsingCompany === 'yes' ? ratings.pub : null,
-        companyComments:    ynValues.pubUsingCompany === 'yes' ? val('pubCompanyComments') : null,
-        interestedInCompany:ynValues.pubUsingCompany === 'no'  ? ynValues.pubInterested : null,
-        comments:           val('publicComments')
-      };
+    function toggleDropdown(key) {
+      const wrap = document.getElementById(key + 'Wrap');
+      const isOpen = wrap.classList.contains('open');
+      closeAllDropdowns();
+      if (!isOpen) {
+        wrap.classList.add('open');
+        buildLocList(key);
+        setTimeout(() => document.getElementById(key + 'Filter')?.focus(), 50);
+      }
     }
 
-    console.log('Survey Payload:', JSON.stringify(payload, null, 2));
+    function closeAllDropdowns() {
+      document.querySelectorAll('.loc-wrap.open').forEach(w => w.classList.remove('open'));
+    }
 
-    Swal.fire({
-      icon: 'success',
-      title: 'Survey Submitted!',
-      html: '<p>Thank you for your valuable feedback.<br>We appreciate your response!</p>',
-      confirmButtonColor: '#0072bc',
-      confirmButtonText: 'OK'
-    }).then(() => {
-      // Reset everything
-      document.getElementById('busForm').reset();
-      transportMode = ''; vehicleType = ''; selectedPublicType = '';
-      ratings.own = 0; ratings.pub = 0; hovered.own = 0; hovered.pub = 0;
-      pillValues.ownTravelTime = ''; pillValues.publicTravelTime = '';
-      Object.keys(ynValues).forEach(k => ynValues[k] = '');
+    function filterLoc(key, term) { buildLocList(key, term); }
 
-      document.querySelectorAll('.transport-card,.vehicle-card,.pub-type-card,.yn-card').forEach(c => c.classList.remove('selected'));
-      document.querySelectorAll('.ptc-check').forEach(c => c.style.display = 'none');
-      document.querySelectorAll('.pill-opt').forEach(p => p.classList.remove('selected'));
-      document.querySelectorAll('.survey-input').forEach(i => i.classList.remove('is-invalid'));
-      document.querySelectorAll('.field-error').forEach(e => e.classList.remove('show'));
-      ['ownSection','publicSection','ownCompanyYesBlock','ownCompanyNoBlock','pubCompanyYesBlock','pubCompanyNoBlock'].forEach(id => {
-        document.getElementById(id).style.display = 'none';
-      });
-      updateStars('own'); updateStars('pub');
+    function selectLoc(key, name) {
+      S[key] = name;
+      document.getElementById(key + 'Display').value = name;
+      document.getElementById(key + 'Display').classList.remove('err');
+      hideErr('e_' + key);
+      document.getElementById(key + 'Filter').value = '';
+      closeAllDropdowns();
+    }
+
+    document.addEventListener('click', e => {
+      if (!e.target.closest('.loc-wrap')) closeAllDropdowns();
     });
-  });
-</script>
+
+    // ── Interactions ────────────────────────────────────────────────
+    function pickMode(m) {
+      S.mode = m;
+      document.querySelectorAll('.mode-card').forEach(c => c.classList.toggle('sel', c.dataset.mode === m));
+      showEl('ownSection', m === 'own');
+      showEl('pubSection', m === 'public');
+      hideErr('e_mode');
+    }
+
+    function pickVeh(v) {
+      S.veh = v;
+      document.querySelectorAll('.veh-chip').forEach(c => c.classList.toggle('sel', c.dataset.v === v));
+      hideErr('e_veh');
+    }
+
+    function pickPubType(t) {
+      S.pubType = S.pubType === t ? '' : t;
+      document.querySelectorAll('.pub-chip').forEach(c => c.classList.toggle('sel', c.dataset.pt === S.pubType));
+      hideErr('e_pubType');
+    }
+
+    function pickYN(group, val) {
+      S[group] = val;
+      document.querySelectorAll('#g_' + group + ' .yn-btn').forEach(b => b.classList.toggle('sel', b.dataset.yn === val));
+      hideErr('e_' + group);
+
+      // Show JNTU question only when company transport = YES
+      if (group === 'ownCo') {
+        showEl('ownJntuBlock', val === 'yes');
+        if (val === 'no') { S.ownJntu = ''; resetYN('ownJntu'); }
+      }
+      if (group === 'pubCo') {
+        showEl('pubJntuBlock', val === 'yes');
+        if (val === 'no') { S.pubJntu = ''; resetYN('pubJntu'); }
+      }
+    }
+
+    function resetYN(group) {
+      S[group] = '';
+      document.querySelectorAll('#g_' + group + ' .yn-btn').forEach(b => b.classList.remove('sel'));
+      hideErr('e_' + group);
+    }
+
+    function showEl(id, cond = true) {
+      const el = document.getElementById(id);
+      if (el) el.style.display = cond ? '' : 'none';
+    }
+    function hideErr(id) {
+      const el = document.getElementById(id);
+      if (el) { el.style.display = 'none'; el.classList.remove('show'); }
+    }
+    function showErr(id) {
+      const el = document.getElementById(id);
+      if (el) { el.style.display = 'block'; el.classList.add('show'); }
+    }
+    function markErr(id, on) {
+      const el = document.getElementById(id);
+      if (el) el.classList.toggle('err', on);
+    }
+    function v(id) { const el = document.getElementById(id); return el ? el.value.trim() : ''; }
+
+    // ── Submit ──────────────────────────────────────────────────────
+    document.getElementById('form').addEventListener('submit', function (e) {
+      e.preventDefault();
+      let ok = true;
+
+      if (!S.mode) { showErr('e_mode'); ok = false; }
+
+      if (S.mode === 'own') {
+        if (!S.veh) { showErr('e_veh'); ok = false; }
+        if (!S.ownLoc) { showErr('e_ownLoc'); markErr('ownLocDisplay', true); ok = false; }
+        else markErr('ownLocDisplay', false);
+        if (!S.ownCo) { showErr('e_ownCo'); ok = false; }
+        if (S.ownCo === 'yes' && !S.ownJntu) { showErr('e_ownJntu'); ok = false; }
+      }
+
+      if (S.mode === 'public') {
+        if (!S.pubType) { showErr('e_pubType'); ok = false; }
+        if (!S.pubFrom) { showErr('e_pubFrom'); markErr('pubFromDisplay', true); ok = false; }
+        else markErr('pubFromDisplay', false);
+        if (!S.pubDrop) { showErr('e_pubDrop'); markErr('pubDropDisplay', true); ok = false; }
+        else markErr('pubDropDisplay', false);
+        if (!S.pubCo) { showErr('e_pubCo'); ok = false; }
+        if (S.pubCo === 'yes' && !S.pubJntu) { showErr('e_pubJntu'); ok = false; }
+        if (!v('pubComments')) { showErr('e_pubComments'); markErr('pubComments', true); ok = false; }
+        else markErr('pubComments', false);
+      }
+
+      if (!ok) {
+        const first = document.querySelector('.err-txt.show');
+        if (first) first.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        return;
+      }
+
+      // ── Build JSON payload ──
+      const payload = {
+        transportMode: S.mode,
+        submittedAt: new Date().toISOString(),
+        ...(S.mode === 'own' ? {
+          ownTransport: {
+            vehicleType: S.veh === '2w' ? '2-Wheeler' : '4-Wheeler',
+            homeLocation: S.ownLoc,
+            usingCompanyTransport: S.ownCo,
+            passByJNTU: S.ownCo === 'yes' ? S.ownJntu : null,
+            comments: v('ownComments') || null
+          }
+        } : {
+          publicTransport: {
+            transportType: S.pubType,
+            homeLocation: S.pubFrom,
+            publicTransportEndPoint: S.pubDrop,
+            usingCompanyTransport: S.pubCo,
+            passByJNTU: S.pubCo === 'yes' ? S.pubJntu : null,
+            comments: v('pubComments')
+          }
+        })
+      };
+
+      console.log('Survey JSON Payload:');
+      console.log(JSON.stringify(payload, null, 2));
+
+      Swal.fire({
+        icon: 'success',
+        title: 'Survey Submitted!',
+        html: `<p style="font-size:0.88rem;color:#344054;">Thank you for your feedback.<br>We appreciate your response!</p>`,
+        confirmButtonColor: '#0072BC',
+        confirmButtonText: 'Done'
+      }).then(() => resetForm());
+    });
+
+    function resetForm() {
+      document.getElementById('form').reset();
+      Object.keys(S).forEach(k => S[k] = '');
+      document.querySelectorAll('.mode-card,.veh-chip,.pub-chip,.yn-btn').forEach(el => el.classList.remove('sel'));
+      ['ownSection', 'pubSection', 'ownJntuBlock', 'pubJntuBlock'].forEach(id => showEl(id, false));
+      document.querySelectorAll('.err-txt').forEach(el => { el.style.display = 'none'; el.classList.remove('show'); });
+      document.querySelectorAll('.inp,.loc-search').forEach(el => el.classList.remove('err'));
+      ['ownLocDisplay', 'pubFromDisplay', 'pubDropDisplay'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.value = '';
+      });
+    }
+  </script>
 </body>
+
 </html>
