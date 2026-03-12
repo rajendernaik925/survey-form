@@ -6,7 +6,7 @@
   <title>Employee Transport Survey</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; }
 
@@ -28,6 +28,8 @@
       --radius-sm: 6px;
       --shadow-card: 0 2px 16px rgba(0,0,0,0.08);
       --trans: all 0.2s ease;
+      --success: #198754;
+      --danger: #dc3545;
     }
 
     body {
@@ -63,10 +65,38 @@
       color: #fff;
       padding: 2rem 2rem 1.75rem;
       text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .survey-header::before {
+      content: '';
+      position: absolute;
+      top: -40px; right: -40px;
+      width: 140px; height: 140px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.07);
+    }
+    .survey-header::after {
+      content: '';
+      position: absolute;
+      bottom: -30px; left: -20px;
+      width: 100px; height: 100px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.05);
+    }
+    .header-icon {
+      width: 56px; height: 56px;
+      background: rgba(255,255,255,0.18);
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 1rem;
+      font-size: 1.6rem;
+      backdrop-filter: blur(4px);
+      border: 1px solid rgba(255,255,255,0.25);
     }
     .survey-header h4 {
       font-size: 1.45rem;
-      font-weight: 700;
+      font-weight: 800;
       letter-spacing: 0.2px;
       margin-bottom: 0.25rem;
     }
@@ -75,6 +105,23 @@
       opacity: 0.85;
       margin: 0;
     }
+
+    /* Progress bar */
+    .survey-progress {
+      padding: 0.75rem 1.75rem;
+      background: #f0f4fa;
+      border-bottom: 1px solid var(--border);
+    }
+    .progress-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--text-sub);
+      margin-bottom: 0.35rem;
+      display: flex;
+      justify-content: space-between;
+    }
+    .progress { height: 5px; border-radius: 999px; background: var(--border); }
+    .progress-bar { background: var(--gradient); border-radius: 999px; transition: width 0.4s ease; }
 
     /* Form */
     .survey-form { padding: 1.5rem 1.75rem; }
@@ -140,6 +187,10 @@
       border-color: var(--primary);
       box-shadow: 0 0 0 3px rgba(0,114,188,0.11);
     }
+    .survey-input.is-invalid {
+      border-color: #dc3545;
+      box-shadow: 0 0 0 3px rgba(220,53,69,0.10);
+    }
     .survey-input::placeholder { color: #b0b8c4; }
 
     .input-icon-wrap { position: relative; }
@@ -154,25 +205,49 @@
     }
     .has-icon { padding-left: 2.2rem !important; }
 
+    /* Employee ID section */
+    .employee-section {
+      background: linear-gradient(135deg, rgba(0,114,188,0.06) 0%, rgba(0,90,150,0.04) 100%);
+      border: 1px solid rgba(0,114,188,0.2);
+      border-left: 4px solid var(--primary);
+      border-radius: var(--radius-lg);
+      padding: 1.4rem 1.5rem;
+      margin-bottom: 1.25rem;
+    }
+
     /* Transport Mode Cards */
-    .transport-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 0.75rem; }
+    .transport-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 0.75rem; }
     .transport-card {
       cursor: pointer;
       display: flex;
       flex-direction: column;
       align-items: center;
       text-align: center;
-      padding: 1.1rem 0.75rem;
+      padding: 1.25rem 0.75rem;
       background: #fff;
       border: 2px solid var(--border);
       border-radius: var(--radius-lg);
       transition: var(--trans);
       user-select: none;
+      position: relative;
     }
-    .tc-icon { font-size: 2rem; color: var(--primary); margin-bottom: 0.45rem; line-height: 1; }
+    .tc-check-badge {
+      position: absolute;
+      top: 8px; right: 8px;
+      width: 22px; height: 22px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: #fff;
+      font-size: 0.7rem;
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+    .transport-card.selected .tc-check-badge { display: flex; }
+    .tc-icon { font-size: 2.2rem; color: var(--primary); margin-bottom: 0.45rem; line-height: 1; }
     .tc-title { font-weight: 700; font-size: 0.875rem; color: var(--text); }
     .tc-desc { font-size: 0.72rem; color: var(--text-sub); margin-top: 3px; }
-    .transport-card:hover { border-color: var(--primary); background: rgba(0,114,188,0.03); }
+    .transport-card:hover { border-color: var(--primary); background: rgba(0,114,188,0.03); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,114,188,0.12); }
     .transport-card.selected { border-color: var(--border-sel); background: var(--primary-light); }
     .transport-card.selected .tc-title { color: var(--primary); }
 
@@ -211,10 +286,37 @@
       background: #fff;
       transition: var(--trans);
       user-select: none;
-      margin-bottom: 0;
     }
     .pill-opt:hover { border-color: var(--primary); color: var(--primary); }
     .pill-opt.selected { border-color: var(--primary); background: var(--primary); color: #fff; }
+
+    /* Yes/No Cards - big choice cards */
+    .yn-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+    .yn-card {
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 1.1rem 1rem;
+      background: #fff;
+      border: 2px solid var(--border);
+      border-radius: var(--radius-lg);
+      transition: var(--trans);
+      user-select: none;
+      text-align: center;
+    }
+    .yn-card .yn-icon { font-size: 2rem; }
+    .yn-card .yn-label { font-weight: 700; font-size: 0.9rem; color: var(--text); }
+    .yn-card .yn-sub { font-size: 0.72rem; color: var(--text-sub); }
+    .yn-card:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+    .yn-card[data-yn="yes"]:hover, .yn-card[data-yn="yes"].selected { border-color: #198754; background: rgba(25,135,84,0.07); }
+    .yn-card[data-yn="yes"].selected .yn-label { color: #198754; }
+    .yn-card[data-yn="no"]:hover, .yn-card[data-yn="no"].selected { border-color: #dc3545; background: rgba(220,53,69,0.07); }
+    .yn-card[data-yn="no"].selected .yn-label { color: #dc3545; }
+    .yn-card[data-yn="yes"] .yn-icon { color: #198754; }
+    .yn-card[data-yn="no"] .yn-icon { color: #dc3545; }
 
     /* Public Transport Type Cards */
     .pub-type-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 0.6rem; }
@@ -271,30 +373,48 @@
     .star:hover { transform: scale(1.15); }
     .rating-label { font-size: 0.85rem; font-weight: 600; color: var(--primary); margin-left: 0.5rem; }
 
-    /* Interest Cards */
-    .interest-group { display: flex; gap: 0.75rem; flex-wrap: wrap; }
-    .interest-card {
-      cursor: pointer;
+    /* Divider */
+    .section-divider {
+      border: none;
+      border-top: 1px dashed var(--border);
+      margin: 1.1rem 0;
+    }
+
+    /* Sub section */
+    .sub-section {
+      background: #fff;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 1.1rem 1.2rem;
+      margin-top: 0.75rem;
+    }
+    .sub-section-title {
+      font-size: 0.84rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 0.9rem;
       display: flex;
       align-items: center;
-      gap: 0.5rem;
-      padding: 0.65rem 1.25rem;
-      background: #fff;
-      border: 2px solid var(--border);
-      border-radius: var(--radius-lg);
-      transition: var(--trans);
-      font-size: 0.875rem;
-      font-weight: 500;
-      color: var(--text);
-      user-select: none;
-      margin-bottom: 0;
+      gap: 0.4rem;
     }
-    .ic-icon { font-size: 1.2rem; }
-    .interest-card:hover { border-color: var(--primary); }
-    .interest-card.selected { border-color: var(--border-sel); background: var(--primary-light); }
 
     /* Field error */
-    .field-error { display: block; color: #dc3545; font-size: 0.78rem; margin-top: 0.3rem; }
+    .field-error { display: none; color: #dc3545; font-size: 0.78rem; margin-top: 0.3rem; }
+    .field-error.show { display: block; }
+
+    /* Mandatory note */
+    .mandatory-note {
+      font-size: 0.75rem;
+      color: var(--text-sub);
+      background: rgba(220,53,69,0.06);
+      border: 1px solid rgba(220,53,69,0.15);
+      border-radius: var(--radius-sm);
+      padding: 0.4rem 0.7rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      margin-bottom: 1.25rem;
+    }
 
     /* Submit */
     .submit-area { padding: 0.75rem 0 0.5rem; text-align: center; }
@@ -303,7 +423,7 @@
       color: #fff;
       border: none;
       border-radius: var(--radius-md);
-      padding: 0.75rem 3.5rem;
+      padding: 0.8rem 3.5rem;
       font-size: 0.95rem;
       font-weight: 700;
       letter-spacing: 0.3px;
@@ -324,6 +444,10 @@
     .form-group { margin-bottom: 1rem; }
     .form-group.mb-0 { margin-bottom: 0; }
 
+    /* row field */
+    .row { margin-left: -0.4rem; margin-right: -0.4rem; }
+    .row > * { padding-left: 0.4rem; padding-right: 0.4rem; }
+
     /* Animation */
     @keyframes fadeSlideIn {
       from { opacity: 0; transform: translateY(-10px); }
@@ -337,7 +461,7 @@
     @media (max-width: 600px) {
       .survey-shell { padding: 0.75rem 0.5rem; }
       .survey-form { padding: 1.1rem 1rem; }
-      .transport-grid { grid-template-columns: 1fr; gap: 0.5rem; }
+      .transport-grid { grid-template-columns: 1fr 1fr; gap: 0.5rem; }
       .pub-type-grid { grid-template-columns: 1fr 1fr; }
       .like-grid { grid-template-columns: 1fr; }
       .vehicle-grid { grid-template-columns: 1fr 1fr; }
@@ -354,6 +478,7 @@
 
     <!-- Header -->
     <div class="survey-header">
+      <div class="header-icon"><i class="bi bi-bus-front-fill"></i></div>
       <h4>Employee Transport Survey</h4>
       <p>Help us understand your commute needs and improve our transport services</p>
     </div>
@@ -361,12 +486,68 @@
     <!-- Form -->
     <form id="busForm" class="survey-form" novalidate>
 
-      <!-- Hidden personal info -->
-      <input type="hidden" id="employeeName">
-      <input type="hidden" id="employeeId">
-      <input type="hidden" id="department">
-      <input type="hidden" id="email">
-      <input type="hidden" id="mobile">
+      <!-- Mandatory note -->
+      <!-- <div class="mandatory-note">
+        <i class="bi bi-exclamation-circle-fill text-danger"></i>
+        All fields marked with <strong class="text-danger ms-1 me-1">*</strong> are mandatory.
+      </div> -->
+
+      <!-- 1. Employee Information -->
+      <div class="employee-section">
+        <div class="section-header">
+          <span class="section-badge"><i class="bi bi-person-badge-fill"></i></span>
+          <div>
+            <div class="section-title">Employee Information</div>
+            <div class="section-subtitle">Your basic details for this survey</div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="survey-label">Employee ID <span class="req">*</span></label>
+              <div class="input-icon-wrap">
+                <i class="bi bi-person-badge input-icon"></i>
+                <input type="text" class="survey-input has-icon" id="employeeId" placeholder="Enter your Employee ID (numbers only)" maxlength="10" inputmode="numeric">
+              </div>
+              <small class="field-error" id="employeeIdError">Employee ID is required (numbers only).</small>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="survey-label">Employee Name <span class="req">*</span></label>
+              <div class="input-icon-wrap">
+                <i class="bi bi-person input-icon"></i>
+                <input type="text" class="survey-input has-icon" id="employeeName" placeholder="Enter your full name">
+              </div>
+              <small class="field-error" id="employeeNameError">Employee name is required.</small>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="survey-label">Department <span class="req">*</span></label>
+              <div class="input-icon-wrap">
+                <i class="bi bi-building input-icon"></i>
+                <input type="text" class="survey-input has-icon" id="department" placeholder="e.g., IT, Finance, HR">
+              </div>
+              <small class="field-error" id="departmentError">Department is required.</small>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group mb-0">
+              <label class="survey-label">Mobile Number <span class="req">*</span></label>
+              <div class="input-icon-wrap">
+                <i class="bi bi-phone input-icon"></i>
+                <input type="text" class="survey-input has-icon" id="mobile" placeholder="10-digit mobile number" maxlength="10" inputmode="numeric">
+              </div>
+              <small class="field-error" id="mobileError">Valid 10-digit mobile number is required.</small>
+            </div>
+          </div>
+        </div>
+      </div>
 
       <!-- 2. Transport Preference -->
       <div class="survey-section">
@@ -381,22 +562,19 @@
           <label class="survey-label">How do you commute to office? <span class="req">*</span></label>
           <div class="transport-grid mt-2">
             <div class="transport-card" data-mode="own" onclick="selectTransportMode('own')">
+              <div class="tc-check-badge"><i class="bi bi-check"></i></div>
               <div class="tc-icon"><i class="bi bi-bicycle"></i></div>
               <div class="tc-title">Own Transport</div>
               <div class="tc-desc">2-Wheeler / 4-Wheeler</div>
             </div>
             <div class="transport-card" data-mode="public" onclick="selectTransportMode('public')">
+              <div class="tc-check-badge"><i class="bi bi-check"></i></div>
               <div class="tc-icon"><i class="bi bi-bus-front"></i></div>
               <div class="tc-title">Public Transport</div>
               <div class="tc-desc">Bus, Metro, Auto, Taxi</div>
             </div>
-            <div class="transport-card" data-mode="company" onclick="selectTransportMode('company')">
-              <div class="tc-icon"><i class="bi bi-truck"></i></div>
-              <div class="tc-title">Company Service</div>
-              <div class="tc-desc">Company-provided transport</div>
-            </div>
           </div>
-          <small class="field-error" id="transportModeError" style="display:none;">Please select a transport mode.</small>
+          <small class="field-error" id="transportModeError">Please select a transport mode.</small>
         </div>
       </div>
 
@@ -422,6 +600,7 @@
               <div><span class="vc-label">4-Wheeler</span><span class="vc-sub">Car</span></div>
             </div>
           </div>
+          <small class="field-error" id="vehicleTypeError">Please select your vehicle type.</small>
         </div>
 
         <div class="form-group">
@@ -430,10 +609,11 @@
             <i class="bi bi-geo-alt-fill input-icon"></i>
             <input type="text" class="survey-input has-icon" id="ownFromLocation" placeholder="Enter your home address or area name">
           </div>
+          <small class="field-error" id="ownFromLocationError">From location is required.</small>
         </div>
 
         <div class="form-group">
-          <label class="survey-label">Average Travel Time (One Way)</label>
+          <label class="survey-label">Average Travel Time (One Way) <span class="req">*</span></label>
           <div class="pill-group mt-1" id="ownTravelTimePills">
             <span class="pill-opt" data-group="ownTravelTime" data-value="0-15" onclick="selectPill(this,'ownTravelTime')">&lt; 15 min</span>
             <span class="pill-opt" data-group="ownTravelTime" data-value="15-30" onclick="selectPill(this,'ownTravelTime')">15–30 min</span>
@@ -441,11 +621,76 @@
             <span class="pill-opt" data-group="ownTravelTime" data-value="45-60" onclick="selectPill(this,'ownTravelTime')">45–60 min</span>
             <span class="pill-opt" data-group="ownTravelTime" data-value="60+" onclick="selectPill(this,'ownTravelTime')">60+ min</span>
           </div>
+          <small class="field-error" id="ownTravelTimeError">Please select travel time.</small>
         </div>
 
-        <div class="form-group mb-0">
-          <label class="survey-label">Comments / Suggestions</label>
+        <!-- Are you using company transport? -->
+        <hr class="section-divider">
+        <div class="form-group">
+          <label class="survey-label">Are you using company transport? <span class="req">*</span></label>
+          <div class="yn-grid mt-2" id="ownUsingCompanyGrid">
+            <div class="yn-card" data-yn="yes" data-group="ownUsingCompany" onclick="selectYN('ownUsingCompany','yes')">
+              <span class="yn-icon"><i class="bi bi-check-circle-fill"></i></span>
+              <span class="yn-label">Yes</span>
+              <span class="yn-sub">I use company transport</span>
+            </div>
+            <div class="yn-card" data-yn="no" data-group="ownUsingCompany" onclick="selectYN('ownUsingCompany','no')">
+              <span class="yn-icon"><i class="bi bi-x-circle-fill"></i></span>
+              <span class="yn-label">No</span>
+              <span class="yn-sub">I don't use company transport</span>
+            </div>
+          </div>
+          <small class="field-error" id="ownUsingCompanyError">Please select an option.</small>
+        </div>
+
+        <!-- If YES: Rate & Comments -->
+        <div id="ownCompanyYesBlock" style="display:none;" class="sub-section section-animate">
+          <div class="sub-section-title"><i class="bi bi-star-fill"></i> Rate Company Transport Service</div>
+          <div class="form-group">
+            <label class="survey-label">Your Rating <span class="req">*</span></label>
+            <div class="star-block mt-1" id="ownStarBlock" onmouseleave="clearHover('own')">
+              <span class="star own-star" data-star="1" onclick="rateService(1,'own')" onmouseenter="hoverStar(1,'own')"><i class="bi bi-star"></i></span>
+              <span class="star own-star" data-star="2" onclick="rateService(2,'own')" onmouseenter="hoverStar(2,'own')"><i class="bi bi-star"></i></span>
+              <span class="star own-star" data-star="3" onclick="rateService(3,'own')" onmouseenter="hoverStar(3,'own')"><i class="bi bi-star"></i></span>
+              <span class="star own-star" data-star="4" onclick="rateService(4,'own')" onmouseenter="hoverStar(4,'own')"><i class="bi bi-star"></i></span>
+              <span class="star own-star" data-star="5" onclick="rateService(5,'own')" onmouseenter="hoverStar(5,'own')"><i class="bi bi-star"></i></span>
+              <span class="rating-label" id="ownRatingLabel"></span>
+            </div>
+            <small class="text-muted d-block mt-1">Click to rate (1 = Poor, 5 = Excellent)</small>
+            <small class="field-error" id="ownRatingError">Please rate the service.</small>
+          </div>
+          <div class="form-group mb-0">
+            <label class="survey-label">Comments / Feedback <span class="req">*</span></label>
+            <textarea class="survey-input" id="ownCompanyComments" rows="3" placeholder="Share your experience with the company transport..."></textarea>
+            <small class="field-error" id="ownCompanyCommentsError">Please enter your comments.</small>
+          </div>
+        </div>
+
+        <!-- If NO: Interested? -->
+        <div id="ownCompanyNoBlock" style="display:none;" class="sub-section section-animate">
+          <div class="sub-section-title"><i class="bi bi-question-circle-fill"></i> Would you like to use company transport?</div>
+          <div class="form-group mb-0">
+            <label class="survey-label">Are you interested in using company transport? <span class="req">*</span></label>
+            <div class="yn-grid mt-2" id="ownInterestedGrid">
+              <div class="yn-card" data-yn="yes" data-group="ownInterested" onclick="selectYN('ownInterested','yes')">
+                <span class="yn-icon"><i class="bi bi-hand-thumbs-up-fill"></i></span>
+                <span class="yn-label">Yes, Interested</span>
+                <span class="yn-sub">I'd like to use it</span>
+              </div>
+              <div class="yn-card" data-yn="no" data-group="ownInterested" onclick="selectYN('ownInterested','no')">
+                <span class="yn-icon"><i class="bi bi-hand-thumbs-down-fill"></i></span>
+                <span class="yn-label">Not Interested</span>
+                <span class="yn-sub">I'll continue with own</span>
+              </div>
+            </div>
+            <small class="field-error" id="ownInterestedError">Please select an option.</small>
+          </div>
+        </div>
+
+        <div class="form-group mb-0 mt-3">
+          <label class="survey-label">Comments / Suggestions <span class="req">*</span></label>
           <textarea class="survey-input" id="ownComments" rows="3" placeholder="Any parking issues, route problems, or suggestions for improvement..."></textarea>
+          <small class="field-error" id="ownCommentsError">Please enter your comments.</small>
         </div>
       </div>
 
@@ -493,6 +738,7 @@
               <i class="bi bi-check-circle-fill ptc-check" style="display:none;"></i>
             </button>
           </div>
+          <small class="field-error" id="publicTypeError">Please select a transport type.</small>
         </div>
 
         <div class="form-group">
@@ -501,28 +747,31 @@
             <i class="bi bi-geo-alt-fill input-icon"></i>
             <input type="text" class="survey-input has-icon" id="publicFromLocation" placeholder="Your home address or nearest station / stop">
           </div>
+          <small class="field-error" id="publicFromLocationError">Starting location is required.</small>
         </div>
 
         <div class="form-group">
-          <label class="survey-label">Midpoint / Junction Point <span class="text-muted fw-normal">(Optional)</span></label>
+          <label class="survey-label">Midpoint / Junction Point <span class="req">*</span></label>
           <div class="input-icon-wrap">
             <i class="bi bi-arrows-angle-contract input-icon"></i>
             <input type="text" class="survey-input has-icon" id="publicMidpoint" placeholder="e.g., Ameerpet Metro, Hitech City Bus Stop">
           </div>
+          <small class="field-error" id="publicMidpointError">Midpoint is required.</small>
         </div>
 
         <div class="form-group">
-          <label class="survey-label">Drop Location / Final Stop</label>
+          <label class="survey-label">Drop Location / Final Stop <span class="req">*</span></label>
           <div class="input-icon-wrap">
             <i class="bi bi-geo-fill input-icon"></i>
             <input type="text" class="survey-input has-icon" id="publicDropLocation" placeholder="Nearest point to office">
           </div>
+          <small class="field-error" id="publicDropLocationError">Drop location is required.</small>
         </div>
 
         <div class="row">
           <div class="col-md-7">
             <div class="form-group">
-              <label class="survey-label">Average Travel Time (One Way)</label>
+              <label class="survey-label">Average Travel Time (One Way) <span class="req">*</span></label>
               <div class="pill-group mt-1">
                 <span class="pill-opt" data-value="0-15" onclick="selectPill(this,'publicTravelTime')">&lt; 15 min</span>
                 <span class="pill-opt" data-value="15-30" onclick="selectPill(this,'publicTravelTime')">15–30 min</span>
@@ -530,161 +779,88 @@
                 <span class="pill-opt" data-value="45-60" onclick="selectPill(this,'publicTravelTime')">45–60 min</span>
                 <span class="pill-opt" data-value="60+" onclick="selectPill(this,'publicTravelTime')">60+ min</span>
               </div>
+              <small class="field-error" id="publicTravelTimeError">Please select travel time.</small>
             </div>
           </div>
           <div class="col-md-5">
             <div class="form-group">
-              <label class="survey-label">Daily Cost (Round Trip)</label>
+              <label class="survey-label">Daily Cost (Round Trip) <span class="req">*</span></label>
               <div class="input-icon-wrap">
                 <i class="bi bi-currency-rupee input-icon"></i>
-                <input type="text" class="survey-input has-icon" id="publicCost" placeholder="e.g., 100">
+                <input type="text" class="survey-input has-icon" id="publicCost" placeholder="e.g., 100" maxlength="6" inputmode="numeric">
               </div>
+              <small class="field-error" id="publicCostError">Please enter daily cost (numbers only).</small>
             </div>
           </div>
         </div>
 
-        <div class="form-group mb-0">
-          <label class="survey-label">Comments / Challenges</label>
+        <!-- Are you using company transport? -->
+        <hr class="section-divider">
+        <div class="form-group">
+          <label class="survey-label">Are you using company transport? <span class="req">*</span></label>
+          <div class="yn-grid mt-2" id="pubUsingCompanyGrid">
+            <div class="yn-card" data-yn="yes" data-group="pubUsingCompany" onclick="selectYN('pubUsingCompany','yes')">
+              <span class="yn-icon"><i class="bi bi-check-circle-fill"></i></span>
+              <span class="yn-label">Yes</span>
+              <span class="yn-sub">I use company transport</span>
+            </div>
+            <div class="yn-card" data-yn="no" data-group="pubUsingCompany" onclick="selectYN('pubUsingCompany','no')">
+              <span class="yn-icon"><i class="bi bi-x-circle-fill"></i></span>
+              <span class="yn-label">No</span>
+              <span class="yn-sub">I don't use company transport</span>
+            </div>
+          </div>
+          <small class="field-error" id="pubUsingCompanyError">Please select an option.</small>
+        </div>
+
+        <!-- If YES: Rate & Comments -->
+        <div id="pubCompanyYesBlock" style="display:none;" class="sub-section section-animate">
+          <div class="sub-section-title"><i class="bi bi-star-fill"></i> Rate Company Transport Service</div>
+          <div class="form-group">
+            <label class="survey-label">Your Rating <span class="req">*</span></label>
+            <div class="star-block mt-1" id="pubStarBlock" onmouseleave="clearHover('pub')">
+              <span class="star pub-star" data-star="1" onclick="rateService(1,'pub')" onmouseenter="hoverStar(1,'pub')"><i class="bi bi-star"></i></span>
+              <span class="star pub-star" data-star="2" onclick="rateService(2,'pub')" onmouseenter="hoverStar(2,'pub')"><i class="bi bi-star"></i></span>
+              <span class="star pub-star" data-star="3" onclick="rateService(3,'pub')" onmouseenter="hoverStar(3,'pub')"><i class="bi bi-star"></i></span>
+              <span class="star pub-star" data-star="4" onclick="rateService(4,'pub')" onmouseenter="hoverStar(4,'pub')"><i class="bi bi-star"></i></span>
+              <span class="star pub-star" data-star="5" onclick="rateService(5,'pub')" onmouseenter="hoverStar(5,'pub')"><i class="bi bi-star"></i></span>
+              <span class="rating-label" id="pubRatingLabel"></span>
+            </div>
+            <small class="text-muted d-block mt-1">Click to rate (1 = Poor, 5 = Excellent)</small>
+            <small class="field-error" id="pubRatingError">Please rate the service.</small>
+          </div>
+          <div class="form-group mb-0">
+            <label class="survey-label">Comments / Feedback <span class="req">*</span></label>
+            <textarea class="survey-input" id="pubCompanyComments" rows="3" placeholder="Share your experience with the company transport..."></textarea>
+            <small class="field-error" id="pubCompanyCommentsError">Please enter your comments.</small>
+          </div>
+        </div>
+
+        <!-- If NO: Interested? -->
+        <div id="pubCompanyNoBlock" style="display:none;" class="sub-section section-animate">
+          <div class="sub-section-title"><i class="bi bi-question-circle-fill"></i> Would you like to use company transport?</div>
+          <div class="form-group mb-0">
+            <label class="survey-label">Are you interested in using company transport? <span class="req">*</span></label>
+            <div class="yn-grid mt-2" id="pubInterestedGrid">
+              <div class="yn-card" data-yn="yes" data-group="pubInterested" onclick="selectYN('pubInterested','yes')">
+                <span class="yn-icon"><i class="bi bi-hand-thumbs-up-fill"></i></span>
+                <span class="yn-label">Yes, Interested</span>
+                <span class="yn-sub">I'd like to use it</span>
+              </div>
+              <div class="yn-card" data-yn="no" data-group="pubInterested" onclick="selectYN('pubInterested','no')">
+                <span class="yn-icon"><i class="bi bi-hand-thumbs-down-fill"></i></span>
+                <span class="yn-label">Not Interested</span>
+                <span class="yn-sub">I'll continue with public</span>
+              </div>
+            </div>
+            <small class="field-error" id="pubInterestedError">Please select an option.</small>
+          </div>
+        </div>
+
+        <div class="form-group mb-0 mt-3">
+          <label class="survey-label">Comments / Challenges <span class="req">*</span></label>
           <textarea class="survey-input" id="publicComments" rows="3" placeholder="Any issues with frequency, connectivity, safety, or suggestions..."></textarea>
-        </div>
-      </div>
-
-      <!-- 5. Company Transport -->
-      <div class="survey-section section-animate" id="companySection" style="display:none;">
-        <div class="section-header">
-          <span class="section-badge"><i class="bi bi-truck"></i></span>
-          <div>
-            <div class="section-title">Company Transport Details</div>
-            <div class="section-subtitle">Share your experience with our transport service</div>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col-md-6">
-            <div class="form-group">
-              <label class="survey-label">Present Pickup Point <span class="req">*</span></label>
-              <div class="input-icon-wrap">
-                <i class="bi bi-geo-alt-fill input-icon"></i>
-                <input type="text" class="survey-input has-icon" id="presentServicePoint" placeholder="Your current pickup location">
-              </div>
-            </div>
-          </div>
-          <div class="col-md-6">
-            <div class="form-group">
-              <label class="survey-label">Preferred Nearest Pickup Point</label>
-              <div class="input-icon-wrap">
-                <i class="bi bi-pin-map-fill input-icon"></i>
-                <input type="text" class="survey-input has-icon" id="nearestServicePoint" placeholder="Suggest a convenient pickup point">
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col-md-6">
-            <div class="form-group">
-              <label class="survey-label">Pickup Time</label>
-              <div class="input-icon-wrap">
-                <i class="bi bi-clock input-icon"></i>
-                <input type="text" class="survey-input has-icon" id="pickupTime" placeholder="e.g., 8:30 AM">
-              </div>
-            </div>
-          </div>
-          <div class="col-md-6">
-            <div class="form-group">
-              <label class="survey-label">Drop Time</label>
-              <div class="input-icon-wrap">
-                <i class="bi bi-clock-history input-icon"></i>
-                <input type="text" class="survey-input has-icon" id="dropTime" placeholder="e.g., 6:30 PM">
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Star Rating -->
-        <div class="form-group">
-          <label class="survey-label">Rate Our Transport Service <span class="req">*</span></label>
-          <div class="star-block mt-2" id="starBlock" onmouseleave="clearHover()">
-            <span class="star" data-star="1" onclick="rateService(1)" onmouseenter="hoverStar(1)"><i class="bi bi-star"></i></span>
-            <span class="star" data-star="2" onclick="rateService(2)" onmouseenter="hoverStar(2)"><i class="bi bi-star"></i></span>
-            <span class="star" data-star="3" onclick="rateService(3)" onmouseenter="hoverStar(3)"><i class="bi bi-star"></i></span>
-            <span class="star" data-star="4" onclick="rateService(4)" onmouseenter="hoverStar(4)"><i class="bi bi-star"></i></span>
-            <span class="star" data-star="5" onclick="rateService(5)" onmouseenter="hoverStar(5)"><i class="bi bi-star"></i></span>
-            <span class="rating-label" id="ratingLabel"></span>
-          </div>
-          <small class="text-muted d-block mt-1">Click to rate (1 = Poor, 5 = Excellent)</small>
-        </div>
-
-        <!-- Service Likes -->
-        <div class="form-group">
-          <label class="survey-label">What do you like about our service?</label>
-          <div class="like-grid mt-2">
-            <button type="button" class="like-card" data-like="punctual" onclick="toggleServiceLike('punctual')">
-              <i class="bi bi-clock lc-icon"></i>
-              <span class="lc-label">Punctual &amp; On-time</span>
-              <i class="bi bi-check-circle-fill lc-check" style="display:none;"></i>
-            </button>
-            <button type="button" class="like-card" data-like="comfortable" onclick="toggleServiceLike('comfortable')">
-              <i class="bi bi-person-check lc-icon"></i>
-              <span class="lc-label">Comfortable Seats</span>
-              <i class="bi bi-check-circle-fill lc-check" style="display:none;"></i>
-            </button>
-            <button type="button" class="like-card" data-like="ac" onclick="toggleServiceLike('ac')">
-              <i class="bi bi-thermometer-snow lc-icon"></i>
-              <span class="lc-label">AC Facility</span>
-              <i class="bi bi-check-circle-fill lc-check" style="display:none;"></i>
-            </button>
-            <button type="button" class="like-card" data-like="driver" onclick="toggleServiceLike('driver')">
-              <i class="bi bi-person-badge lc-icon"></i>
-              <span class="lc-label">Professional Driver</span>
-              <i class="bi bi-check-circle-fill lc-check" style="display:none;"></i>
-            </button>
-            <button type="button" class="like-card" data-like="clean" onclick="toggleServiceLike('clean')">
-              <i class="bi bi-stars lc-icon"></i>
-              <span class="lc-label">Clean &amp; Well-maintained</span>
-              <i class="bi bi-check-circle-fill lc-check" style="display:none;"></i>
-            </button>
-            <button type="button" class="like-card" data-like="convenient" onclick="toggleServiceLike('convenient')">
-              <i class="bi bi-geo-alt lc-icon"></i>
-              <span class="lc-label">Convenient Pickup Point</span>
-              <i class="bi bi-check-circle-fill lc-check" style="display:none;"></i>
-            </button>
-          </div>
-        </div>
-
-        <div class="form-group mb-0">
-          <label class="survey-label">Feedback / Suggestions</label>
-          <textarea class="survey-input" id="companyFeedback" rows="3" placeholder="Share your feedback or suggestions to help us improve..."></textarea>
-        </div>
-      </div>
-
-      <!-- 6. Additional Information (Own / Public only) -->
-      <div class="survey-section" id="additionalSection" style="display:none;">
-        <div class="section-header">
-          <span class="section-badge"><i class="bi bi-lightbulb"></i></span>
-          <div>
-            <div class="section-title">Additional Information</div>
-            <div class="section-subtitle">Help us plan better transport services</div>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label class="survey-label">Would you be interested in company transport if available from your area?</label>
-          <div class="interest-group mt-2">
-            <div class="interest-card" data-interest="yes" onclick="selectInterest('yes')">
-              <i class="bi bi-check-circle-fill ic-icon text-success"></i>
-              <span>Yes, Interested</span>
-            </div>
-            <div class="interest-card" data-interest="no" onclick="selectInterest('no')">
-              <i class="bi bi-x-circle-fill ic-icon text-danger"></i>
-              <span>Not Interested</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="form-group mb-0">
-          <label class="survey-label">Any other comments or suggestions?</label>
-          <textarea class="survey-input" id="generalComments" rows="3" placeholder="Any other feedback for the HR / Admin team..."></textarea>
+          <small class="field-error" id="publicCommentsError">Please enter your comments.</small>
         </div>
       </div>
 
@@ -711,12 +887,23 @@
   let transportMode = '';
   let vehicleType   = '';
   let selectedPublicType = '';
-  let selectedServiceLikes = [];
-  let rating = 0;
-  let hoveredRating = 0;
+  const ratings   = { own: 0, pub: 0 };
+  const hovered   = { own: 0, pub: 0 };
   const pillValues = { ownTravelTime: '', publicTravelTime: '' };
-  let interestedValue = '';
-  let formTouched = false;
+  const ynValues  = { ownUsingCompany: '', ownInterested: '', pubUsingCompany: '', pubInterested: '' };
+
+  const ratingLabels = ['','Poor','Fair','Good','Very Good','Excellent'];
+
+  // ── Number-only inputs ─────────────────────────────────────────
+  document.getElementById('employeeId').addEventListener('input', function() {
+    this.value = this.value.replace(/\D/g,'');
+  });
+  document.getElementById('mobile').addEventListener('input', function() {
+    this.value = this.value.replace(/\D/g,'');
+  });
+  document.getElementById('publicCost').addEventListener('input', function() {
+    this.value = this.value.replace(/\D/g,'');
+  });
 
   // ── Transport Mode ─────────────────────────────────────────────
   function selectTransportMode(mode) {
@@ -724,11 +911,9 @@
     document.querySelectorAll('.transport-card').forEach(c => {
       c.classList.toggle('selected', c.dataset.mode === mode);
     });
-    document.getElementById('ownSection').style.display     = mode === 'own'     ? '' : 'none';
-    document.getElementById('publicSection').style.display  = mode === 'public'  ? '' : 'none';
-    document.getElementById('companySection').style.display = mode === 'company' ? '' : 'none';
-    document.getElementById('additionalSection').style.display = (mode === 'own' || mode === 'public') ? '' : 'none';
-    document.getElementById('transportModeError').style.display = 'none';
+    document.getElementById('ownSection').style.display     = mode === 'own'    ? '' : 'none';
+    document.getElementById('publicSection').style.display  = mode === 'public' ? '' : 'none';
+    document.getElementById('transportModeError').classList.remove('show');
   }
 
   // ── Vehicle ────────────────────────────────────────────────────
@@ -737,6 +922,7 @@
     document.querySelectorAll('.vehicle-card').forEach(c => {
       c.classList.toggle('selected', c.dataset.vehicle === v);
     });
+    document.getElementById('vehicleTypeError').classList.remove('show');
   }
 
   // ── Pills ──────────────────────────────────────────────────────
@@ -745,110 +931,169 @@
     pills.forEach(p => p.classList.remove('selected'));
     el.classList.add('selected');
     pillValues[group] = el.dataset.value;
+    const errMap = { ownTravelTime: 'ownTravelTimeError', publicTravelTime: 'publicTravelTimeError' };
+    if (errMap[group]) document.getElementById(errMap[group]).classList.remove('show');
   }
 
   // ── Public Type ────────────────────────────────────────────────
   function selectPublicType(val) {
-    if (selectedPublicType === val) {
-      selectedPublicType = '';
-    } else {
-      selectedPublicType = val;
-    }
+    selectedPublicType = selectedPublicType === val ? '' : val;
     document.querySelectorAll('.pub-type-card').forEach(c => {
-      const isSelected = c.dataset.pubtype === selectedPublicType;
-      c.classList.toggle('selected', isSelected);
-      c.querySelector('.ptc-check').style.display = isSelected ? '' : 'none';
+      const isSel = c.dataset.pubtype === selectedPublicType;
+      c.classList.toggle('selected', isSel);
+      c.querySelector('.ptc-check').style.display = isSel ? '' : 'none';
     });
+    document.getElementById('publicTypeError').classList.remove('show');
   }
 
-  // ── Service Likes ──────────────────────────────────────────────
-  function toggleServiceLike(val) {
-    const idx = selectedServiceLikes.indexOf(val);
-    if (idx > -1) selectedServiceLikes.splice(idx, 1);
-    else          selectedServiceLikes.push(val);
-    document.querySelectorAll('.like-card').forEach(c => {
-      const isSel = selectedServiceLikes.includes(c.dataset.like);
-      c.classList.toggle('selected', isSel);
-      c.querySelector('.lc-check').style.display = isSel ? '' : 'none';
+  // ── Yes/No Cards ───────────────────────────────────────────────
+  function selectYN(group, val) {
+    ynValues[group] = val;
+    const gridId = {
+      ownUsingCompany: 'ownUsingCompanyGrid',
+      ownInterested:   'ownInterestedGrid',
+      pubUsingCompany: 'pubUsingCompanyGrid',
+      pubInterested:   'pubInterestedGrid'
+    }[group];
+    document.querySelectorAll('#' + gridId + ' .yn-card').forEach(c => {
+      c.classList.toggle('selected', c.dataset.yn === val);
     });
+    const errId = group + 'Error';
+    const el = document.getElementById(errId);
+    if (el) el.classList.remove('show');
+
+    // Show/hide dependent blocks
+    if (group === 'ownUsingCompany') {
+      document.getElementById('ownCompanyYesBlock').style.display = val === 'yes' ? '' : 'none';
+      document.getElementById('ownCompanyNoBlock').style.display  = val === 'no'  ? '' : 'none';
+    }
+    if (group === 'pubUsingCompany') {
+      document.getElementById('pubCompanyYesBlock').style.display = val === 'yes' ? '' : 'none';
+      document.getElementById('pubCompanyNoBlock').style.display  = val === 'no'  ? '' : 'none';
+    }
   }
 
   // ── Star Rating ────────────────────────────────────────────────
-  const ratingLabels = ['','Poor','Fair','Good','Very Good','Excellent'];
-
-  function updateStars() {
-    const display = hoveredRating || rating;
-    document.querySelectorAll('.star').forEach(s => {
+  function updateStars(prefix) {
+    const display = hovered[prefix] || ratings[prefix];
+    document.querySelectorAll('.' + prefix + '-star').forEach(s => {
       const n = parseInt(s.dataset.star);
       s.classList.toggle('active', n <= display);
       s.querySelector('i').className = 'bi ' + (n <= display ? 'bi-star-fill' : 'bi-star');
     });
-    const lbl = document.getElementById('ratingLabel');
-    lbl.textContent = display > 0 ? ratingLabels[display] : '';
+    const lbl = document.getElementById(prefix + 'RatingLabel');
+    if (lbl) lbl.textContent = display > 0 ? ratingLabels[display] : '';
   }
 
-  function rateService(star) { rating = star; updateStars(); }
-  function hoverStar(star)   { hoveredRating = star; updateStars(); }
-  function clearHover()      { hoveredRating = 0; updateStars(); }
-
-  // ── Interest ───────────────────────────────────────────────────
-  function selectInterest(val) {
-    interestedValue = val;
-    document.querySelectorAll('.interest-card').forEach(c => {
-      c.classList.toggle('selected', c.dataset.interest === val);
-    });
+  function rateService(star, prefix) {
+    ratings[prefix] = star;
+    updateStars(prefix);
+    const errId = prefix + 'RatingError';
+    const el = document.getElementById(errId);
+    if (el) el.classList.remove('show');
   }
+  function hoverStar(star, prefix) { hovered[prefix] = star; updateStars(prefix); }
+  function clearHover(prefix)       { hovered[prefix] = 0; updateStars(prefix); }
+
+  // ── Validation Helpers ─────────────────────────────────────────
+  function showErr(id) { document.getElementById(id).classList.add('show'); }
+  function hideErr(id) { document.getElementById(id).classList.remove('show'); }
+  function markInvalid(inputId) { document.getElementById(inputId).classList.add('is-invalid'); }
+  function markValid(inputId)   { document.getElementById(inputId).classList.remove('is-invalid'); }
+  function val(id) { return document.getElementById(id).value.trim(); }
 
   // ── Submit ─────────────────────────────────────────────────────
   document.getElementById('busForm').addEventListener('submit', function(e) {
     e.preventDefault();
-    formTouched = true;
+    let valid = true;
 
-    if (!transportMode) {
-      document.getElementById('transportModeError').style.display = 'block';
+    // Employee info validation
+    if (!val('employeeId') || !/^\d+$/.test(val('employeeId'))) { showErr('employeeIdError'); markInvalid('employeeId'); valid = false; } else { hideErr('employeeIdError'); markValid('employeeId'); }
+    if (!val('employeeName')) { showErr('employeeNameError'); markInvalid('employeeName'); valid = false; } else { hideErr('employeeNameError'); markValid('employeeName'); }
+    if (!val('department')) { showErr('departmentError'); markInvalid('department'); valid = false; } else { hideErr('departmentError'); markValid('department'); }
+    if (!val('mobile') || !/^\d{10}$/.test(val('mobile'))) { showErr('mobileError'); markInvalid('mobile'); valid = false; } else { hideErr('mobileError'); markValid('mobile'); }
+
+    // Transport mode
+    if (!transportMode) { showErr('transportModeError'); valid = false; }
+
+    // Own transport validation
+    if (transportMode === 'own') {
+      if (!vehicleType)            { showErr('vehicleTypeError'); valid = false; }
+      if (!val('ownFromLocation')) { showErr('ownFromLocationError'); markInvalid('ownFromLocation'); valid = false; } else { hideErr('ownFromLocationError'); markValid('ownFromLocation'); }
+      if (!pillValues.ownTravelTime) { showErr('ownTravelTimeError'); valid = false; }
+      if (!ynValues.ownUsingCompany) { showErr('ownUsingCompanyError'); valid = false; }
+      if (ynValues.ownUsingCompany === 'yes') {
+        if (!ratings.own) { showErr('ownRatingError'); valid = false; }
+        if (!val('ownCompanyComments')) { showErr('ownCompanyCommentsError'); markInvalid('ownCompanyComments'); valid = false; } else { hideErr('ownCompanyCommentsError'); markValid('ownCompanyComments'); }
+      }
+      if (ynValues.ownUsingCompany === 'no') {
+        if (!ynValues.ownInterested) { showErr('ownInterestedError'); valid = false; }
+      }
+      if (!val('ownComments')) { showErr('ownCommentsError'); markInvalid('ownComments'); valid = false; } else { hideErr('ownCommentsError'); markValid('ownComments'); }
+    }
+
+    // Public transport validation
+    if (transportMode === 'public') {
+      if (!selectedPublicType)          { showErr('publicTypeError'); valid = false; }
+      if (!val('publicFromLocation'))   { showErr('publicFromLocationError'); markInvalid('publicFromLocation'); valid = false; } else { hideErr('publicFromLocationError'); markValid('publicFromLocation'); }
+      if (!val('publicMidpoint'))       { showErr('publicMidpointError'); markInvalid('publicMidpoint'); valid = false; } else { hideErr('publicMidpointError'); markValid('publicMidpoint'); }
+      if (!val('publicDropLocation'))   { showErr('publicDropLocationError'); markInvalid('publicDropLocation'); valid = false; } else { hideErr('publicDropLocationError'); markValid('publicDropLocation'); }
+      if (!pillValues.publicTravelTime) { showErr('publicTravelTimeError'); valid = false; }
+      if (!val('publicCost') || !/^\d+$/.test(val('publicCost'))) { showErr('publicCostError'); markInvalid('publicCost'); valid = false; } else { hideErr('publicCostError'); markValid('publicCost'); }
+      if (!ynValues.pubUsingCompany)    { showErr('pubUsingCompanyError'); valid = false; }
+      if (ynValues.pubUsingCompany === 'yes') {
+        if (!ratings.pub) { showErr('pubRatingError'); valid = false; }
+        if (!val('pubCompanyComments')) { showErr('pubCompanyCommentsError'); markInvalid('pubCompanyComments'); valid = false; } else { hideErr('pubCompanyCommentsError'); markValid('pubCompanyComments'); }
+      }
+      if (ynValues.pubUsingCompany === 'no') {
+        if (!ynValues.pubInterested) { showErr('pubInterestedError'); valid = false; }
+      }
+      if (!val('publicComments')) { showErr('publicCommentsError'); markInvalid('publicComments'); valid = false; } else { hideErr('publicCommentsError'); markValid('publicComments'); }
+    }
+
+    if (!valid) {
+      const firstError = document.querySelector('.field-error.show');
+      if (firstError) firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
       return;
     }
 
-    const payload = { transportMode };
+    // Build payload
+    const payload = {
+      employeeInfo: {
+        employeeId:   val('employeeId'),
+        employeeName: val('employeeName'),
+        department:   val('department'),
+        mobile:       val('mobile')
+      },
+      transportMode
+    };
 
     if (transportMode === 'own') {
       payload.ownTransport = {
         vehicleType,
-        fromLocation: document.getElementById('ownFromLocation').value,
-        travelTime:   pillValues.ownTravelTime,
-        comments:     document.getElementById('ownComments').value
-      };
-      payload.additional = {
-        interestedInCompanyTransport: interestedValue,
-        generalComments: document.getElementById('generalComments').value
+        fromLocation:       val('ownFromLocation'),
+        travelTime:         pillValues.ownTravelTime,
+        usingCompany:       ynValues.ownUsingCompany,
+        companyRating:      ynValues.ownUsingCompany === 'yes' ? ratings.own : null,
+        companyComments:    ynValues.ownUsingCompany === 'yes' ? val('ownCompanyComments') : null,
+        interestedInCompany:ynValues.ownUsingCompany === 'no'  ? ynValues.ownInterested : null,
+        comments:           val('ownComments')
       };
     }
 
     if (transportMode === 'public') {
       payload.publicTransport = {
-        transportType: selectedPublicType,
-        fromLocation:  document.getElementById('publicFromLocation').value,
-        midpoint:      document.getElementById('publicMidpoint').value,
-        dropLocation:  document.getElementById('publicDropLocation').value,
-        travelTime:    pillValues.publicTravelTime,
-        dailyCost:     document.getElementById('publicCost').value,
-        comments:      document.getElementById('publicComments').value
-      };
-      payload.additional = {
-        interestedInCompanyTransport: interestedValue,
-        generalComments: document.getElementById('generalComments').value
-      };
-    }
-
-    if (transportMode === 'company') {
-      payload.companyTransport = {
-        presentServicePoint: document.getElementById('presentServicePoint').value,
-        nearestServicePoint: document.getElementById('nearestServicePoint').value,
-        pickupTime:          document.getElementById('pickupTime').value,
-        dropTime:            document.getElementById('dropTime').value,
-        serviceRating:       rating,
-        serviceLikes:        [...selectedServiceLikes],
-        feedback:            document.getElementById('companyFeedback').value
+        transportType:      selectedPublicType,
+        fromLocation:       val('publicFromLocation'),
+        midpoint:           val('publicMidpoint'),
+        dropLocation:       val('publicDropLocation'),
+        travelTime:         pillValues.publicTravelTime,
+        dailyCost:          val('publicCost'),
+        usingCompany:       ynValues.pubUsingCompany,
+        companyRating:      ynValues.pubUsingCompany === 'yes' ? ratings.pub : null,
+        companyComments:    ynValues.pubUsingCompany === 'yes' ? val('pubCompanyComments') : null,
+        interestedInCompany:ynValues.pubUsingCompany === 'no'  ? ynValues.pubInterested : null,
+        comments:           val('publicComments')
       };
     }
 
@@ -861,27 +1106,22 @@
       confirmButtonColor: '#0072bc',
       confirmButtonText: 'OK'
     }).then(() => {
-      // Reset
+      // Reset everything
       document.getElementById('busForm').reset();
-      transportMode = '';
-      vehicleType   = '';
-      selectedPublicType = '';
-      selectedServiceLikes = [];
-      rating = 0;
-      hoveredRating = 0;
-      interestedValue = '';
-      pillValues.ownTravelTime = '';
-      pillValues.publicTravelTime = '';
-      formTouched = false;
+      transportMode = ''; vehicleType = ''; selectedPublicType = '';
+      ratings.own = 0; ratings.pub = 0; hovered.own = 0; hovered.pub = 0;
+      pillValues.ownTravelTime = ''; pillValues.publicTravelTime = '';
+      Object.keys(ynValues).forEach(k => ynValues[k] = '');
 
-      document.querySelectorAll('.transport-card,.vehicle-card,.pub-type-card,.like-card,.interest-card').forEach(c => c.classList.remove('selected'));
-      document.querySelectorAll('.ptc-check,.lc-check').forEach(c => c.style.display = 'none');
+      document.querySelectorAll('.transport-card,.vehicle-card,.pub-type-card,.yn-card').forEach(c => c.classList.remove('selected'));
+      document.querySelectorAll('.ptc-check').forEach(c => c.style.display = 'none');
       document.querySelectorAll('.pill-opt').forEach(p => p.classList.remove('selected'));
-      document.getElementById('ownSection').style.display     = 'none';
-      document.getElementById('publicSection').style.display  = 'none';
-      document.getElementById('companySection').style.display = 'none';
-      document.getElementById('additionalSection').style.display = 'none';
-      updateStars();
+      document.querySelectorAll('.survey-input').forEach(i => i.classList.remove('is-invalid'));
+      document.querySelectorAll('.field-error').forEach(e => e.classList.remove('show'));
+      ['ownSection','publicSection','ownCompanyYesBlock','ownCompanyNoBlock','pubCompanyYesBlock','pubCompanyNoBlock'].forEach(id => {
+        document.getElementById(id).style.display = 'none';
+      });
+      updateStars('own'); updateStars('pub');
     });
   });
 </script>
