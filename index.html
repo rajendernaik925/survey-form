@@ -1,31 +1,27 @@
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Employee Transport Survey</title>
-  <link rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css">
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    *,
-    *::before,
-    *::after {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
       --blue: #0072BC;
       --blue-dark: #005a96;
-      --blue-soft: rgba(0, 114, 188, 0.08);
-      --blue-mid: rgba(0, 114, 188, 0.16);
+      --blue-soft: rgba(0,114,188,0.08);
+      --blue-mid: rgba(0,114,188,0.16);
       --green: #0a9f6e;
-      --green-soft: rgba(10, 159, 110, 0.08);
+      --green-soft: rgba(10,159,110,0.08);
       --red: #e8334a;
-      --red-soft: rgba(232, 51, 74, 0.08);
+      --red-soft: rgba(232,51,74,0.08);
       --surface: #ffffff;
       --bg: #eef3f8;
       --border: #dde5ef;
@@ -52,9 +48,10 @@
       background: var(--surface);
       border-radius: 16px;
       overflow: hidden;
-      box-shadow: 0 4px 40px rgba(0, 114, 188, 0.1);
+      box-shadow: 0 4px 40px rgba(0,114,188,0.1);
     }
 
+    
     .hdr {
       background: linear-gradient(135deg, var(--blue) 0%, var(--blue-dark) 100%);
       padding: 1.5rem 1.75rem;
@@ -93,9 +90,7 @@
       border: 1px solid rgba(255, 255, 255, 0.25);
     }
 
-    .body {
-      padding: 1.4rem 1.5rem;
-    }
+    .body { padding: 1.4rem 1.5rem; }
 
     .block {
       border: 1.5px solid var(--border);
@@ -103,303 +98,102 @@
       padding: 1.15rem 1.2rem;
       margin-bottom: 0.9rem;
     }
-
     .block-title {
-      font-size: 0.75rem;
-      font-weight: 700;
-      color: var(--sub);
-      text-transform: uppercase;
-      letter-spacing: 0.07em;
+      font-size: 0.75rem; font-weight: 700; color: var(--sub);
+      text-transform: uppercase; letter-spacing: 0.07em;
       margin-bottom: 0.9rem;
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
+      display: flex; align-items: center; gap: 0.4rem;
     }
+    .block-title i { color: var(--blue); font-size: 0.9rem; }
 
-    .block-title i {
-      color: var(--blue);
-      font-size: 0.9rem;
-    }
-
-    .lbl {
-      display: block;
-      font-size: 0.78rem;
-      font-weight: 600;
-      color: var(--label);
-      margin-bottom: 0.35rem;
-    }
-
-    .req {
-      color: var(--red);
-    }
+    .lbl { display: block; font-size: 0.78rem; font-weight: 600; color: var(--label); margin-bottom: 0.35rem; }
+    .req { color: var(--red); }
 
     .inp {
-      width: 100%;
-      font-family: inherit;
-      font-size: 0.84rem;
+      width: 100%; font-family: inherit; font-size: 0.84rem;
       padding: 0.48rem 0.72rem;
-      border: 1.5px solid var(--border);
-      border-radius: var(--r-sm);
-      background: #fff;
-      color: var(--text);
-      outline: none;
+      border: 1.5px solid var(--border); border-radius: var(--r-sm);
+      background: #fff; color: var(--text); outline: none;
       transition: border 0.15s, box-shadow 0.15s;
     }
+    .inp:focus { border-color: var(--blue); box-shadow: 0 0 0 3px var(--blue-soft); }
+    .inp.err { border-color: var(--red); box-shadow: 0 0 0 3px var(--red-soft); }
+    .inp::placeholder { color: #b8c2ce; }
+    textarea.inp { resize: none; }
 
-    .inp:focus {
-      border-color: var(--blue);
-      box-shadow: 0 0 0 3px var(--blue-soft);
-    }
+    .inp-wrap { position: relative; }
+    .inp-ico { position: absolute; left: 0.6rem; top: 50%; transform: translateY(-50%); color: var(--blue); font-size: 0.78rem; pointer-events: none; }
+    .inp-wrap .inp { padding-left: 1.9rem; }
 
-    .inp.err {
-      border-color: var(--red);
-      box-shadow: 0 0 0 3px var(--red-soft);
-    }
-
-    .inp::placeholder {
-      color: #b8c2ce;
-    }
-
-    textarea.inp {
-      resize: none;
-    }
-
-    .inp-wrap {
-      position: relative;
-    }
-
-    .inp-ico {
-      position: absolute;
-      left: 0.6rem;
-      top: 50%;
-      transform: translateY(-50%);
-      color: var(--blue);
-      font-size: 0.78rem;
-      pointer-events: none;
-    }
-
-    .inp-wrap .inp {
-      padding-left: 1.9rem;
-    }
-
-    .fg {
-      margin-bottom: 0.8rem;
-    }
-
-    .fg:last-child {
-      margin-bottom: 0;
-    }
-
-    .g2 {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0.6rem;
-    }
+    .fg { margin-bottom: 0.8rem; }
+    .fg:last-child { margin-bottom: 0; }
+    .g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; }
 
     /* Mode cards */
-    .mode-cards {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0.6rem;
-    }
-
+    .mode-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; }
     .mode-card {
-      display: flex;
-      align-items: center;
-      gap: 0.7rem;
+      display: flex; align-items: center; gap: 0.7rem;
       padding: 0.85rem 0.95rem;
-      border: 2px solid var(--border);
-      border-radius: var(--r);
-      cursor: pointer;
-      transition: all 0.15s;
-      user-select: none;
-      background: #f8fafc;
+      border: 2px solid var(--border); border-radius: var(--r);
+      cursor: pointer; transition: all 0.15s; user-select: none; background: #f8fafc;
     }
-
-    .mode-card:hover {
-      border-color: var(--blue);
-      background: var(--blue-soft);
-    }
-
-    .mode-card.sel {
-      border-color: var(--blue);
-      background: var(--blue-soft);
-    }
-
-    .mode-card.sel .mc-title {
-      color: var(--blue);
-    }
-
-    .mc-ico {
-      font-size: 1.5rem;
-      color: var(--blue);
-      line-height: 1;
-    }
-
-    .mc-title {
-      font-size: 0.86rem;
-      font-weight: 700;
-      color: var(--text);
-    }
-
-    .mc-sub {
-      font-size: 0.7rem;
-      color: var(--sub);
-    }
-
+    .mode-card:hover { border-color: var(--blue); background: var(--blue-soft); }
+    .mode-card.sel { border-color: var(--blue); background: var(--blue-soft); }
+    .mode-card.sel .mc-title { color: var(--blue); }
+    .mc-ico { font-size: 1.5rem; color: var(--blue); line-height: 1; }
+    .mc-title { font-size: 0.86rem; font-weight: 700; color: var(--text); }
+    .mc-sub { font-size: 0.7rem; color: var(--sub); }
     .mc-badge {
-      margin-left: auto;
-      width: 18px;
-      height: 18px;
-      background: var(--blue);
-      border-radius: 50%;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      color: #fff;
-      font-size: 0.6rem;
+      margin-left: auto; width: 18px; height: 18px;
+      background: var(--blue); border-radius: 50%;
+      display: none; align-items: center; justify-content: center;
+      color: #fff; font-size: 0.6rem;
     }
-
-    .mode-card.sel .mc-badge {
-      display: flex;
-    }
+    .mode-card.sel .mc-badge { display: flex; }
 
     /* Vehicle chips */
-    .veh-chips {
-      display: flex;
-      gap: 0.45rem;
-    }
-
+    .veh-chips { display: flex; gap: 0.45rem; }
     .veh-chip {
-      flex: 1;
-      display: flex;
-      align-items: center;
-      gap: 0.45rem;
+      flex: 1; display: flex; align-items: center; gap: 0.45rem;
       padding: 0.55rem 0.8rem;
-      border: 1.5px solid var(--border);
-      border-radius: var(--r-sm);
-      cursor: pointer;
-      transition: all 0.15s;
-      user-select: none;
-      background: #fff;
+      border: 1.5px solid var(--border); border-radius: var(--r-sm);
+      cursor: pointer; transition: all 0.15s; user-select: none; background: #fff;
     }
-
-    .veh-chip i {
-      font-size: 1.1rem;
-      color: var(--blue);
-    }
-
-    .veh-chip span {
-      font-size: 0.8rem;
-      font-weight: 600;
-      color: var(--sub);
-    }
-
-    .veh-chip:hover {
-      border-color: var(--blue);
-      background: var(--blue-soft);
-    }
-
-    .veh-chip.sel {
-      border-color: var(--blue);
-      background: var(--blue-soft);
-    }
-
-    .veh-chip.sel span {
-      color: var(--blue);
-    }
+    .veh-chip i { font-size: 1.1rem; color: var(--blue); }
+    .veh-chip span { font-size: 0.8rem; font-weight: 600; color: var(--sub); }
+    .veh-chip:hover { border-color: var(--blue); background: var(--blue-soft); }
+    .veh-chip.sel { border-color: var(--blue); background: var(--blue-soft); }
+    .veh-chip.sel span { color: var(--blue); }
 
     /* Pub type chips */
-    .pub-chips {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.38rem;
-    }
-
+    .pub-chips { display: flex; flex-wrap: wrap; gap: 0.38rem; }
     .pub-chip {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.3rem;
+      display: inline-flex; align-items: center; gap: 0.3rem;
       padding: 0.3rem 0.75rem;
-      border: 1.5px solid var(--border);
-      border-radius: var(--r-sm);
-      font-size: 0.77rem;
-      font-weight: 600;
-      color: var(--sub);
-      background: #fff;
-      cursor: pointer;
-      transition: all 0.15s;
-      user-select: none;
+      border: 1.5px solid var(--border); border-radius: var(--r-sm);
+      font-size: 0.77rem; font-weight: 600; color: var(--sub);
+      background: #fff; cursor: pointer; transition: all 0.15s; user-select: none;
     }
-
-    .pub-chip i {
-      font-size: 0.88rem;
-      color: var(--blue);
-    }
-
-    .pub-chip:hover {
-      border-color: var(--blue);
-      color: var(--blue);
-      background: var(--blue-soft);
-    }
-
-    .pub-chip.sel {
-      border-color: var(--blue);
-      background: var(--blue);
-      color: #fff;
-    }
-
-    .pub-chip.sel i {
-      color: #fff;
-    }
+    .pub-chip i { font-size: 0.88rem; color: var(--blue); }
+    .pub-chip:hover { border-color: var(--blue); color: var(--blue); background: var(--blue-soft); }
+    .pub-chip.sel { border-color: var(--blue); background: var(--blue); color: #fff; }
+    .pub-chip.sel i { color: #fff; }
 
     /* YN pills */
-    .yn-row {
-      display: flex;
-      gap: 0.4rem;
-      margin-top: 0.4rem;
-    }
-
+    .yn-row { display: flex; gap: 0.4rem; margin-top: 0.4rem; }
     .yn-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.3rem;
+      display: inline-flex; align-items: center; gap: 0.3rem;
       padding: 0.32rem 0.8rem;
-      border-radius: 999px;
-      border: 1.5px solid var(--border);
-      font-size: 0.78rem;
-      font-weight: 600;
-      cursor: pointer;
-      user-select: none;
-      transition: all 0.15s;
-      background: #fff;
-      color: var(--sub);
-      font-family: inherit;
+      border-radius: 999px; border: 1.5px solid var(--border);
+      font-size: 0.78rem; font-weight: 600;
+      cursor: pointer; user-select: none; transition: all 0.15s;
+      background: #fff; color: var(--sub); font-family: inherit;
     }
+    .yn-btn i { font-size: 0.85rem; }
+    .yn-btn[data-yn="yes"]:hover, .yn-btn[data-yn="yes"].sel { border-color: var(--green); background: var(--green-soft); color: var(--green); }
+    .yn-btn[data-yn="no"]:hover, .yn-btn[data-yn="no"].sel { border-color: var(--red); background: var(--red-soft); color: var(--red); }
 
-    .yn-btn i {
-      font-size: 0.85rem;
-    }
-
-    .yn-btn[data-yn="yes"]:hover,
-    .yn-btn[data-yn="yes"].sel {
-      border-color: var(--green);
-      background: var(--green-soft);
-      color: var(--green);
-    }
-
-    .yn-btn[data-yn="no"]:hover,
-    .yn-btn[data-yn="no"].sel {
-      border-color: var(--red);
-      background: var(--red-soft);
-      color: var(--red);
-    }
-
-    .div {
-      border: none;
-      border-top: 1px solid var(--border);
-      margin: 0.9rem 0;
-    }
+    .div { border: none; border-top: 1px solid var(--border); margin: 0.9rem 0; }
 
     /* Sub block — conditional reveal */
     .sub-block {
@@ -411,726 +205,523 @@
       margin-top: 0.65rem;
       animation: fadeIn 0.2s ease;
     }
-
     .sub-block-label {
-      font-size: 0.7rem;
-      font-weight: 700;
-      color: var(--blue);
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
+      font-size: 0.7rem; font-weight: 700; color: var(--blue);
+      text-transform: uppercase; letter-spacing: 0.06em;
       margin-bottom: 0.65rem;
-      display: flex;
-      align-items: center;
-      gap: 0.35rem;
+      display: flex; align-items: center; gap: 0.35rem;
     }
 
     /* Location Dropdown */
-    .loc-wrap {
-      position: relative;
-    }
-
+    .loc-wrap { position: relative; }
     .loc-search {
-      width: 100%;
-      font-family: inherit;
-      font-size: 0.84rem;
+      width: 100%; font-family: inherit; font-size: 0.84rem;
       padding: 0.48rem 1.9rem 0.48rem 1.9rem;
-      border: 1.5px solid var(--border);
-      border-radius: var(--r-sm);
-      background: #fff;
-      color: var(--text);
-      outline: none;
-      transition: border 0.15s, box-shadow 0.15s;
-      cursor: pointer;
+      border: 1.5px solid var(--border); border-radius: var(--r-sm);
+      background: #fff; color: var(--text); outline: none;
+      transition: border 0.15s, box-shadow 0.15s; cursor: pointer;
     }
-
-    .loc-search:focus {
-      border-color: var(--blue);
-      box-shadow: 0 0 0 3px var(--blue-soft);
-    }
-
-    .loc-search.err {
-      border-color: var(--red);
-      box-shadow: 0 0 0 3px var(--red-soft);
-    }
-
-    .loc-search::placeholder {
-      color: #b8c2ce;
-    }
-
+    .loc-search:focus { border-color: var(--blue); box-shadow: 0 0 0 3px var(--blue-soft); }
+    .loc-search.err { border-color: var(--red); box-shadow: 0 0 0 3px var(--red-soft); }
+    .loc-search::placeholder { color: #b8c2ce; }
     .loc-arrow {
-      position: absolute;
-      right: 0.65rem;
-      top: 50%;
-      transform: translateY(-50%);
-      color: var(--sub);
-      font-size: 0.75rem;
-      pointer-events: none;
-      transition: transform 0.2s;
+      position: absolute; right: 0.65rem; top: 50%; transform: translateY(-50%);
+      color: var(--sub); font-size: 0.75rem; pointer-events: none; transition: transform 0.2s;
     }
-
-    .loc-wrap.open .loc-arrow {
-      transform: translateY(-50%) rotate(180deg);
-    }
+    .loc-wrap.open .loc-arrow { transform: translateY(-50%) rotate(180deg); }
 
     .loc-dropdown {
       display: none;
-      position: absolute;
-      top: calc(100% + 4px);
-      left: 0;
-      right: 0;
-      background: #fff;
-      border: 1.5px solid var(--border);
-      border-radius: var(--r-sm);
-      z-index: 200;
-      box-shadow: 0 8px 30px rgba(0, 114, 188, 0.13);
-      max-height: 240px;
-      overflow: hidden;
-      flex-direction: column;
+      position: absolute; top: calc(100% + 4px); left: 0; right: 0;
+      background: #fff; border: 1.5px solid var(--border);
+      border-radius: var(--r-sm); z-index: 200;
+      box-shadow: 0 8px 30px rgba(0,114,188,0.13);
+      max-height: 240px; overflow: hidden; flex-direction: column;
     }
+    .loc-wrap.open .loc-dropdown { display: flex; }
 
-    .loc-wrap.open .loc-dropdown {
-      display: flex;
-    }
-
-    .loc-filter-wrap {
-      padding: 0.45rem 0.55rem;
-      border-bottom: 1px solid var(--border);
-      flex-shrink: 0;
-      position: relative;
-    }
-
+    .loc-filter-wrap { padding: 0.45rem 0.55rem; border-bottom: 1px solid var(--border); flex-shrink: 0; position: relative; }
     .loc-filter {
-      width: 100%;
-      font-family: inherit;
-      font-size: 0.8rem;
+      width: 100%; font-family: inherit; font-size: 0.8rem;
       padding: 0.32rem 0.6rem 0.32rem 1.75rem;
-      border: 1.5px solid var(--border);
-      border-radius: var(--r-sm);
-      outline: none;
-      background: #f8fafc;
-      color: var(--text);
+      border: 1.5px solid var(--border); border-radius: var(--r-sm);
+      outline: none; background: #f8fafc; color: var(--text);
     }
+    .loc-filter:focus { border-color: var(--blue); }
+    .loc-filter::placeholder { color: #b8c2ce; }
+    .loc-filter-ico { position: absolute; left: 1.1rem; top: 50%; transform: translateY(-50%); font-size: 0.72rem; color: var(--sub); }
 
-    .loc-filter:focus {
-      border-color: var(--blue);
-    }
-
-    .loc-filter::placeholder {
-      color: #b8c2ce;
-    }
-
-    .loc-filter-ico {
-      position: absolute;
-      left: 1.1rem;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 0.72rem;
-      color: var(--sub);
-    }
-
-    .loc-list {
-      overflow-y: auto;
-      flex: 1;
-    }
-
+    .loc-list { overflow-y: auto; flex: 1; }
     .loc-group-label {
       padding: 0.4rem 0.75rem 0.2rem;
-      font-size: 0.67rem;
-      font-weight: 700;
-      color: var(--blue);
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      background: #f0f6fb;
-      border-bottom: 1px solid var(--border);
-      position: sticky;
-      top: 0;
-      z-index: 1;
+      font-size: 0.67rem; font-weight: 700; color: var(--blue);
+      text-transform: uppercase; letter-spacing: 0.06em;
+      background: #f0f6fb; border-bottom: 1px solid var(--border);
+      position: sticky; top: 0; z-index: 1;
     }
-
     .loc-item {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
+      display: flex; align-items: center; gap: 0.5rem;
       padding: 0.38rem 0.75rem;
-      font-size: 0.82rem;
-      color: var(--text);
-      cursor: pointer;
-      transition: background 0.12s;
+      font-size: 0.82rem; color: var(--text);
+      cursor: pointer; transition: background 0.12s;
     }
+    .loc-item:hover { background: var(--blue-soft); color: var(--blue); }
+    .loc-item.selected { background: var(--blue-mid); color: var(--blue); font-weight: 600; }
+    .loc-item i { font-size: 0.72rem; color: var(--sub); flex-shrink: 0; }
+    .loc-item.selected i { color: var(--blue); }
+    .loc-empty { padding: 0.75rem; font-size: 0.8rem; color: var(--sub); text-align: center; }
 
-    .loc-item:hover {
-      background: var(--blue-soft);
-      color: var(--blue);
-    }
+    .err-txt { display: none; font-size: 0.72rem; color: var(--red); margin-top: 0.28rem; }
+    .err-txt.show { display: block; }
 
-    .loc-item.selected {
-      background: var(--blue-mid);
-      color: var(--blue);
-      font-weight: 600;
-    }
-
-    .loc-item i {
-      font-size: 0.72rem;
-      color: var(--sub);
-      flex-shrink: 0;
-    }
-
-    .loc-item.selected i {
-      color: var(--blue);
-    }
-
-    .loc-empty {
-      padding: 0.75rem;
-      font-size: 0.8rem;
-      color: var(--sub);
-      text-align: center;
-    }
-
-    .err-txt {
-      display: none;
-      font-size: 0.72rem;
-      color: var(--red);
-      margin-top: 0.28rem;
-    }
-
-    .err-txt.show {
-      display: block;
-    }
-
-    .submit-area {
-      padding: 0.2rem 0 0.4rem;
-      text-align: center;
-    }
-
+    .submit-area { padding: 0.2rem 0 0.4rem; text-align: center; }
     .submit-btn {
       background: linear-gradient(135deg, var(--blue) 0%, var(--blue-dark) 100%);
-      color: #fff;
-      border: none;
-      border-radius: var(--r-sm);
-      padding: 0.68rem 2.8rem;
-      font-size: 0.88rem;
-      font-weight: 700;
-      font-family: inherit;
-      cursor: pointer;
-      transition: all 0.18s;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.45rem;
+      color: #fff; border: none; border-radius: var(--r-sm);
+      padding: 0.68rem 2.8rem; font-size: 0.88rem; font-weight: 700;
+      font-family: inherit; cursor: pointer; transition: all 0.18s;
+      display: inline-flex; align-items: center; gap: 0.45rem;
     }
+    .submit-btn:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(0,114,188,0.35); }
+    .submit-btn:active { transform: translateY(0); }
+    .submit-note { font-size: 0.71rem; color: var(--sub); margin-top: 0.45rem; }
 
-    .submit-btn:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 6px 20px rgba(0, 114, 188, 0.35);
-    }
-
-    .submit-btn:active {
-      transform: translateY(0);
-    }
-
-    .submit-note {
-      font-size: 0.71rem;
-      color: var(--sub);
-      margin-top: 0.45rem;
-    }
-
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(-5px);
-      }
-
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .anim {
-      animation: fadeIn 0.22s ease;
-    }
+    @keyframes fadeIn { from { opacity:0; transform:translateY(-5px); } to { opacity:1; transform:translateY(0); } }
+    .anim { animation: fadeIn 0.22s ease; }
 
     @media (max-width: 540px) {
-      .body {
-        padding: 1rem;
-      }
-
-      .g2,
-      .mode-cards {
-        grid-template-columns: 1fr 1fr;
-      }
-
-      .veh-chips {
-        flex-direction: column;
-      }
-
-      .submit-btn {
-        width: 100%;
-        justify-content: center;
-      }
+      .body { padding: 1rem; }
+      .g2, .mode-cards { grid-template-columns: 1fr 1fr; }
+      .veh-chips { flex-direction: column; }
+      .submit-btn { width: 100%; justify-content: center; }
     }
   </style>
 </head>
-
 <body>
 
-  <div class="card">
-    <div class="hdr">
-      <div class="hdr-icon"><i class="bi bi-bus-front-fill"></i></div>
-      <div class="hdr-text">
-        <h1>Feedback Survey</h1>
-        <!-- <p>Help us understand your commute and improve our services</p> -->
+<div class="card">
+  <div class="hdr">
+    <div class="hdr-icon"><i class="bi bi-bus-front-fill"></i></div>
+    <div class="hdr-text">
+      <h1>Employee Transport Survey</h1>
+      <!-- <p>Help us understand your commute and improve our services</p> -->
+    </div>
+  </div>
+
+  <form id="form" class="body" novalidate>
+
+    <!-- Transport Mode -->
+    <div class="block">
+      <div class="block-title"><i class="bi bi-signpost-split"></i> How do you commute to office?</div>
+      <div class="mode-cards">
+        <div class="mode-card" data-mode="own" onclick="pickMode('own')">
+          <i class="bi bi-bicycle mc-ico"></i>
+          <div><div class="mc-title">Own Transport</div><div class="mc-sub">2-Wheeler / 4-Wheeler</div></div>
+          <div class="mc-badge"><i class="bi bi-check"></i></div>
+        </div>
+        <div class="mode-card" data-mode="public" onclick="pickMode('public')">
+          <i class="bi bi-bus-front mc-ico"></i>
+          <div><div class="mc-title">Public Transport</div><div class="mc-sub">Bus, Metro, Auto, Taxi</div></div>
+          <div class="mc-badge"><i class="bi bi-check"></i></div>
+        </div>
+      </div>
+      <div class="err-txt" id="e_mode">Please select a transport mode.</div>
+    </div>
+
+    <!-- ── OWN TRANSPORT ─────────────────────────────── -->
+    <div class="block anim" id="ownSection" style="display:none;">
+      <div class="block-title"><i class="bi bi-car-front"></i> Own Transport Details</div>
+
+      <div class="fg">
+        <label class="lbl">Vehicle Type <span class="req">*</span></label>
+        <div class="veh-chips">
+          <div class="veh-chip" data-v="2w" onclick="pickVeh('2w')">
+            <i class="bi bi-bicycle"></i><span>2-Wheeler</span>
+          </div>
+          <div class="veh-chip" data-v="4w" onclick="pickVeh('4w')">
+            <i class="bi bi-car-front"></i><span>4-Wheeler</span>
+          </div>
+        </div>
+        <div class="err-txt" id="e_veh">Please select vehicle type.</div>
+      </div>
+
+      <div class="fg">
+        <label class="lbl">Home Location <span class="req">*</span></label>
+        <div class="loc-wrap" id="ownLocWrap">
+          <i class="bi bi-geo-alt-fill inp-ico" style="position:absolute;left:0.6rem;top:50%;transform:translateY(-50%);color:var(--blue);font-size:0.78rem;pointer-events:none;z-index:1;"></i>
+          <input type="text" class="loc-search" id="ownLocDisplay" placeholder="Select your home location" readonly onclick="toggleDropdown('ownLoc')">
+          <i class="bi bi-chevron-down loc-arrow"></i>
+          <div class="loc-dropdown" id="ownLocDropdown">
+            <div class="loc-filter-wrap">
+              <i class="bi bi-search loc-filter-ico"></i>
+              <input type="text" class="loc-filter" id="ownLocFilter" placeholder="Search location..." oninput="filterLoc('ownLoc',this.value)" onclick="event.stopPropagation()">
+            </div>
+            <div class="loc-list" id="ownLocList"></div>
+          </div>
+        </div>
+        <div class="err-txt" id="e_ownLoc">Please select your home location.</div>
+      </div>
+
+      <hr class="div">
+
+      <!-- Are you using company transport? -->
+      <div class="fg">
+        <label class="lbl">Are you using company transport? <span class="req">*</span></label>
+        <div class="yn-row" id="g_ownCo">
+          <button type="button" class="yn-btn" data-yn="yes" onclick="pickYN('ownCo','yes')"><i class="bi bi-check-circle-fill"></i> Yes</button>
+          <button type="button" class="yn-btn" data-yn="no" onclick="pickYN('ownCo','no')"><i class="bi bi-x-circle-fill"></i> No</button>
+        </div>
+        <div class="err-txt" id="e_ownCo">Please select an option.</div>
+      </div>
+
+      <!-- Own → Yes → JNTU question -->
+      <div class="sub-block" id="ownJntuBlock" style="display:none;">
+        <div class="sub-block-label"><i class="bi bi-arrow-return-right"></i> Follow-up</div>
+        <div class="fg">
+          <label class="lbl">Are you pass by JNTU? <span class="req">*</span></label>
+          <div class="yn-row" id="g_ownJntu">
+            <button type="button" class="yn-btn" data-yn="yes" onclick="pickYN('ownJntu','yes')"><i class="bi bi-check-circle-fill"></i> Yes</button>
+            <button type="button" class="yn-btn" data-yn="no" onclick="pickYN('ownJntu','no')"><i class="bi bi-x-circle-fill"></i> No</button>
+          </div>
+          <div class="err-txt" id="e_ownJntu">Please select an option.</div>
+        </div>
+      </div>
+
+      <div class="fg" style="margin-top:0.8rem;">
+        <label class="lbl">Comments</label>
+        <textarea class="inp" id="ownComments" rows="3" placeholder="Any additional comments..."></textarea>
       </div>
     </div>
 
-    <form id="form" class="body" novalidate>
+    <!-- ── PUBLIC TRANSPORT ──────────────────────────── -->
+    <div class="block anim" id="pubSection" style="display:none;">
+      <div class="block-title"><i class="bi bi-bus-front"></i> Public Transport Details</div>
 
-      <!-- Transport Mode -->
-      <div class="block">
-        <div class="block-title"><i class="bi bi-signpost-split"></i> How do you commute to office?</div>
-        <div class="mode-cards">
-          <div class="mode-card" data-mode="own" onclick="pickMode('own')">
-            <i class="bi bi-bicycle mc-ico"></i>
-            <div>
-              <div class="mc-title">Own Transport</div>
-              <div class="mc-sub">2-Wheeler / 4-Wheeler</div>
-            </div>
-            <div class="mc-badge"><i class="bi bi-check"></i></div>
-          </div>
-          <div class="mode-card" data-mode="public" onclick="pickMode('public')">
-            <i class="bi bi-bus-front mc-ico"></i>
-            <div>
-              <div class="mc-title">Public Transport</div>
-              <div class="mc-sub">Bus, Metro, Auto, Taxi</div>
-            </div>
-            <div class="mc-badge"><i class="bi bi-check"></i></div>
-          </div>
+      <div class="fg">
+        <label class="lbl">Transport Type <span class="req">*</span></label>
+        <div class="pub-chips">
+          <div class="pub-chip" data-pt="bus" onclick="pickPubType('bus')"><i class="bi bi-bus-front"></i> Bus</div>
+          <div class="pub-chip" data-pt="metro" onclick="pickPubType('metro')"><i class="bi bi-train-front"></i> Metro</div>
+          <div class="pub-chip" data-pt="auto" onclick="pickPubType('auto')"><i class="bi bi-bicycle"></i> Auto</div>
+          <div class="pub-chip" data-pt="taxi" onclick="pickPubType('taxi')"><i class="bi bi-taxi-front"></i> Taxi/Cab</div>
+          <div class="pub-chip" data-pt="train" onclick="pickPubType('train')"><i class="bi bi-train-freight-front"></i> Local Train</div>
+          <div class="pub-chip" data-pt="other" onclick="pickPubType('other')"><i class="bi bi-three-dots"></i> Other</div>
         </div>
-        <div class="err-txt" id="e_mode">Please select a transport mode.</div>
+        <div class="err-txt" id="e_pubType">Please select a transport type.</div>
       </div>
 
-      <!-- ── OWN TRANSPORT ─────────────────────────────── -->
-      <div class="block anim" id="ownSection" style="display:none;">
-        <div class="block-title"><i class="bi bi-car-front"></i> Own Transport Details</div>
-
-        <div class="fg">
-          <label class="lbl">Vehicle Type <span class="req">*</span></label>
-          <div class="veh-chips">
-            <div class="veh-chip" data-v="2w" onclick="pickVeh('2w')">
-              <i class="bi bi-bicycle"></i><span>2-Wheeler</span>
-            </div>
-            <div class="veh-chip" data-v="4w" onclick="pickVeh('4w')">
-              <i class="bi bi-car-front"></i><span>4-Wheeler</span>
-            </div>
-          </div>
-          <div class="err-txt" id="e_veh">Please select vehicle type.</div>
-        </div>
-
+      <div class="g2">
         <div class="fg">
           <label class="lbl">Home Location <span class="req">*</span></label>
-          <div class="loc-wrap" id="ownLocWrap">
-            <i class="bi bi-geo-alt-fill inp-ico"
-              style="position:absolute;left:0.6rem;top:50%;transform:translateY(-50%);color:var(--blue);font-size:0.78rem;pointer-events:none;z-index:1;"></i>
-            <input type="text" class="loc-search" id="ownLocDisplay" placeholder="Select your home location" readonly
-              onclick="toggleDropdown('ownLoc')">
+          <div class="loc-wrap" id="pubFromWrap">
+            <i class="bi bi-geo-alt-fill inp-ico" style="position:absolute;left:0.6rem;top:50%;transform:translateY(-50%);color:var(--blue);font-size:0.78rem;pointer-events:none;z-index:1;"></i>
+            <input type="text" class="loc-search" id="pubFromDisplay" placeholder="Select home location" readonly onclick="toggleDropdown('pubFrom')">
             <i class="bi bi-chevron-down loc-arrow"></i>
-            <div class="loc-dropdown" id="ownLocDropdown">
+            <div class="loc-dropdown" id="pubFromDropdown">
               <div class="loc-filter-wrap">
                 <i class="bi bi-search loc-filter-ico"></i>
-                <input type="text" class="loc-filter" id="ownLocFilter" placeholder="Search location..."
-                  oninput="filterLoc('ownLoc',this.value)" onclick="event.stopPropagation()">
+                <input type="text" class="loc-filter" id="pubFromFilter" placeholder="Search..." oninput="filterLoc('pubFrom',this.value)" onclick="event.stopPropagation()">
               </div>
-              <div class="loc-list" id="ownLocList"></div>
+              <div class="loc-list" id="pubFromList"></div>
             </div>
           </div>
-          <div class="err-txt" id="e_ownLoc">Please select your home location.</div>
+          <div class="err-txt" id="e_pubFrom">Home location is required.</div>
         </div>
-
-        <hr class="div">
-
-        <!-- Are you using company transport? -->
         <div class="fg">
-          <label class="lbl">Are you using company transport? <span class="req">*</span></label>
-          <div class="yn-row" id="g_ownCo">
-            <button type="button" class="yn-btn" data-yn="yes" onclick="pickYN('ownCo','yes')"><i
-                class="bi bi-check-circle-fill"></i> Yes</button>
-            <button type="button" class="yn-btn" data-yn="no" onclick="pickYN('ownCo','no')"><i
-                class="bi bi-x-circle-fill"></i> No</button>
-          </div>
-          <div class="err-txt" id="e_ownCo">Please select an option.</div>
-        </div>
-
-        <!-- Own → Yes → JNTU question -->
-        <div class="sub-block" id="ownJntuBlock" style="display:none;">
-          <div class="sub-block-label"><i class="bi bi-arrow-return-right"></i> Follow-up</div>
-          <div class="fg">
-            <label class="lbl">Will you pass by JNTU? <span class="req">*</span></label>
-            <div class="yn-row" id="g_ownJntu">
-              <button type="button" class="yn-btn" data-yn="yes" onclick="pickYN('ownJntu','yes')"><i
-                  class="bi bi-check-circle-fill"></i> Yes</button>
-              <button type="button" class="yn-btn" data-yn="no" onclick="pickYN('ownJntu','no')"><i
-                  class="bi bi-x-circle-fill"></i> No</button>
+          <label class="lbl">Public Transport End Point <span class="req">*</span></label>
+          <div class="loc-wrap" id="pubDropWrap">
+            <i class="bi bi-geo-fill inp-ico" style="position:absolute;left:0.6rem;top:50%;transform:translateY(-50%);color:var(--blue);font-size:0.78rem;pointer-events:none;z-index:1;"></i>
+            <input type="text" class="loc-search" id="pubDropDisplay" placeholder="Select end point" readonly onclick="toggleDropdown('pubDrop')">
+            <i class="bi bi-chevron-down loc-arrow"></i>
+            <div class="loc-dropdown" id="pubDropDropdown">
+              <div class="loc-filter-wrap">
+                <i class="bi bi-search loc-filter-ico"></i>
+                <input type="text" class="loc-filter" id="pubDropFilter" placeholder="Search..." oninput="filterLoc('pubDrop',this.value)" onclick="event.stopPropagation()">
+              </div>
+              <div class="loc-list" id="pubDropList"></div>
             </div>
-            <div class="err-txt" id="e_ownJntu">Please select an option.</div>
           </div>
-        </div>
-
-        <div class="fg" style="margin-top:0.8rem;">
-          <label class="lbl">Comments</label>
-          <textarea class="inp" id="ownComments" rows="3" placeholder="Any additional comments..."></textarea>
+          <div class="err-txt" id="e_pubDrop">Drop location is required.</div>
         </div>
       </div>
 
-      <!-- ── PUBLIC TRANSPORT ──────────────────────────── -->
-      <div class="block anim" id="pubSection" style="display:none;">
-        <div class="block-title"><i class="bi bi-bus-front"></i> Public Transport Details</div>
+      <hr class="div">
 
+      <!-- Are you using company transport? -->
+      <div class="fg">
+        <label class="lbl">Are you using company transport? <span class="req">*</span></label>
+        <div class="yn-row" id="g_pubCo">
+          <button type="button" class="yn-btn" data-yn="yes" onclick="pickYN('pubCo','yes')"><i class="bi bi-check-circle-fill"></i> Yes</button>
+          <button type="button" class="yn-btn" data-yn="no" onclick="pickYN('pubCo','no')"><i class="bi bi-x-circle-fill"></i> No</button>
+        </div>
+        <div class="err-txt" id="e_pubCo">Please select an option.</div>
+      </div>
+
+      <!-- Pub → Yes → JNTU question -->
+      <div class="sub-block" id="pubJntuBlock" style="display:none;">
+        <div class="sub-block-label"><i class="bi bi-arrow-return-right"></i> Follow-up</div>
         <div class="fg">
-          <label class="lbl">Transport Type <span class="req">*</span></label>
-          <div class="pub-chips">
-            <div class="pub-chip" data-pt="bus" onclick="pickPubType('bus')"><i class="bi bi-bus-front"></i> Bus</div>
-            <div class="pub-chip" data-pt="metro" onclick="pickPubType('metro')"><i class="bi bi-train-front"></i> Metro
-            </div>
-            <div class="pub-chip" data-pt="auto" onclick="pickPubType('auto')"><i class="bi bi-bicycle"></i> Auto</div>
-            <div class="pub-chip" data-pt="taxi" onclick="pickPubType('taxi')"><i class="bi bi-taxi-front"></i> Taxi/Cab
-            </div>
-            <div class="pub-chip" data-pt="train" onclick="pickPubType('train')"><i
-                class="bi bi-train-freight-front"></i> Local Train</div>
-            <div class="pub-chip" data-pt="other" onclick="pickPubType('other')"><i class="bi bi-three-dots"></i> Other
-            </div>
+          <label class="lbl">Are you pass by JNTU? <span class="req">*</span></label>
+          <div class="yn-row" id="g_pubJntu">
+            <button type="button" class="yn-btn" data-yn="yes" onclick="pickYN('pubJntu','yes')"><i class="bi bi-check-circle-fill"></i> Yes</button>
+            <button type="button" class="yn-btn" data-yn="no" onclick="pickYN('pubJntu','no')"><i class="bi bi-x-circle-fill"></i> No</button>
           </div>
-          <div class="err-txt" id="e_pubType">Please select a transport type.</div>
-        </div>
-
-        <div class="g2">
-          <div class="fg">
-            <label class="lbl">Home Location <span class="req">*</span></label>
-            <div class="loc-wrap" id="pubFromWrap">
-              <i class="bi bi-geo-alt-fill inp-ico"
-                style="position:absolute;left:0.6rem;top:50%;transform:translateY(-50%);color:var(--blue);font-size:0.78rem;pointer-events:none;z-index:1;"></i>
-              <input type="text" class="loc-search" id="pubFromDisplay" placeholder="Select home location" readonly
-                onclick="toggleDropdown('pubFrom')">
-              <i class="bi bi-chevron-down loc-arrow"></i>
-              <div class="loc-dropdown" id="pubFromDropdown">
-                <div class="loc-filter-wrap">
-                  <i class="bi bi-search loc-filter-ico"></i>
-                  <input type="text" class="loc-filter" id="pubFromFilter" placeholder="Search..."
-                    oninput="filterLoc('pubFrom',this.value)" onclick="event.stopPropagation()">
-                </div>
-                <div class="loc-list" id="pubFromList"></div>
-              </div>
-            </div>
-            <div class="err-txt" id="e_pubFrom">Home location is required.</div>
-          </div>
-          <div class="fg">
-            <label class="lbl">Public Transport End Point <span class="req">*</span></label>
-            <div class="loc-wrap" id="pubDropWrap">
-              <i class="bi bi-geo-fill inp-ico"
-                style="position:absolute;left:0.6rem;top:50%;transform:translateY(-50%);color:var(--blue);font-size:0.78rem;pointer-events:none;z-index:1;"></i>
-              <input type="text" class="loc-search" id="pubDropDisplay" placeholder="Select end point" readonly
-                onclick="toggleDropdown('pubDrop')">
-              <i class="bi bi-chevron-down loc-arrow"></i>
-              <div class="loc-dropdown" id="pubDropDropdown">
-                <div class="loc-filter-wrap">
-                  <i class="bi bi-search loc-filter-ico"></i>
-                  <input type="text" class="loc-filter" id="pubDropFilter" placeholder="Search..."
-                    oninput="filterLoc('pubDrop',this.value)" onclick="event.stopPropagation()">
-                </div>
-                <div class="loc-list" id="pubDropList"></div>
-              </div>
-            </div>
-            <div class="err-txt" id="e_pubDrop">Drop location is required.</div>
-          </div>
-        </div>
-
-        <hr class="div">
-
-        <!-- Are you using company transport? -->
-        <div class="fg">
-          <label class="lbl">Are you using company transport? <span class="req">*</span></label>
-          <div class="yn-row" id="g_pubCo">
-            <button type="button" class="yn-btn" data-yn="yes" onclick="pickYN('pubCo','yes')"><i
-                class="bi bi-check-circle-fill"></i> Yes</button>
-            <button type="button" class="yn-btn" data-yn="no" onclick="pickYN('pubCo','no')"><i
-                class="bi bi-x-circle-fill"></i> No</button>
-          </div>
-          <div class="err-txt" id="e_pubCo">Please select an option.</div>
-        </div>
-
-        <!-- Pub → Yes → JNTU question -->
-        <div class="sub-block" id="pubJntuBlock" style="display:none;">
-          <div class="sub-block-label"><i class="bi bi-arrow-return-right"></i> Follow-up</div>
-          <div class="fg">
-            <label class="lbl">Are you pass by JNTU? <span class="req">*</span></label>
-            <div class="yn-row" id="g_pubJntu">
-              <button type="button" class="yn-btn" data-yn="yes" onclick="pickYN('pubJntu','yes')"><i
-                  class="bi bi-check-circle-fill"></i> Yes</button>
-              <button type="button" class="yn-btn" data-yn="no" onclick="pickYN('pubJntu','no')"><i
-                  class="bi bi-x-circle-fill"></i> No</button>
-            </div>
-            <div class="err-txt" id="e_pubJntu">Please select an option.</div>
-          </div>
-        </div>
-
-        <div class="fg" style="margin-top:0.8rem;">
-          <label class="lbl">Comments <span class="req">*</span></label>
-          <textarea class="inp" id="pubComments" rows="3" placeholder="Comments.."></textarea>
-          <div class="err-txt" id="e_pubComments">Please enter your comments.</div>
+          <div class="err-txt" id="e_pubJntu">Please select an option.</div>
         </div>
       </div>
 
-      <div class="submit-area">
-        <button type="submit" class="submit-btn"><i class="bi bi-send-fill"></i> Submit Survey</button>
-        <p class="submit-note"><i class="bi bi-shield-check"></i> Your response is confidential and used to improve
-          services.</p>
+      <div class="fg" style="margin-top:0.8rem;">
+        <label class="lbl">Comments / Challenges <span class="req">*</span></label>
+        <textarea class="inp" id="pubComments" rows="3" placeholder="Frequency, connectivity, safety, or suggestions..."></textarea>
+        <div class="err-txt" id="e_pubComments">Please enter your comments.</div>
       </div>
-    </form>
-  </div>
+    </div>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.10.5/sweetalert2.all.min.js"></script>
-  <script>
-    // ── Location Master Data ────────────────────────────────────────
-    const LOCATIONS = {
-      "West Hyderabad / IT Corridor": [
-        "Madhapur", "Hitech City", "Raidurg", "Gachibowli", "Kondapur", "Kothaguda",
-        "Hafeezpet", "Miyapur", "Chandanagar", "Lingampally", "Nallagandla", "Tellapur",
-        "Financial District", "Nanakramguda", "Manikonda", "Puppalaguda",
-        "Alkapuri Township", "Narsingi", "Kokapet", "Khajaguda"
-      ],
-      "Central Hyderabad": [
-        "Ameerpet", "Punjagutta", "Begumpet", "Somajiguda", "Lakdikapul", "Khairatabad",
-        "Banjara Hills", "Jubilee Hills", "Panjagutta", "Nampally", "Abids",
-        "Basheerbagh", "Himayatnagar", "Koti", "Narayanguda"
-      ],
-      "South Hyderabad": [
-        "Mehdipatnam", "Tolichowki", "Attapur", "Rajendranagar", "Shamshabad",
-        "Falaknuma", "Chandrayangutta", "Barkas", "Santosh Nagar", "Bahadurpura",
-        "Charminar", "Shalibanda", "Moghalpura", "Saidabad", "Jahanuma"
-      ],
-      "East Hyderabad": [
-        "Uppal", "Nagole", "LB Nagar", "Dilsukhnagar", "Kothapet", "Ramanthapur",
-        "Habsiguda", "Tarnaka", "Nacharam", "Mallapur", "Cherlapally",
-        "Peerzadiguda", "Boduppal", "Medipally", "Ghatkesar"
-      ],
-      "North Hyderabad": [
-        "Secunderabad", "Paradise", "Trimulgherry", "Bowenpally", "Suchitra",
-        "Kompally", "Petbasheerabad", "Jeedimetla", "Balanagar", "Kukatpally",
-        "Moosapet", "JNTU", "Erragadda", "Sanathnagar", "Fatehnagar", "Begumpet"
-      ],
-      "Secunderabad & Nearby Areas": [
-        "Malkajgiri", "Sainikpuri", "AS Rao Nagar", "ECIL", "Kapra", "Alwal",
-        "Old Alwal", "Yapral", "Kushaiguda", "Moula Ali"
-      ],
-      "Outer Areas / Expanding Zones": [
-        "Shamirpet", "Medchal", "Dundigal", "Suraram", "Bachupally", "Pragathi Nagar",
-        "Nizampet", "Chintal", "Quthbullapur", "Patancheru", "Sangareddy", "Isnapur",
-        "Beeramguda", "Ameenpur", "BHEL Township"
-      ]
-    };
+    <div class="submit-area">
+      <button type="submit" class="submit-btn"><i class="bi bi-send-fill"></i> Submit Survey</button>
+      <p class="submit-note"><i class="bi bi-shield-check"></i> Your response is confidential and used to improve services.</p>
+    </div>
+  </form>
+</div>
 
-    // ── State ───────────────────────────────────────────────────────
-    const S = {
-      mode: '', veh: '', pubType: '',
-      ownCo: '', ownJntu: '',
-      pubCo: '', pubJntu: '',
-      ownLoc: '', pubFrom: '', pubDrop: ''
-    };
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.10.5/sweetalert2.all.min.js"></script>
+<script>
+// ── Location Master Data ────────────────────────────────────────
+const LOCATIONS = {
+  "West Hyderabad / IT Corridor": [
+    "Madhapur","Hitech City","Raidurg","Gachibowli","Kondapur","Kothaguda",
+    "Hafeezpet","Miyapur","Chandanagar","Lingampally","Nallagandla","Tellapur",
+    "Financial District","Nanakramguda","Manikonda","Puppalaguda",
+    "Alkapuri Township","Narsingi","Kokapet","Khajaguda"
+  ],
+  "Central Hyderabad": [
+    "Ameerpet","Punjagutta","Begumpet","Somajiguda","Lakdikapul","Khairatabad",
+    "Banjara Hills","Jubilee Hills","Panjagutta","Nampally","Abids",
+    "Basheerbagh","Himayatnagar","Koti","Narayanguda"
+  ],
+  "South Hyderabad": [
+    "Mehdipatnam","Tolichowki","Attapur","Rajendranagar","Shamshabad",
+    "Falaknuma","Chandrayangutta","Barkas","Santosh Nagar","Bahadurpura",
+    "Charminar","Shalibanda","Moghalpura","Saidabad","Jahanuma"
+  ],
+  "East Hyderabad": [
+    "Uppal","Nagole","LB Nagar","Dilsukhnagar","Kothapet","Ramanthapur",
+    "Habsiguda","Tarnaka","Nacharam","Mallapur","Cherlapally",
+    "Peerzadiguda","Boduppal","Medipally","Ghatkesar"
+  ],
+  "North Hyderabad": [
+    "Secunderabad","Paradise","Trimulgherry","Bowenpally","Suchitra",
+    "Kompally","Petbasheerabad","Jeedimetla","Balanagar","Kukatpally",
+    "Moosapet","Erragadda","Sanathnagar","Fatehnagar","Begumpet"
+  ],
+  "Secunderabad & Nearby Areas": [
+    "Malkajgiri","Sainikpuri","AS Rao Nagar","ECIL","Kapra","Alwal",
+    "Old Alwal","Yapral","Kushaiguda","Moula Ali"
+  ],
+  "Outer Areas / Expanding Zones": [
+    "Shamirpet","Medchal","Dundigal","Suraram","Bachupally","Pragathi Nagar",
+    "Nizampet","Chintal","Quthbullapur","Patancheru","Sangareddy","Isnapur",
+    "Beeramguda","Ameenpur","BHEL Township"
+  ]
+};
 
-    // ── Location Dropdown ───────────────────────────────────────────
-    function buildLocList(key, filter = '') {
-      const listEl = document.getElementById(key + 'List');
-      const term = filter.toLowerCase().trim();
-      let html = '', hasResult = false;
+// ── State ───────────────────────────────────────────────────────
+const S = {
+  mode: '', veh: '', pubType: '',
+  ownCo: '', ownJntu: '',
+  pubCo: '', pubJntu: '',
+  ownLoc: '', pubFrom: '', pubDrop: ''
+};
 
-      for (const [group, items] of Object.entries(LOCATIONS)) {
-        const filtered = items.filter(n => !term || n.toLowerCase().includes(term));
-        if (!filtered.length) continue;
-        hasResult = true;
-        html += `<div class="loc-group-label">${group}</div>`;
-        filtered.forEach(name => {
-          const sel = S[key] === name ? ' selected' : '';
-          html += `<div class="loc-item${sel}" onclick="selectLoc('${key}','${name}')">
+// ── Location Dropdown ───────────────────────────────────────────
+function buildLocList(key, filter = '') {
+  const listEl = document.getElementById(key + 'List');
+  const term = filter.toLowerCase().trim();
+  let html = '', hasResult = false;
+
+  for (const [group, items] of Object.entries(LOCATIONS)) {
+    const filtered = items.filter(n => !term || n.toLowerCase().includes(term));
+    if (!filtered.length) continue;
+    hasResult = true;
+    html += `<div class="loc-group-label">${group}</div>`;
+    filtered.forEach(name => {
+      const sel = S[key] === name ? ' selected' : '';
+      html += `<div class="loc-item${sel}" onclick="selectLoc('${key}','${name}')">
         <i class="bi bi-geo-alt${sel ? '-fill' : ''}"></i>${name}
       </div>`;
-        });
-      }
-
-      if (!hasResult) html = `<div class="loc-empty"><i class="bi bi-search"></i> No results for "${filter}"</div>`;
-      listEl.innerHTML = html;
-    }
-
-    function toggleDropdown(key) {
-      const wrap = document.getElementById(key + 'Wrap');
-      const isOpen = wrap.classList.contains('open');
-      closeAllDropdowns();
-      if (!isOpen) {
-        wrap.classList.add('open');
-        buildLocList(key);
-        setTimeout(() => document.getElementById(key + 'Filter')?.focus(), 50);
-      }
-    }
-
-    function closeAllDropdowns() {
-      document.querySelectorAll('.loc-wrap.open').forEach(w => w.classList.remove('open'));
-    }
-
-    function filterLoc(key, term) { buildLocList(key, term); }
-
-    function selectLoc(key, name) {
-      S[key] = name;
-      document.getElementById(key + 'Display').value = name;
-      document.getElementById(key + 'Display').classList.remove('err');
-      hideErr('e_' + key);
-      document.getElementById(key + 'Filter').value = '';
-      closeAllDropdowns();
-    }
-
-    document.addEventListener('click', e => {
-      if (!e.target.closest('.loc-wrap')) closeAllDropdowns();
     });
+  }
 
-    // ── Interactions ────────────────────────────────────────────────
-    function pickMode(m) {
-      S.mode = m;
-      document.querySelectorAll('.mode-card').forEach(c => c.classList.toggle('sel', c.dataset.mode === m));
-      showEl('ownSection', m === 'own');
-      showEl('pubSection', m === 'public');
-      hideErr('e_mode');
-    }
+  if (!hasResult) html = `<div class="loc-empty"><i class="bi bi-search"></i> No results for "${filter}"</div>`;
+  listEl.innerHTML = html;
+}
 
-    function pickVeh(v) {
-      S.veh = v;
-      document.querySelectorAll('.veh-chip').forEach(c => c.classList.toggle('sel', c.dataset.v === v));
-      hideErr('e_veh');
-    }
+function toggleDropdown(key) {
+  const wrap = document.getElementById(key + 'Wrap');
+  const isOpen = wrap.classList.contains('open');
+  closeAllDropdowns();
+  if (!isOpen) {
+    wrap.classList.add('open');
+    buildLocList(key);
+    setTimeout(() => document.getElementById(key + 'Filter')?.focus(), 50);
+  }
+}
 
-    function pickPubType(t) {
-      S.pubType = S.pubType === t ? '' : t;
-      document.querySelectorAll('.pub-chip').forEach(c => c.classList.toggle('sel', c.dataset.pt === S.pubType));
-      hideErr('e_pubType');
-    }
+function closeAllDropdowns() {
+  document.querySelectorAll('.loc-wrap.open').forEach(w => w.classList.remove('open'));
+}
 
-    function pickYN(group, val) {
-      S[group] = val;
-      document.querySelectorAll('#g_' + group + ' .yn-btn').forEach(b => b.classList.toggle('sel', b.dataset.yn === val));
-      hideErr('e_' + group);
+function filterLoc(key, term) { buildLocList(key, term); }
 
-      // Show JNTU question only when company transport = YES
-      if (group === 'ownCo') {
-        showEl('ownJntuBlock', val === 'yes');
-        if (val === 'no') { S.ownJntu = ''; resetYN('ownJntu'); }
+function selectLoc(key, name) {
+  S[key] = name;
+  document.getElementById(key + 'Display').value = name;
+  document.getElementById(key + 'Display').classList.remove('err');
+  hideErr('e_' + key);
+  document.getElementById(key + 'Filter').value = '';
+  closeAllDropdowns();
+}
+
+document.addEventListener('click', e => {
+  if (!e.target.closest('.loc-wrap')) closeAllDropdowns();
+});
+
+// ── Interactions ────────────────────────────────────────────────
+function pickMode(m) {
+  S.mode = m;
+  document.querySelectorAll('.mode-card').forEach(c => c.classList.toggle('sel', c.dataset.mode === m));
+  showEl('ownSection', m === 'own');
+  showEl('pubSection', m === 'public');
+  hideErr('e_mode');
+}
+
+function pickVeh(v) {
+  S.veh = v;
+  document.querySelectorAll('.veh-chip').forEach(c => c.classList.toggle('sel', c.dataset.v === v));
+  hideErr('e_veh');
+}
+
+function pickPubType(t) {
+  S.pubType = S.pubType === t ? '' : t;
+  document.querySelectorAll('.pub-chip').forEach(c => c.classList.toggle('sel', c.dataset.pt === S.pubType));
+  hideErr('e_pubType');
+}
+
+function pickYN(group, val) {
+  S[group] = val;
+  document.querySelectorAll('#g_' + group + ' .yn-btn').forEach(b => b.classList.toggle('sel', b.dataset.yn === val));
+  hideErr('e_' + group);
+
+  // Show JNTU question for both YES and NO
+  if (group === 'ownCo') showEl('ownJntuBlock', true);
+  if (group === 'pubCo') showEl('pubJntuBlock', true);
+}
+
+function resetYN(group) {
+  S[group] = '';
+  document.querySelectorAll('#g_' + group + ' .yn-btn').forEach(b => b.classList.remove('sel'));
+  hideErr('e_' + group);
+}
+
+function showEl(id, cond = true) {
+  const el = document.getElementById(id);
+  if (el) el.style.display = cond ? '' : 'none';
+}
+function hideErr(id) {
+  const el = document.getElementById(id);
+  if (el) { el.style.display = 'none'; el.classList.remove('show'); }
+}
+function showErr(id) {
+  const el = document.getElementById(id);
+  if (el) { el.style.display = 'block'; el.classList.add('show'); }
+}
+function markErr(id, on) {
+  const el = document.getElementById(id);
+  if (el) el.classList.toggle('err', on);
+}
+function v(id) { const el = document.getElementById(id); return el ? el.value.trim() : ''; }
+
+// ── Submit ──────────────────────────────────────────────────────
+document.getElementById('form').addEventListener('submit', function(e) {
+  e.preventDefault();
+  let ok = true;
+
+  if (!S.mode) { showErr('e_mode'); ok = false; }
+
+  if (S.mode === 'own') {
+    if (!S.veh)    { showErr('e_veh'); ok = false; }
+    if (!S.ownLoc) { showErr('e_ownLoc'); markErr('ownLocDisplay', true); ok = false; }
+    else markErr('ownLocDisplay', false);
+    if (!S.ownCo)  { showErr('e_ownCo'); ok = false; }
+    if (S.ownCo === 'yes' && !S.ownJntu) { showErr('e_ownJntu'); ok = false; }
+  }
+
+  if (S.mode === 'public') {
+    if (!S.pubType)  { showErr('e_pubType'); ok = false; }
+    if (!S.pubFrom)  { showErr('e_pubFrom'); markErr('pubFromDisplay', true); ok = false; }
+    else markErr('pubFromDisplay', false);
+    if (!S.pubDrop)  { showErr('e_pubDrop'); markErr('pubDropDisplay', true); ok = false; }
+    else markErr('pubDropDisplay', false);
+    if (!S.pubCo)    { showErr('e_pubCo'); ok = false; }
+    if (S.pubCo === 'yes' && !S.pubJntu) { showErr('e_pubJntu'); ok = false; }
+    if (!v('pubComments')) { showErr('e_pubComments'); markErr('pubComments', true); ok = false; }
+    else markErr('pubComments', false);
+  }
+
+  if (!ok) {
+    const first = document.querySelector('.err-txt.show');
+    if (first) first.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    return;
+  }
+
+  // ── Build JSON payload ──
+  const payload = {
+    transportMode: S.mode,
+    submittedAt: new Date().toISOString(),
+    ...(S.mode === 'own' ? {
+      ownTransport: {
+        vehicleType: S.veh === '2w' ? '2-Wheeler' : '4-Wheeler',
+        homeLocation: S.ownLoc,
+        usingCompanyTransport: S.ownCo,
+        passByJNTU: S.ownCo === 'yes' ? S.ownJntu : null,
+        comments: v('ownComments') || null
       }
-      if (group === 'pubCo') {
-        showEl('pubJntuBlock', val === 'yes');
-        if (val === 'no') { S.pubJntu = ''; resetYN('pubJntu'); }
+    } : {
+      publicTransport: {
+        transportType: S.pubType,
+        homeLocation: S.pubFrom,
+        publicTransportEndPoint: S.pubDrop,
+        usingCompanyTransport: S.pubCo,
+        passByJNTU: S.pubCo === 'yes' ? S.pubJntu : null,
+        comments: v('pubComments')
       }
-    }
+    })
+  };
 
-    function resetYN(group) {
-      S[group] = '';
-      document.querySelectorAll('#g_' + group + ' .yn-btn').forEach(b => b.classList.remove('sel'));
-      hideErr('e_' + group);
-    }
+  console.log('Survey JSON Payload:');
+  console.log(JSON.stringify(payload, null, 2));
 
-    function showEl(id, cond = true) {
-      const el = document.getElementById(id);
-      if (el) el.style.display = cond ? '' : 'none';
-    }
-    function hideErr(id) {
-      const el = document.getElementById(id);
-      if (el) { el.style.display = 'none'; el.classList.remove('show'); }
-    }
-    function showErr(id) {
-      const el = document.getElementById(id);
-      if (el) { el.style.display = 'block'; el.classList.add('show'); }
-    }
-    function markErr(id, on) {
-      const el = document.getElementById(id);
-      if (el) el.classList.toggle('err', on);
-    }
-    function v(id) { const el = document.getElementById(id); return el ? el.value.trim() : ''; }
+  Swal.fire({
+    icon: 'success',
+    title: 'Survey Submitted!',
+    html: `<p style="font-size:0.88rem;color:#344054;">Thank you for your feedback.<br>We appreciate your response!</p>`,
+    confirmButtonColor: '#0072BC',
+    confirmButtonText: 'Done'
+  }).then(() => resetForm());
+});
 
-    // ── Submit ──────────────────────────────────────────────────────
-    document.getElementById('form').addEventListener('submit', function (e) {
-      e.preventDefault();
-      let ok = true;
-
-      if (!S.mode) { showErr('e_mode'); ok = false; }
-
-      if (S.mode === 'own') {
-        if (!S.veh) { showErr('e_veh'); ok = false; }
-        if (!S.ownLoc) { showErr('e_ownLoc'); markErr('ownLocDisplay', true); ok = false; }
-        else markErr('ownLocDisplay', false);
-        if (!S.ownCo) { showErr('e_ownCo'); ok = false; }
-        if (S.ownCo === 'yes' && !S.ownJntu) { showErr('e_ownJntu'); ok = false; }
-      }
-
-      if (S.mode === 'public') {
-        if (!S.pubType) { showErr('e_pubType'); ok = false; }
-        if (!S.pubFrom) { showErr('e_pubFrom'); markErr('pubFromDisplay', true); ok = false; }
-        else markErr('pubFromDisplay', false);
-        if (!S.pubDrop) { showErr('e_pubDrop'); markErr('pubDropDisplay', true); ok = false; }
-        else markErr('pubDropDisplay', false);
-        if (!S.pubCo) { showErr('e_pubCo'); ok = false; }
-        if (S.pubCo === 'yes' && !S.pubJntu) { showErr('e_pubJntu'); ok = false; }
-        if (!v('pubComments')) { showErr('e_pubComments'); markErr('pubComments', true); ok = false; }
-        else markErr('pubComments', false);
-      }
-
-      if (!ok) {
-        const first = document.querySelector('.err-txt.show');
-        if (first) first.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        return;
-      }
-
-      // ── Build JSON payload ──
-      const payload = {
-        transportMode: S.mode,
-        submittedAt: new Date().toISOString(),
-        ...(S.mode === 'own' ? {
-          ownTransport: {
-            vehicleType: S.veh === '2w' ? '2-Wheeler' : '4-Wheeler',
-            homeLocation: S.ownLoc,
-            usingCompanyTransport: S.ownCo,
-            passByJNTU: S.ownCo === 'yes' ? S.ownJntu : null,
-            comments: v('ownComments') || null
-          }
-        } : {
-          publicTransport: {
-            transportType: S.pubType,
-            homeLocation: S.pubFrom,
-            publicTransportEndPoint: S.pubDrop,
-            usingCompanyTransport: S.pubCo,
-            passByJNTU: S.pubCo === 'yes' ? S.pubJntu : null,
-            comments: v('pubComments')
-          }
-        })
-      };
-
-      console.log('Survey JSON Payload:');
-      console.log(JSON.stringify(payload, null, 2));
-
-      Swal.fire({
-        icon: 'success',
-        title: 'Survey Submitted!',
-        html: `<p style="font-size:0.88rem;color:#344054;">Thank you for your feedback.<br>We appreciate your response!</p>`,
-        confirmButtonColor: '#0072BC',
-        confirmButtonText: 'Done'
-      }).then(() => resetForm());
-    });
-
-    function resetForm() {
-      document.getElementById('form').reset();
-      Object.keys(S).forEach(k => S[k] = '');
-      document.querySelectorAll('.mode-card,.veh-chip,.pub-chip,.yn-btn').forEach(el => el.classList.remove('sel'));
-      ['ownSection', 'pubSection', 'ownJntuBlock', 'pubJntuBlock'].forEach(id => showEl(id, false));
-      document.querySelectorAll('.err-txt').forEach(el => { el.style.display = 'none'; el.classList.remove('show'); });
-      document.querySelectorAll('.inp,.loc-search').forEach(el => el.classList.remove('err'));
-      ['ownLocDisplay', 'pubFromDisplay', 'pubDropDisplay'].forEach(id => {
-        const el = document.getElementById(id);
-        if (el) el.value = '';
-      });
-    }
-  </script>
+function resetForm() {
+  document.getElementById('form').reset();
+  Object.keys(S).forEach(k => S[k] = '');
+  document.querySelectorAll('.mode-card,.veh-chip,.pub-chip,.yn-btn').forEach(el => el.classList.remove('sel'));
+  ['ownSection','pubSection','ownJntuBlock','pubJntuBlock'].forEach(id => showEl(id, false));
+  document.querySelectorAll('.err-txt').forEach(el => { el.style.display='none'; el.classList.remove('show'); });
+  document.querySelectorAll('.inp,.loc-search').forEach(el => el.classList.remove('err'));
+  ['ownLocDisplay','pubFromDisplay','pubDropDisplay'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = '';
+  });
+}
+</script>
 </body>
-
 </html>
